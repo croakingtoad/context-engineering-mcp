@@ -119,8 +119,8 @@ describe('Project Structure Tests', () => {
       if (fs.existsSync(serverPath)) {
         const serverContent = fs.readFileSync(serverPath, 'utf8');
         expect(serverContent).toContain('@modelcontextprotocol/sdk');
-        expect(serverContent).toContain('createServer');
-        expect(serverContent).toContain('streamable');
+        expect(serverContent).toContain('new Server');
+        expect(serverContent).toContain('StdioServerTransport');
       }
     });
   });
