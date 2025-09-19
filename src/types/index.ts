@@ -18,8 +18,8 @@ export const PRPTemplateSchema = z.object({
   version: z.string(),
   author: z.string().optional(),
   tags: z.array(z.string()).optional(),
-  created: z.date().optional(),
-  updated: z.date().optional(),
+  created: z.string().optional().transform((str) => str ? new Date(str) : undefined),
+  updated: z.string().optional().transform((str) => str ? new Date(str) : undefined),
 });
 
 export const ContextEngineeringWorkflowSchema = z.object({
