@@ -1,0 +1,95 @@
+{
+  "id": "basic-web-app",
+  "name": "Basic Web Application",
+  "description": "Comprehensive template for basic web application projects following context engineering principles",
+  "category": "web-development",
+  "version": "1.0.0",
+  "author": "Context Engineering MCP Server",
+  "tags": ["web", "application", "frontend", "backend", "full-stack"],
+  "created": "2024-01-19T00:00:00Z",
+  "sections": [
+    {
+      "title": "Project Overview",
+      "content": "Define the core purpose and scope of {{projectName}} in the {{domain}} domain. This section should clearly articulate what the application will do and why it's needed.",
+      "examples": [
+        "{{projectName}} is a task management application that helps teams coordinate work",
+        "The application serves users in the {{domain}} industry with specific workflow needs"
+      ],
+      "requirements": [
+        "Clear problem statement",
+        "Target audience definition",
+        "Success criteria"
+      ]
+    },
+    {
+      "title": "Stakeholders",
+      "content": "List all stakeholders involved in {{projectName}} and their roles in the project. Include primary users, secondary users, and decision makers.",
+      "examples": [
+        "Primary stakeholders: {{stakeholders}}",
+        "End users who will interact with the application daily",
+        "System administrators who will maintain the application"
+      ],
+      "requirements": [
+        "Identify primary stakeholders",
+        "Define their roles and responsibilities",
+        "Document their needs and expectations"
+      ]
+    },
+    {
+      "title": "Functional Requirements",
+      "content": "Detail what the {{projectName}} application must do. Include core features, user workflows, and system behaviors.",
+      "examples": [
+        "User authentication and authorization",
+        "Data input and validation",
+        "Reporting and analytics features"
+      ],
+      "requirements": [
+        "Core feature specifications",
+        "User workflow definitions",
+        "Input/output requirements"
+      ]
+    },
+    {
+      "title": "Non-Functional Requirements",
+      "content": "Specify performance, security, and usability requirements for {{projectName}}. Address scalability, reliability, and maintainability concerns.",
+      "examples": [
+        "Application must support 1000+ concurrent users",
+        "Response time must be under 2 seconds",
+        "99.9% uptime availability"
+      ],
+      "requirements": [
+        "Performance benchmarks",
+        "Security standards",
+        "Usability guidelines"
+      ]
+    },
+    {
+      "title": "Technical Constraints",
+      "content": "Document any technical limitations or requirements that will impact the development of {{projectName}}. Include technology stack, infrastructure, and integration constraints.",
+      "examples": [
+        "Must integrate with existing {{domain}} systems",
+        "Browser compatibility requirements",
+        "Mobile responsiveness requirements"
+      ],
+      "requirements": [
+        "Technology stack decisions",
+        "Infrastructure requirements",
+        "Integration specifications"
+      ]
+    },
+    {
+      "title": "Success Criteria",
+      "content": "Define how success will be measured for {{projectName}}. Include both technical and business metrics.",
+      "examples": [
+        "User adoption rate of 80% within 6 months",
+        "System uptime of 99.9%",
+        "User satisfaction score of 4.5/5"
+      ],
+      "requirements": [
+        "Measurable success metrics",
+        "Timeline for achievement",
+        "Validation methods"
+      ]
+    }
+  ]
+}
