@@ -72,16 +72,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/locomotive-agency/context-engineering-mcp.git"
+    "url": "https://github.com/croakingtoad/context-engineering-mcp.git"
   },
   "bugs": {
-    "url": "https://github.com/locomotive-agency/context-engineering-mcp/issues"
+    "url": "https://github.com/croakingtoad/context-engineering-mcp/issues"
   },
-  "homepage": "https://github.com/locomotive-agency/context-engineering-mcp#readme",
-  "funding": {
-    "type": "github",
-    "url": "https://github.com/sponsors/locomotive-agency"
-  },
+  "homepage": "https://github.com/croakingtoad/context-engineering-mcp#readme",
   "engines": {
     "node": ">=18.0.0"
   }
