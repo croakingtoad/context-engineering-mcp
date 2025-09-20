@@ -11,15 +11,31 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
+    "test:unit": "jest --testPathPattern=\"src/\"",
+    "test:integration": "jest --testPathPattern=\"test/integration\"",
+    "test:e2e": "jest --testPathPattern=\"test/e2e\"",
+    "test:performance": "jest --testPathPattern=\"test/performance\" --runInBand --detectOpenHandles",
+    "test:all": "npm run test:unit && npm run test:integration && npm run test:e2e",
+    "test:ci": "jest --coverage --ci --watchAll=false --maxWorkers=2",
+    "coverage-report": "node scripts/test-coverage-report.js",
     "lint": "eslint src/**/*.ts",
     "lint:fix": "eslint src/**/*.ts --fix",
     "format": "prettier --write src/**/*.ts",
     "format:check": "prettier --check src/**/*.ts",
     "sync-templates": "./scripts/sync-templates.sh",
-    "prepare": "npm run build"
+    "type-check": "tsc --noEmit",
+    "validate": "npm run lint && npm run type-check && npm run test:all",
+    "prepare": "npm run build",
+    "precommit": "npm run lint && npm run type-check",
+    "prepush": "npm run validate"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^0.6.0",
+    "@typescript-eslint/typescript-estree": "^6.12.0",
+    "acorn": "^8.11.2",
+    "acorn-walk": "^8.3.4",
+    "fast-glob": "^3.3.2",
+    "ignore": "^5.3.0",
     "zod": "^3.23.8"
   },
   "devDependencies": {
@@ -42,10 +58,30 @@
     "prp",
     "requirements",
     "prompts",
-    "ai"
+    "ai",
+    "cole-medin",
+    "model-context-protocol",
+    "automation"
   ],
-  "author": "Marty",
+  "author": "Locomotive Agency <info@locomotive.agency>",
+  "contributors": [
+    "Cole Medin <https://github.com/coleam00> (original methodology)",
+    "croakingtoad <https://github.com/croakingtoad> (project coordination)",
+    "Claude/Anthropic (MCP implementation)"
+  ],
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/locomotive-agency/context-engineering-mcp.git"
+  },
+  "bugs": {
+    "url": "https://github.com/locomotive-agency/context-engineering-mcp/issues"
+  },
+  "homepage": "https://github.com/locomotive-agency/context-engineering-mcp#readme",
+  "funding": {
+    "type": "github",
+    "url": "https://github.com/sponsors/locomotive-agency"
+  },
   "engines": {
     "node": ">=18.0.0"
   }

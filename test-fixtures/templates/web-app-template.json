@@ -1,0 +1,88 @@
+{
+  "id": "web-app-comprehensive",
+  "name": "Comprehensive Web Application Template",
+  "description": "A detailed template for full-stack web application development with modern practices",
+  "category": "web-development",
+  "version": "1.2.0",
+  "author": "Context Engineering Team",
+  "tags": ["web", "fullstack", "modern", "scalable"],
+  "created": "2024-01-15T10:00:00Z",
+  "updated": "2024-01-20T14:30:00Z",
+  "sections": [
+    {
+      "title": "Project Overview",
+      "content": "Define the core purpose, scope, and value proposition of the web application. This should clearly articulate what problem the application solves and for whom.",
+      "examples": [
+        "E-commerce platform for sustainable products",
+        "Task management tool for remote teams",
+        "Educational platform for coding bootcamps"
+      ],
+      "requirements": [
+        "Clear problem statement",
+        "Target audience definition",
+        "Success metrics identification",
+        "Competitive landscape analysis"
+      ]
+    },
+    {
+      "title": "Technical Architecture",
+      "content": "Specify the overall technical architecture, including frontend, backend, database, and infrastructure components.",
+      "examples": [
+        "React frontend with Node.js API and PostgreSQL database",
+        "Vue.js with Django REST API and Redis caching",
+        "Angular with .NET Core and MongoDB"
+      ],
+      "requirements": [
+        "Technology stack selection with justification",
+        "Architecture diagram",
+        "Scalability considerations",
+        "Security architecture overview"
+      ]
+    },
+    {
+      "title": "User Experience Requirements",
+      "content": "Define the user experience requirements, including user journeys, interface design principles, and accessibility standards.",
+      "examples": [
+        "Mobile-first responsive design",
+        "WCAG 2.1 AA compliance",
+        "Progressive web app capabilities"
+      ],
+      "requirements": [
+        "User persona definitions",
+        "User journey mapping",
+        "Accessibility requirements",
+        "Performance benchmarks"
+      ]
+    },
+    {
+      "title": "Functional Requirements",
+      "content": "Detail the specific functionality that the application must provide, organized by user roles and use cases.",
+      "examples": [
+        "User authentication and authorization",
+        "Content management system",
+        "Real-time notifications"
+      ],
+      "requirements": [
+        "Feature specifications by user role",
+        "API endpoint definitions",
+        "Business logic requirements",
+        "Integration requirements"
+      ]
+    },
+    {
+      "title": "Quality Assurance",
+      "content": "Define the testing strategy, quality metrics, and acceptance criteria for the application.",
+      "examples": [
+        "Unit test coverage > 90%",
+        "End-to-end test automation",
+        "Performance testing under load"
+      ],
+      "requirements": [
+        "Testing strategy definition",
+        "Quality gates and metrics",
+        "Acceptance criteria",
+        "Deployment validation process"
+      ]
+    }
+  ]
+}

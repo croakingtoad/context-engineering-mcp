@@ -3,14 +3,18 @@ import {
   PRPSection,
   PRPGenerationRequest,
   PRPGenerationRequestSchema,
+  ContentSynthesis,
 } from '../types/index.js';
 import { TemplateManager } from './template-manager.js';
+import { ContentSynthesizer } from './content-synthesizer.js';
 
 export class PRPGenerator {
   private templateManager: TemplateManager;
+  private contentSynthesizer: ContentSynthesizer;
 
   constructor(templateManager: TemplateManager) {
     this.templateManager = templateManager;
+    this.contentSynthesizer = new ContentSynthesizer();
   }
 
   /**
@@ -28,6 +32,65 @@ export class PRPGenerator {
 
     // Generate the PRP content
     const prpContent = await this.buildPRP(template, validatedRequest);
+
+    // Format according to requested output format
+    return this.formatOutput(prpContent, validatedRequest.outputFormat);
+  }
+
+  /**
+   * Generate an intelligent PRP from INITIAL.md and optional codebase analysis
+   */
+  async generateIntelligentPRP(
+    initialMdPath: string,
+    projectPath?: string,
+    templateId?: string,
+    domain?: string,
+    outputFormat: 'markdown' | 'json' | 'html' = 'markdown'
+  ): Promise<string> {
+    // Synthesize content from INITIAL.md and codebase
+    const contentSynthesis = await this.contentSynthesizer.synthesizeContent(
+      initialMdPath,
+      projectPath,
+      domain
+    );
+
+    // Generate PRP content using synthesized insights
+    const prpContent = await this.buildIntelligentPRP(contentSynthesis, templateId);
+
+    // Format according to requested output format
+    return this.formatOutput(prpContent, outputFormat);
+  }
+
+  /**
+   * Generate a PRP with enhanced contextual analysis
+   */
+  async generateContextualPRP(
+    request: PRPGenerationRequest,
+    initialMdPath?: string,
+    projectPath?: string
+  ): Promise<string> {
+    // Validate the request
+    const validatedRequest = PRPGenerationRequestSchema.parse(request);
+
+    // Get the template
+    const template = this.templateManager.getTemplate(validatedRequest.templateId);
+    if (!template) {
+      throw new Error(`Template with ID ${validatedRequest.templateId} not found`);
+    }
+
+    let contentSynthesis: ContentSynthesis | undefined;
+
+    // If INITIAL.md or project path provided, perform intelligent synthesis
+    if (initialMdPath || projectPath) {
+      contentSynthesis = await this.contentSynthesizer.synthesizeContent(
+        initialMdPath || '',
+        projectPath,
+        validatedRequest.projectContext.domain
+      );
+    }
+
+    // Build enhanced PRP content
+    const prpContent = await this.buildEnhancedPRP(template, validatedRequest, contentSynthesis);
 
     // Format according to requested output format
     return this.formatOutput(prpContent, validatedRequest.outputFormat);
@@ -60,6 +123,102 @@ export class PRPGenerator {
         templateVersion: template.version,
         generatedAt: new Date().toISOString(),
         projectContext: request.projectContext,
+      },
+    };
+  }
+
+  /**
+   * Build intelligent PRP content from synthesized content
+   */
+  private async buildIntelligentPRP(
+    contentSynthesis: ContentSynthesis,
+    templateId?: string
+  ): Promise<{ sections: PRPSection[]; metadata: any }> {
+    const sections: PRPSection[] = [];
+
+    // Use template if provided, otherwise create sections from synthesized content
+    let template: PRPTemplate | null = null;
+    if (templateId) {
+      template = this.templateManager.getTemplate(templateId);
+    }
+
+    if (template) {
+      // Enhance template sections with synthesized content
+      for (const templateSection of template.sections) {
+        const enhancedSection = await this.enhanceSectionWithSynthesis(
+          templateSection,
+          contentSynthesis
+        );
+        sections.push(enhancedSection);
+      }
+    } else {
+      // Create sections directly from synthesized content
+      sections.push(...this.createSectionsFromSynthesis(contentSynthesis));
+    }
+
+    return {
+      sections,
+      metadata: {
+        generationMethod: 'intelligent-synthesis',
+        template: template?.name || 'Generated from analysis',
+        templateVersion: template?.version || '1.0',
+        generatedAt: new Date().toISOString(),
+        projectContext: {
+          name: 'Generated Project',
+          domain: 'Inferred from analysis',
+        },
+        contentSynthesis: {
+          confidenceScore: contentSynthesis.generatedContent.metadata.confidenceScore,
+          sourcesUsed: contentSynthesis.generatedContent.metadata.sourcesUsed,
+        },
+      },
+    };
+  }
+
+  /**
+   * Build enhanced PRP content combining template with synthesis
+   */
+  private async buildEnhancedPRP(
+    template: PRPTemplate,
+    request: PRPGenerationRequest,
+    contentSynthesis?: ContentSynthesis
+  ): Promise<{ sections: PRPSection[]; metadata: any }> {
+    const sections: PRPSection[] = [];
+
+    // Process template sections with potential synthesis enhancement
+    for (const section of template.sections) {
+      let processedSection: PRPSection;
+
+      if (contentSynthesis) {
+        // Enhanced processing with synthesis
+        processedSection = await this.enhanceSectionWithSynthesis(section, contentSynthesis);
+        // Apply context substitution
+        processedSection = await this.processSection(processedSection, request);
+      } else {
+        // Standard processing
+        processedSection = await this.processSection(section, request);
+      }
+
+      sections.push(processedSection);
+    }
+
+    // Add custom sections if provided
+    if (request.customSections) {
+      sections.push(...request.customSections);
+    }
+
+    return {
+      sections,
+      metadata: {
+        generationMethod: contentSynthesis ? 'enhanced-template' : 'template-based',
+        template: template.name,
+        templateVersion: template.version,
+        generatedAt: new Date().toISOString(),
+        projectContext: request.projectContext,
+        contentSynthesis: contentSynthesis ? {
+          confidenceScore: contentSynthesis.generatedContent.metadata.confidenceScore,
+          sourcesUsed: contentSynthesis.generatedContent.metadata.sourcesUsed,
+        } : undefined,
       },
     };
   }
@@ -188,6 +347,104 @@ export class PRPGenerator {
     }
 
     return markdown;
+  }
+
+  /**
+   * Enhance template section with synthesized content
+   */
+  private async enhanceSectionWithSynthesis(
+    section: PRPSection,
+    contentSynthesis: ContentSynthesis
+  ): Promise<PRPSection> {
+    const sectionTitleLower = section.title.toLowerCase();
+    const generatedSections = contentSynthesis.generatedContent.sections;
+
+    // Find matching generated section
+    const matchingGeneratedSection = Object.entries(generatedSections).find(
+      ([key]) => key.toLowerCase().includes(sectionTitleLower) ||
+                 sectionTitleLower.includes(key.toLowerCase())
+    );
+
+    if (matchingGeneratedSection) {
+      const [, generatedContent] = matchingGeneratedSection;
+
+      return {
+        ...section,
+        content: this.mergeContent(section.content, generatedContent),
+        metadata: {
+          ...section.metadata,
+          enhanced: true,
+          synthesisConfidence: contentSynthesis.generatedContent.metadata.confidenceScore,
+        },
+      };
+    }
+
+    return section;
+  }
+
+  /**
+   * Create sections directly from synthesis
+   */
+  private createSectionsFromSynthesis(contentSynthesis: ContentSynthesis): PRPSection[] {
+    const sections: PRPSection[] = [];
+    const generatedSections = contentSynthesis.generatedContent.sections;
+
+    Object.entries(generatedSections).forEach(([title, content]) => {
+      sections.push({
+        title,
+        content,
+        metadata: {
+          generatedFromSynthesis: true,
+          synthesisConfidence: contentSynthesis.generatedContent.metadata.confidenceScore,
+          sourcesUsed: contentSynthesis.generatedContent.metadata.sourcesUsed,
+        },
+      });
+    });
+
+    return sections;
+  }
+
+  /**
+   * Intelligently merge template content with generated content
+   */
+  private mergeContent(templateContent: string, generatedContent: string): string {
+    // If template content has placeholders, replace them
+    if (templateContent.includes('{{') || templateContent.includes('[')) {
+      const placeholderPattern = /\{\{[^}]+\}\}|\[.*?\]/g;
+      const placeholders = templateContent.match(placeholderPattern);
+
+      if (placeholders && placeholders.length > 0) {
+        // Replace placeholders with relevant generated content
+        let mergedContent = templateContent;
+
+        placeholders.forEach(placeholder => {
+          // Extract a relevant excerpt from generated content
+          const lines = generatedContent.split('\n');
+          const relevantLine = lines.find(line => line.trim().length > 20) || lines[0] || '';
+          mergedContent = mergedContent.replace(placeholder, relevantLine.trim());
+        });
+
+        // Append additional generated content
+        if (generatedContent.length > templateContent.length) {
+          mergedContent += '\n\n' + generatedContent;
+        }
+
+        return mergedContent;
+      }
+    }
+
+    // If template content is minimal, prefer generated content
+    if (templateContent.length < 100 && generatedContent.length > 100) {
+      return generatedContent;
+    }
+
+    // If both have substantial content, combine them intelligently
+    if (templateContent.length > 50 && generatedContent.length > 50) {
+      return templateContent + '\n\n' + generatedContent;
+    }
+
+    // Default: prefer longer content
+    return templateContent.length > generatedContent.length ? templateContent : generatedContent;
   }
 
   /**

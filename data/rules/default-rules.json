@@ -1,0 +1,100 @@
+[
+  {
+    "id": "naming-camelcase-functions",
+    "name": "Function Naming Convention",
+    "description": "Functions should use camelCase naming convention",
+    "category": "coding",
+    "rule": "Use camelCase for function names (e.g., getUserData, processPayment)",
+    "severity": "warning",
+    "applicableLanguages": [
+      "javascript",
+      "typescript"
+    ],
+    "examples": [
+      {
+        "good": "function getUserData() { /* ... */ }",
+        "bad": "function get_user_data() { /* ... */ }",
+        "explanation": "camelCase is the standard convention for JavaScript/TypeScript functions"
+      }
+    ],
+    "createdAt": "2025-09-19T20:11:04.047Z",
+    "updatedAt": "2025-09-19T20:11:04.047Z"
+  },
+  {
+    "id": "architecture-single-responsibility",
+    "name": "Single Responsibility Principle",
+    "description": "Each module/class should have one reason to change",
+    "category": "architecture",
+    "rule": "Design modules and classes with a single, well-defined responsibility",
+    "severity": "error",
+    "examples": [
+      {
+        "good": "class UserValidator { validate(user) { /* validation logic */ } }",
+        "bad": "class UserManager { validate(user) { /* ... */ } save(user) { /* ... */ } sendEmail(user) { /* ... */ } }",
+        "explanation": "The bad example handles validation, persistence, and communication - too many responsibilities"
+      }
+    ],
+    "references": [
+      "https://en.wikipedia.org/wiki/Single-responsibility_principle"
+    ],
+    "createdAt": "2025-09-19T20:11:04.047Z",
+    "updatedAt": "2025-09-19T20:11:04.047Z"
+  },
+  {
+    "id": "documentation-function-comments",
+    "name": "Function Documentation",
+    "description": "All public functions should have documentation comments",
+    "category": "documentation",
+    "rule": "Document all public functions with JSDoc, docstrings, or equivalent",
+    "severity": "warning",
+    "applicableLanguages": [
+      "javascript",
+      "typescript",
+      "python",
+      "java"
+    ],
+    "examples": [
+      {
+        "good": "/**\n * Calculates the total price including tax\n * @param {number} price - Base price\n * @param {number} taxRate - Tax rate (0-1)\n * @returns {number} Total price\n */\nfunction calculateTotal(price, taxRate) { /* ... */ }",
+        "bad": "function calculateTotal(price, taxRate) { /* ... */ }",
+        "explanation": "Documentation helps other developers understand the function's purpose and usage"
+      }
+    ],
+    "createdAt": "2025-09-19T20:11:04.047Z",
+    "updatedAt": "2025-09-19T20:11:04.047Z"
+  },
+  {
+    "id": "testing-unit-coverage",
+    "name": "Unit Test Coverage",
+    "description": "Maintain high unit test coverage for critical code paths",
+    "category": "testing",
+    "rule": "Aim for 80%+ test coverage on business logic and critical paths",
+    "severity": "warning",
+    "examples": [
+      {
+        "good": "describe('UserService', () => {\n  it('should validate user data', () => { /* test */ });\n  it('should handle invalid input', () => { /* test */ });\n});",
+        "bad": "// No tests for UserService",
+        "explanation": "Tests ensure code reliability and make refactoring safer"
+      }
+    ],
+    "createdAt": "2025-09-19T20:11:04.047Z",
+    "updatedAt": "2025-09-19T20:11:04.047Z"
+  },
+  {
+    "id": "deployment-environment-config",
+    "name": "Environment Configuration",
+    "description": "Use environment variables for configuration, never hardcode",
+    "category": "deployment",
+    "rule": "Store configuration in environment variables, use config files for defaults",
+    "severity": "error",
+    "examples": [
+      {
+        "good": "const dbUrl = process.env.DATABASE_URL || config.database.defaultUrl;",
+        "bad": "const dbUrl = \"postgresql://user:pass@localhost:5432/mydb\";",
+        "explanation": "Hardcoded values make it impossible to deploy to different environments"
+      }
+    ],
+    "createdAt": "2025-09-19T20:11:04.047Z",
+    "updatedAt": "2025-09-19T20:11:04.047Z"
+  }
+]

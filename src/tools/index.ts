@@ -10,6 +10,11 @@ import { searchTemplatesToolHandler } from './search-templates.js';
 import { createCustomTemplateToolHandler } from './create-custom-template.js';
 import { analyzeContextToolHandler } from './analyze-context.js';
 
+// Import storage tools
+import { listPRPsToolHandler, getListPRPsToolDefinition } from './list-prps.js';
+import { updatePRPToolHandler, getUpdatePRPToolDefinition } from './update-prp.js';
+import { manageStorageToolHandler, getManageStorageToolDefinition } from './manage-storage.js';
+
 /**
  * Register all MCP tools with the server
  */
@@ -37,6 +42,15 @@ export function registerTools(server: Server): void {
 
         case 'analyze_context':
           return await analyzeContextToolHandler(args);
+
+        case 'list_prps':
+          return await listPRPsToolHandler(args);
+
+        case 'update_prp':
+          return await updatePRPToolHandler(args);
+
+        case 'manage_storage':
+          return await manageStorageToolHandler(args);
 
         default:
           throw new McpError(ErrorCode.MethodNotFound, `Unknown tool: ${name}`);
@@ -88,7 +102,7 @@ export function getToolDefinitions(): Array<{
     },
     {
       name: 'generate_prp',
-      description: 'Generate a Product Requirements Prompt based on a template and project context',
+      description: 'Generate a Product Requirements Prompt based on a template and project context with storage integration',
       inputSchema: {
         type: 'object',
         properties: {
@@ -140,6 +154,43 @@ export function getToolDefinitions(): Array<{
             enum: ['markdown', 'json', 'html'],
             description: 'Output format for the generated PRP',
             default: 'markdown',
+          },
+          saveToStorage: {
+            type: 'boolean',
+            default: true,
+            description: 'Whether to save the generated PRP to storage',
+          },
+          filename: {
+            type: 'string',
+            description: 'Custom filename for the generated PRP',
+          },
+          saveToArchon: {
+            type: 'boolean',
+            default: false,
+            description: 'Whether to save to Archon if available',
+          },
+          createTasks: {
+            type: 'boolean',
+            default: false,
+            description: 'Whether to create Archon tasks from PRP sections',
+          },
+          projectId: {
+            type: 'string',
+            description: 'Project ID for Archon integration',
+          },
+          author: {
+            type: 'string',
+            description: 'Author of the generated PRP',
+          },
+          tags: {
+            type: 'array',
+            items: { type: 'string' },
+            description: 'Tags for the generated PRP',
+          },
+          category: {
+            type: 'string',
+            default: 'prp',
+            description: 'Category for the generated PRP',
           },
         },
         required: ['templateId', 'projectContext'],
@@ -252,5 +303,9 @@ export function getToolDefinitions(): Array<{
         additionalProperties: false,
       },
     },
+    // Add storage tool definitions
+    getListPRPsToolDefinition(),
+    getUpdatePRPToolDefinition(),
+    getManageStorageToolDefinition(),
   ];
 }

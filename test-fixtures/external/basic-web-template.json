@@ -1,0 +1,27 @@
+{
+  "id": "basic-web-external",
+  "name": "Basic Web Template (External)",
+  "description": "Simple external template for basic web applications",
+  "category": "web-development",
+  "version": "1.0.0",
+  "author": "External Source",
+  "tags": ["web", "basic", "starter"],
+  "sections": [
+    {
+      "title": "Project Basics",
+      "content": "Define the fundamental aspects of your web project.",
+      "requirements": [
+        "Project name and description",
+        "Primary objectives"
+      ]
+    },
+    {
+      "title": "Technical Setup",
+      "content": "Basic technical requirements and setup instructions.",
+      "requirements": [
+        "Technology choices",
+        "Development environment setup"
+      ]
+    }
+  ]
+}
