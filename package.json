@@ -1,7 +1,7 @@
 {
   "name": "context-engineering-mcp-server",
   "version": "1.0.0",
-  "description": "MCP Server that replicates Cole Medin's context engineering methodology for creating comprehensive Product Requirements Prompts",
+  "description": "Context engineering methodology MCP server for creating comprehensive Product Requirements Prompts.",
   "main": "dist/index.js",
   "type": "commonjs",
   "scripts": {
