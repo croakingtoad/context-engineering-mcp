@@ -1,0 +1,63 @@
+{
+  "id": "base-prp-template",
+  "name": "Base PRP Template v2 - Context-Rich with Validation Loops",
+  "description": "Template optimized for AI agents to implement features with sufficient context and self-validation capabilities",
+  "category": "general",
+  "version": "2.0",
+  "author": "Cole Medin",
+  "tags": ["base", "context-rich", "validation", "general-purpose"],
+  "sections": [
+    {
+      "title": "Purpose",
+      "content": "Template optimized for AI agents to implement {{feature_type}} with sufficient context and self-validation capabilities to achieve working code through iterative refinement.",
+      "requirements": ["Clear feature definition", "Implementation context"]
+    },
+    {
+      "title": "Core Principles",
+      "content": "1. Context is King: Include ALL necessary documentation, examples, and caveats\n2. Validation Loops: Provide executable tests/lints the AI can run and fix\n3. Information Dense: Use keywords and patterns from the codebase\n4. Progressive Success: Start simple, validate, then enhance\n5. Global rules: Be sure to follow all rules in CLAUDE.md",
+      "requirements": ["Follow established patterns", "Include validation steps"]
+    },
+    {
+      "title": "Goal",
+      "content": "{{project_goal}}\n\nSpecific end state: {{desired_outcome}}",
+      "requirements": ["Specific measurable goals", "Clear success definition"]
+    },
+    {
+      "title": "Why",
+      "content": "- Business value: {{business_value}}\n- User impact: {{user_impact}}\n- Integration benefits: {{integration_benefits}}\n- Problems solved: {{problems_solved}}",
+      "requirements": ["Business justification", "User value proposition"]
+    },
+    {
+      "title": "What",
+      "content": "User-visible behavior:\n{{user_visible_behavior}}\n\nTechnical requirements:\n{{technical_requirements}}\n\n### Success Criteria\n{{success_criteria}}",
+      "requirements": ["Observable behaviors", "Measurable outcomes"]
+    },
+    {
+      "title": "All Needed Context",
+      "content": "### Documentation & References\n{{documentation_references}}\n\n### Current Codebase Tree\n{{current_codebase_structure}}\n\n### Desired Codebase Tree\n{{desired_codebase_structure}}\n\n### Known Gotchas & Library Quirks\n{{known_challenges}}",
+      "requirements": ["Complete documentation", "Codebase context", "Implementation challenges"]
+    },
+    {
+      "title": "Implementation Blueprint",
+      "content": "### Data Models and Structure\n{{data_models}}\n\n### Tasks List\n{{task_breakdown}}\n\n### Per-Task Pseudocode\n{{implementation_pseudocode}}\n\n### Integration Points\n{{integration_points}}",
+      "requirements": ["Detailed implementation plan", "Clear task breakdown"]
+    },
+    {
+      "title": "Validation Loop",
+      "content": "### Level 1: Syntax & Style\n{{syntax_style_checks}}\n\n### Level 2: Unit Tests\n{{unit_tests}}\n\n### Level 3: Integration Tests\n{{integration_tests}}",
+      "requirements": ["Automated validation", "Progressive testing"]
+    },
+    {
+      "title": "Final Validation Checklist",
+      "content": "{{final_validation_checklist}}",
+      "requirements": ["Complete verification steps"]
+    },
+    {
+      "title": "Anti-Patterns to Avoid",
+      "content": "{{anti_patterns}}",
+      "requirements": ["Common pitfalls", "What not to do"]
+    }
+  ],
+  "created": "2024-09-21T20:00:00Z",
+  "updated": "2024-09-21T20:00:00Z"
+}

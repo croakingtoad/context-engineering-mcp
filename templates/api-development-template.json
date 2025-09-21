@@ -1,0 +1,63 @@
+{
+  "id": "api-development-template",
+  "name": "API Development Template",
+  "description": "Template for REST API development with comprehensive validation and documentation",
+  "category": "backend",
+  "version": "1.0",
+  "author": "Context Engineering MCP",
+  "tags": ["api", "backend", "rest", "validation"],
+  "sections": [
+    {
+      "title": "Purpose",
+      "content": "Develop {{api_name}} API endpoints for {{project_name}} with proper validation, error handling, documentation, and security measures.",
+      "requirements": ["RESTful design", "Input validation", "Security measures"]
+    },
+    {
+      "title": "Core Principles",
+      "content": "1. RESTful API design with consistent resource naming\n2. Comprehensive input validation and sanitization\n3. Proper HTTP status codes and error responses\n4. Authentication and authorization\n5. API documentation with examples\n6. Rate limiting and security headers",
+      "requirements": ["REST conventions", "Security first", "Documentation"]
+    },
+    {
+      "title": "Goal",
+      "content": "Build secure, well-documented {{api_name}} API that provides {{api_functionality}} with {{performance_requirements}} and integrates seamlessly with {{existing_systems}}.",
+      "requirements": ["Performance targets", "Security requirements", "Integration needs"]
+    },
+    {
+      "title": "Why",
+      "content": "- Business need: {{business_need}}\n- User enablement: {{user_enablement}}\n- System integration: {{system_integration}}\n- Scalability requirements: {{scalability_needs}}",
+      "requirements": ["Business justification", "Technical necessity"]
+    },
+    {
+      "title": "What",
+      "content": "### API Endpoints\n{{api_endpoints}}\n\n### Request/Response Formats\n{{request_response_formats}}\n\n### Authentication Requirements\n{{authentication_requirements}}\n\n### Success Criteria\n- [ ] All endpoints respond correctly\n- [ ] Input validation prevents invalid data\n- [ ] Authentication/authorization works\n- [ ] API documentation is complete\n- [ ] Performance targets met\n- [ ] Security requirements satisfied",
+      "requirements": ["Endpoint specifications", "Data formats", "Security measures"]
+    },
+    {
+      "title": "All Needed Context",
+      "content": "### API Documentation Standards\n{{api_documentation_standards}}\n\n### Existing API Patterns\n{{existing_api_patterns}}\n\n### Database Schema\n{{database_schema}}\n\n### Authentication System\n{{authentication_system}}\n\n### Known API Constraints\n{{api_constraints}}",
+      "requirements": ["Existing patterns", "Database integration", "Security context"]
+    },
+    {
+      "title": "Implementation Blueprint",
+      "content": "### Database Models\n{{database_models}}\n\n### API Route Definitions\n{{api_routes}}\n\n### Validation Schemas\n{{validation_schemas}}\n\n### Authentication Middleware\n{{authentication_middleware}}\n\n### Error Handling\n{{error_handling_patterns}}",
+      "requirements": ["Data models", "Route structure", "Validation logic"]
+    },
+    {
+      "title": "Validation Loop",
+      "content": "### Level 1: Code Quality\n- TypeScript/ESLint validation\n- API route registration\n- Schema validation tests\n\n### Level 2: API Testing\n- Unit tests for route handlers\n- Validation schema tests\n- Authentication/authorization tests\n\n### Level 3: Integration Testing\n- End-to-end API tests\n- Database integration tests\n- Performance and load testing",
+      "requirements": ["Quality assurance", "Comprehensive testing"]
+    },
+    {
+      "title": "Final Validation Checklist",
+      "content": "- [ ] All API endpoints respond with correct status codes\n- [ ] Input validation catches invalid requests\n- [ ] Authentication prevents unauthorized access\n- [ ] Error responses include helpful messages\n- [ ] API documentation is accurate and complete\n- [ ] Performance meets specified requirements\n- [ ] Security headers and measures implemented\n- [ ] Database operations are atomic and safe\n- [ ] Rate limiting protects against abuse",
+      "requirements": ["Complete API validation", "Security verification"]
+    },
+    {
+      "title": "Anti-Patterns to Avoid",
+      "content": "- Exposing internal error details in API responses\n- Skipping input validation for trusted sources\n- Using inconsistent HTTP status codes\n- Implementing authentication without proper session management\n- Creating API endpoints without rate limiting\n- Ignoring CORS configuration for browser clients\n- Storing sensitive data in logs or error messages",
+      "requirements": ["Security best practices", "API consistency"]
+    }
+  ],
+  "created": "2024-09-21T20:00:00Z",
+  "updated": "2024-09-21T20:00:00Z"
+}

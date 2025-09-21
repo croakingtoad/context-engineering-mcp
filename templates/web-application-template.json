@@ -1,0 +1,63 @@
+{
+  "id": "web-application-template",
+  "name": "Web Application Feature Template",
+  "description": "Template for web application features with React/TypeScript focus",
+  "category": "web-development",
+  "version": "1.0",
+  "author": "Context Engineering MCP",
+  "tags": ["web", "react", "typescript", "frontend"],
+  "sections": [
+    {
+      "title": "Purpose",
+      "content": "Implement {{feature_name}} for {{project_name}} web application using React/TypeScript with proper component architecture and state management.",
+      "requirements": ["Component-based design", "TypeScript types", "State management"]
+    },
+    {
+      "title": "Core Principles",
+      "content": "1. Component reusability and composability\n2. Type safety with TypeScript\n3. Accessible UI following WCAG guidelines\n4. Performance optimization\n5. Test-driven development",
+      "requirements": ["React best practices", "Accessibility", "Performance"]
+    },
+    {
+      "title": "Goal",
+      "content": "Build {{feature_name}} that provides {{user_benefit}} while maintaining consistency with existing {{project_name}} design system and architecture.",
+      "requirements": ["Design system consistency", "User experience focus"]
+    },
+    {
+      "title": "Why",
+      "content": "- User value: {{user_value}}\n- Business impact: {{business_impact}}\n- Technical debt reduction: {{tech_debt_benefits}}\n- Platform enhancement: {{platform_benefits}}",
+      "requirements": ["Clear value proposition", "Business alignment"]
+    },
+    {
+      "title": "What",
+      "content": "### User Experience\n{{user_interface_requirements}}\n\n### Technical Implementation\n{{technical_implementation}}\n\n### Success Criteria\n- [ ] UI components render correctly\n- [ ] All interactions work as expected\n- [ ] Accessibility requirements met\n- [ ] Performance benchmarks achieved\n- [ ] Unit tests pass\n- [ ] Integration tests pass",
+      "requirements": ["UX specifications", "Technical details", "Measurable outcomes"]
+    },
+    {
+      "title": "All Needed Context",
+      "content": "### Design System Documentation\n{{design_system_docs}}\n\n### Component Library\n{{existing_components}}\n\n### State Management Patterns\n{{state_management}}\n\n### API Integration Patterns\n{{api_patterns}}\n\n### Known UI/UX Constraints\n{{ui_constraints}}",
+      "requirements": ["Design consistency", "Existing patterns", "Technical constraints"]
+    },
+    {
+      "title": "Implementation Blueprint",
+      "content": "### Component Structure\n{{component_hierarchy}}\n\n### TypeScript Interfaces\n{{typescript_interfaces}}\n\n### State Management\n{{state_management_implementation}}\n\n### API Integration\n{{api_integration}}\n\n### Styling Approach\n{{styling_implementation}}",
+      "requirements": ["Component design", "Type definitions", "Integration patterns"]
+    },
+    {
+      "title": "Validation Loop",
+      "content": "### Level 1: Code Quality\n- TypeScript compilation (no errors)\n- ESLint validation\n- Prettier formatting\n\n### Level 2: Component Testing\n- React Testing Library unit tests\n- Component interaction tests\n- Accessibility testing\n\n### Level 3: Integration Testing\n- End-to-end user flows\n- API integration tests\n- Cross-browser compatibility",
+      "requirements": ["Quality gates", "Comprehensive testing"]
+    },
+    {
+      "title": "Final Validation Checklist",
+      "content": "- [ ] All TypeScript types defined and used correctly\n- [ ] Components follow established patterns\n- [ ] Accessibility standards met (WCAG 2.1 AA)\n- [ ] Performance metrics within acceptable ranges\n- [ ] All user interactions work as designed\n- [ ] Error states handled gracefully\n- [ ] Loading states implemented\n- [ ] Mobile responsiveness verified\n- [ ] Cross-browser testing completed",
+      "requirements": ["Complete verification", "Quality assurance"]
+    },
+    {
+      "title": "Anti-Patterns to Avoid",
+      "content": "- Creating components that don't follow the established design system\n- Ignoring TypeScript errors or using 'any' types\n- Skipping accessibility considerations\n- Implementing inline styles instead of using the styling system\n- Creating untested components\n- Ignoring performance implications\n- Breaking existing component contracts",
+      "requirements": ["Quality maintenance", "Consistency preservation"]
+    }
+  ],
+  "created": "2024-09-21T20:00:00Z",
+  "updated": "2024-09-21T20:00:00Z"
+}
