@@ -396,7 +396,7 @@ export class ContentSynthesizer {
       const analysis = await this.performCodebaseAnalysis(projectPath);
       return this.synthesizeCodebaseInsights(analysis);
     } catch (error) {
-      console.warn('Codebase analysis failed:', error);
+      
       return this.createEmptyCodebaseInsights();
     }
   }
@@ -458,11 +458,11 @@ export class ContentSynthesizer {
             analyses.push(analysis);
           }
         } catch (error) {
-          console.warn(`Failed to analyze file ${filePath}:`, error);
+          
         }
       }
     } catch (error) {
-      console.warn('Failed to analyze project files:', error);
+      
     }
 
     return analyses;

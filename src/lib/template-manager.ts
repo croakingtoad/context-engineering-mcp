@@ -44,7 +44,7 @@ export class TemplateManager {
         }
       }
     } catch (error) {
-      console.warn(`Failed to load templates from ${directory}:`, error);
+      
     }
   }
 
@@ -59,7 +59,7 @@ export class TemplateManager {
 
       this.templates.set(template.id, template);
     } catch (error) {
-      console.warn(`Failed to load template from ${templatePath}:`, error);
+      
     }
   }
 

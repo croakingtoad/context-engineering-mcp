@@ -59,7 +59,7 @@ async function initializeServer(): Promise<void> {
       maxConcurrentOperations: 10,
     });
     await storageSystem.initialize();
-    console.error('[Server] Storage system initialized');
+    // Storage system initialized
 
     // Initialize change tracker
     changeTracker = new ChangeTracker({
@@ -68,7 +68,7 @@ async function initializeServer(): Promise<void> {
       enableDiffGeneration: true,
     });
     await changeTracker.initialize();
-    console.error('[Server] Change tracker initialized');
+    // Change tracker initialized
 
     // Initialize integrations manager
     integrationsManager = new IntegrationsManager(storageSystem, {
@@ -77,16 +77,16 @@ async function initializeServer(): Promise<void> {
       fallbackToLocal: true,
     });
     await integrationsManager.initialize();
-    console.error('[Server] Integrations manager initialized');
+    // Integrations manager initialized
 
     // Initialize template manager
     templateManager = new TemplateManager(templatesDir, externalTemplatesDir);
     await templateManager.initialize();
-    console.error('[Server] Template manager initialized');
+    // Template manager initialized
 
     // Initialize PRP generator
     prpGenerator = new PRPGenerator(templateManager);
-    console.error('[Server] PRP generator initialized');
+    // PRP generator initialized
 
     // Set dependencies for storage tools
     setListPRPsDeps(storageSystem, integrationsManager);
@@ -97,15 +97,15 @@ async function initializeServer(): Promise<void> {
     const executionGuidance = new (await import('./lib/execution-guidance.js')).ExecutionGuidance();
 
     setPRPGeneratorDependencies(prpGenerator, prpValidator, executionGuidance, storageSystem, integrationsManager, changeTracker);
-    console.error('[Server] Storage tool dependencies configured');
+    
 
     // Set dependencies for resource handlers
     setResourceDependencies(templateManager);
-    console.error('[Server] Resource dependencies configured');
+    
 
-    console.error('[Server] Context Engineering MCP Server initialized successfully');
+    
   } catch (error) {
-    console.error('[Server] Failed to initialize server:', error);
+    
     process.exit(1);
   }
 }
@@ -123,7 +123,7 @@ registerResources(server);
 
 // Error handlers
 process.on('SIGINT', async () => {
-  console.error('[Server] Received SIGINT, shutting down gracefully...');
+  
   if (integrationsManager) {
     await integrationsManager.shutdown();
   }
@@ -132,7 +132,7 @@ process.on('SIGINT', async () => {
 });
 
 process.on('SIGTERM', async () => {
-  console.error('[Server] Received SIGTERM, shutting down gracefully...');
+  
   if (integrationsManager) {
     await integrationsManager.shutdown();
   }
@@ -141,12 +141,12 @@ process.on('SIGTERM', async () => {
 });
 
 process.on('uncaughtException', (error) => {
-  console.error('[Server] Uncaught exception:', error);
+  
   process.exit(1);
 });
 
 process.on('unhandledRejection', (reason, promise) => {
-  console.error('[Server] Unhandled rejection at:', promise, 'reason:', reason);
+  
   process.exit(1);
 });
 
@@ -161,7 +161,7 @@ async function startServer(): Promise<void> {
   const transport = new StdioServerTransport();
   await server.connect(transport);
 
-  console.error('[Server] Context Engineering MCP Server is running');
+  
 }
 
 // Export for testing and external use
@@ -177,7 +177,7 @@ export {
 // Start server if this file is run directly
 if (process.argv[1] && process.argv[1].endsWith('index.js')) {
   startServer().catch((error) => {
-    console.error('[Server] Failed to start server:', error);
+    
     process.exit(1);
   });
 }

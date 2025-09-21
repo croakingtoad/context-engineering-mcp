@@ -53,7 +53,7 @@ export class CodebaseAnalyzer {
         const analysis = await this.analyzeFile(file);
         fileAnalyses.push(analysis);
       } catch (error) {
-        console.warn(`Failed to analyze file ${file}:`, error);
+        
       }
     }
 
@@ -119,7 +119,7 @@ export class CodebaseAnalyzer {
       analysis.metrics = this.calculateMetrics(content, analysis);
 
     } catch (error) {
-      console.warn(`Failed to parse file ${filePath}:`, error);
+      
     }
 
     return analysis;
@@ -185,7 +185,7 @@ export class CodebaseAnalyzer {
       }
 
     } catch (error) {
-      console.warn('Failed to identify frameworks:', error);
+      
     }
 
     return frameworks;
@@ -350,7 +350,7 @@ export class CodebaseAnalyzer {
         classes,
       };
     } catch (error) {
-      console.warn(`Failed to parse JavaScript/TypeScript file ${filePath}:`, error);
+      
       return analysis;
     }
   }

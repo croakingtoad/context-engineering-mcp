@@ -90,9 +90,9 @@ export class ChangeTracker {
       await this.ensureDirectories();
       await this.loadChangeHistory();
       this.initialized = true;
-      console.log('[ChangeTracker] Initialized successfully');
+      // ChangeTracker initialized successfully
     } catch (error) {
-      console.error('[ChangeTracker] Failed to initialize:', error);
+      // ChangeTracker failed to initialize
       throw error;
     }
   }
@@ -432,13 +432,13 @@ export class ChangeTracker {
             this.changeHistory.get(change.fileId)!.push(change);
           });
         } catch (error) {
-          console.warn(`[ChangeTracker] Failed to load changes from ${file}:`, error);
+          // Failed to load changes from file
         }
       }
 
-      console.log(`[ChangeTracker] Loaded change history for ${this.changeHistory.size} files`);
+      // Loaded change history
     } catch (error) {
-      console.log('[ChangeTracker] No existing change history, starting fresh');
+      // No existing change history, starting fresh
     }
   }
 

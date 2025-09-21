@@ -104,15 +104,15 @@ export class IntegrationsManager {
    * Initialize integrations and detect available services
    */
   async initialize(): Promise<void> {
-    console.log('[Integrations] Initializing integrations manager...');
+    // Initializing integrations manager
 
     if (this.config.archonEnabled) {
       await this.detectArchonMCP();
       this.startHealthMonitoring();
     }
 
-    console.log('[Integrations] Integrations initialized');
-    console.log(`[Integrations] Archon available: ${this.isArchonAvailable()}`);
+    // Integrations initialized
+    // Archon availability checked
   }
 
   /**
@@ -149,7 +149,7 @@ export class IntegrationsManager {
           result.tasks = tasks;
         }
       } catch (error) {
-        console.warn('[Integrations] Failed to store in Archon:', error);
+        // Failed to store in Archon
         if (!this.config.fallbackToLocal) {
           throw error;
         }
@@ -182,7 +182,7 @@ export class IntegrationsManager {
         const archonDocument = await this.updateInArchon(archonDocumentId, content);
         result.archonDocument = archonDocument;
       } catch (error) {
-        console.warn('[Integrations] Failed to update in Archon:', error);
+        // Failed to update in Archon
         if (!this.config.fallbackToLocal) {
           throw error;
         }
@@ -226,7 +226,7 @@ export class IntegrationsManager {
 
           tasks.push(task);
         } catch (error) {
-          console.warn(`[Integrations] Failed to create task for section ${section.title}:`, error);
+          // Failed to create task for section
         }
       }
     }
@@ -300,19 +300,19 @@ export class IntegrationsManager {
    * Manually reconnect to Archon
    */
   async reconnect(): Promise<boolean> {
-    console.log('[Integrations] Attempting to reconnect to Archon...');
+    // Attempting to reconnect to Archon
 
     try {
       await this.detectArchonMCP();
       await this.performHealthCheck();
 
       if (this.healthStatus.isHealthy) {
-        console.log('[Integrations] Successfully reconnected to Archon');
+        // Successfully reconnected to Archon
         this.retryAttempts.clear();
         return true;
       }
     } catch (error) {
-      console.error('[Integrations] Failed to reconnect to Archon:', error);
+      // Failed to reconnect to Archon
     }
 
     return false;
@@ -327,7 +327,7 @@ export class IntegrationsManager {
       this.healthCheckInterval = null;
     }
 
-    console.log('[Integrations] Integrations manager shutdown complete');
+    // Integrations manager shutdown complete
   }
 
   // Private implementation methods
@@ -341,14 +341,14 @@ export class IntegrationsManager {
       const isAvailable = await this.archonClient.isAvailable();
 
       if (isAvailable) {
-        console.log('[Integrations] Archon MCP server detected and connected');
+        // Archon MCP server detected and connected
         await this.performHealthCheck();
       } else {
-        console.log('[Integrations] Archon MCP server not available');
+        // Archon MCP server not available
         this.archonClient = null;
       }
     } catch (error) {
-      console.log('[Integrations] Archon MCP server not found:', error);
+      // Archon MCP server not found
       this.archonClient = null;
     }
   }
@@ -487,7 +487,7 @@ export class IntegrationsManager {
       if (attempts < this.config.maxRetries) {
         this.retryAttempts.set(operationName, attempts + 1);
 
-        console.warn(
+        // Warning:
           `[Integrations] Operation ${operationName} failed (attempt ${attempts + 1}/${this.config.maxRetries}), retrying...`
         );
 

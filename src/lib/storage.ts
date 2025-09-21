@@ -89,9 +89,9 @@ export class StorageSystem {
       await this.loadMetadataCache();
 
       this.initialized = true;
-      console.log('[Storage] Storage system initialized');
+      // Storage system initialized
     } catch (error) {
-      console.error('[Storage] Failed to initialize:', error);
+      // Failed to initialize storage
       throw error;
     }
   }
@@ -406,9 +406,9 @@ export class StorageSystem {
         this.metadataCache.set(id, parsed);
       }
 
-      console.log(`[Storage] Loaded ${this.metadataCache.size} metadata entries`);
+      // Loaded metadata entries
     } catch (error) {
-      console.log('[Storage] No existing metadata index, starting fresh');
+      // No existing metadata index, starting fresh
     }
   }
 
@@ -514,7 +514,7 @@ export class StorageSystem {
         'utf-8'
       );
     } catch (error) {
-      console.warn(`[Storage] Failed to create version backup: ${error}`);
+      // Failed to create version backup
     }
   }
 
