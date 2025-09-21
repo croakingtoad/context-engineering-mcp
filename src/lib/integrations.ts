@@ -487,9 +487,7 @@ export class IntegrationsManager {
       if (attempts < this.config.maxRetries) {
         this.retryAttempts.set(operationName, attempts + 1);
 
-        // Warning:
-          `[Integrations] Operation ${operationName} failed (attempt ${attempts + 1}/${this.config.maxRetries}), retrying...`
-        );
+        // Warning: Operation failed, retrying
 
         await new Promise(resolve => setTimeout(resolve, this.config.retryDelay));
         return await this.retryOperation(operationName, operation);
