@@ -1,5 +1,13 @@
 import { z } from 'zod';
-import { PRPSectionSchema } from '../types/index.js';
+import { PRPSectionSchema, PRPTemplate } from '../types/index.js';
+import { TemplateManager } from '../lib/template-manager.js';
+
+// Template manager will be injected by main server
+let templateManager: TemplateManager;
+
+export function setTemplateManagerDependency(manager: TemplateManager) {
+  templateManager = manager;
+}
 
 const CreateCustomTemplateArgsSchema = z.object({
   name: z.string(),
@@ -12,25 +20,57 @@ const CreateCustomTemplateArgsSchema = z.object({
 export async function createCustomTemplateToolHandler(args: unknown): Promise<{
   content: Array<{ type: 'text'; text: string }>;
 }> {
-  const validatedArgs = CreateCustomTemplateArgsSchema.parse(args);
+  try {
+    const validatedArgs = CreateCustomTemplateArgsSchema.parse(args);
 
-  // Placeholder implementation - will be enhanced
-  const mockResponse = {
-    templateId: `custom-${Date.now()}`,
-    name: validatedArgs.name,
-    description: validatedArgs.description,
-    category: validatedArgs.category,
-    sectionsCount: validatedArgs.sections.length,
-    created: new Date().toISOString(),
-    message: 'Custom template creation functionality - to be fully implemented',
-  };
+    if (!templateManager) {
+      throw new Error('Template manager not initialized');
+    }
 
-  return {
-    content: [
-      {
-        type: 'text',
-        text: JSON.stringify(mockResponse, null, 2),
-      },
-    ],
-  };
+    // Create a real template
+    const templateId = `custom-${Date.now()}`;
+    const template: PRPTemplate = {
+      id: templateId,
+      name: validatedArgs.name,
+      description: validatedArgs.description,
+      category: validatedArgs.category,
+      sections: validatedArgs.sections,
+      version: '1.0',
+      author: 'Custom Template Creator',
+      tags: validatedArgs.tags || [],
+      created: new Date(),
+      updated: new Date(),
+    };
+
+    // Actually create the template using the template manager
+    await templateManager.createTemplate(template);
+
+    const response = {
+      templateId: templateId,
+      name: validatedArgs.name,
+      description: validatedArgs.description,
+      category: validatedArgs.category,
+      sectionsCount: validatedArgs.sections.length,
+      created: new Date().toISOString(),
+      message: `Template ${templateId} created successfully and is ready for use`,
+    };
+
+    return {
+      content: [
+        {
+          type: 'text',
+          text: JSON.stringify(response, null, 2),
+        },
+      ],
+    };
+  } catch (error) {
+    return {
+      content: [
+        {
+          type: 'text',
+          text: `Error creating custom template: ${error instanceof Error ? error.message : 'Unknown error'}`,
+        },
+      ],
+    };
+  }
 }

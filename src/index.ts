@@ -22,6 +22,9 @@ import { setStorageDependencies as setManageStorageDeps } from './tools/manage-s
 import { setPRPGeneratorDependencies } from './tools/generate-prp.js';
 import { setTemplateManagerDependency } from './tools/list-templates.js';
 import { setTemplateManagerDependency as setSearchTemplateManagerDependency } from './tools/search-templates.js';
+import { setTemplateManagerDependency as setCreateTemplateManagerDependency } from './tools/create-custom-template.js';
+import { setPRPValidatorDependency } from './tools/validate-prp.js';
+import { setAnalyzeContextDependencies } from './tools/analyze-context.js';
 
 // Server configuration
 const server = new Server(
@@ -90,16 +93,25 @@ async function initializeServer(): Promise<void> {
     prpGenerator = new PRPGenerator(templateManager);
     // PRP generator initialized
 
+    // Initialize codebase analyzer
+    const codebaseAnalyzer = new (await import('./lib/codebase-analyzer.js')).CodebaseAnalyzer();
+
     // Set template manager dependency for tools
     setTemplateManagerDependency(templateManager);
     setSearchTemplateManagerDependency(templateManager);
+    setCreateTemplateManagerDependency(templateManager);
+
+    // Set other tool dependencies
+    const prpValidator = new (await import('./lib/prp-validator.js')).PRPValidator();
+    setPRPValidatorDependency(prpValidator);
+    setAnalyzeContextDependencies(codebaseAnalyzer, templateManager);
 
     // Set dependencies for storage tools
     setListPRPsDeps(storageSystem, integrationsManager);
     setUpdatePRPDeps(storageSystem, integrationsManager, changeTracker);
     setManageStorageDeps(storageSystem, integrationsManager, changeTracker);
-    // Placeholder implementations for missing services
-    const prpValidator = new (await import('./lib/prp-validator.js')).PRPValidator();
+
+    // Get existing prpValidator and executionGuidance (already created above)
     const executionGuidance = new (await import('./lib/execution-guidance.js')).ExecutionGuidance();
 
     setPRPGeneratorDependencies(prpGenerator, prpValidator, executionGuidance, storageSystem, integrationsManager, changeTracker);

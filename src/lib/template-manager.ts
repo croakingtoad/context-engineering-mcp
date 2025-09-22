@@ -97,6 +97,21 @@ export class TemplateManager {
   }
 
   /**
+   * Create and save a new template
+   */
+  async createTemplate(template: PRPTemplate): Promise<void> {
+    // Validate the template
+    const validatedTemplate = PRPTemplateSchema.parse(template);
+
+    // Add to in-memory store
+    this.templates.set(validatedTemplate.id, validatedTemplate);
+
+    // Save to disk
+    const templatePath = path.join(this.templatesDir, `${validatedTemplate.id}.json`);
+    await fs.writeFile(templatePath, JSON.stringify(validatedTemplate, null, 2), 'utf-8');
+  }
+
+  /**
    * Get available categories
    */
   getCategories(): string[] {
