@@ -115,8 +115,8 @@ export async function createInitialMdToolHandler(args: unknown): Promise<{
 
       // For now, create INITIAL.md with placeholder answers
       // In a real implementation, this would wait for user responses
-      const mockAnswers = generateMockAnswers(questions, projectAnalysis!);
-      session.answers = mockAnswers;
+      const defaultAnswers = generateDefaultAnswers(questions, projectAnalysis!);
+      session.answers = defaultAnswers;
 
       initialMdContent = await initialMdCreator.createFromQuestionnaire(session);
       result.steps.push('✅ Generated INITIAL.md from questionnaire');
@@ -166,8 +166,8 @@ export async function createInitialMdToolHandler(args: unknown): Promise<{
   }
 }
 
-// Helper function to generate mock answers for demonstration
-function generateMockAnswers(questions: any[], analysis: ProjectAnalysis): Record<string, any> {
+// Helper function to generate default answers from analysis
+function generateDefaultAnswers(questions: any[], analysis: ProjectAnalysis): Record<string, any> {
   const answers: Record<string, any> = {};
 
   for (const question of questions) {
