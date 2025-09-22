@@ -59,11 +59,43 @@ export const GeneratePRPInputSchema = PRPGenerationRequestSchema.extend({
 
 export type GeneratePRPInput = z.infer<typeof GeneratePRPInputSchema>;
 
+// Track recent calls to prevent infinite loops
+const recentCalls = new Map<string, { count: number; timestamp: number }>();
+const CALL_WINDOW = 5 * 60 * 1000; // 5 minutes
+const MAX_RETRIES = 3;
+
 export async function generatePRPToolHandler(args: unknown): Promise<{
   content: Array<{ type: 'text'; text: string }>;
 }> {
   try {
     const input = GeneratePRPInputSchema.parse(args);
+
+    // Create a call signature to detect retries
+    const callSignature = JSON.stringify({
+      templateId: input.templateId,
+      projectName: input.projectContext?.name,
+      domain: input.projectContext?.domain
+    });
+
+    // Check if this is a repeated call
+    const now = Date.now();
+    const recent = recentCalls.get(callSignature);
+
+    if (recent && (now - recent.timestamp) < CALL_WINDOW) {
+      recent.count++;
+      if (recent.count > MAX_RETRIES) {
+        return {
+          content: [
+            {
+              type: 'text',
+              text: `⚠️ RETRY LIMIT REACHED\n\nThis PRP generation has been attempted ${recent.count} times in the last 5 minutes.\n\nTo prevent infinite loops, please:\n1. Check the error messages above\n2. Use list_templates to verify available templates\n3. Modify your request parameters\n4. Wait a few minutes before trying again\n\nLast attempt parameters:\n- Template ID: ${input.templateId || 'not specified'}\n- Project: ${input.projectContext?.name || 'not specified'}\n- Domain: ${input.projectContext?.domain || 'not specified'}`,
+            },
+          ],
+        };
+      }
+    } else {
+      recentCalls.set(callSignature, { count: 1, timestamp: now });
+    }
 
     if (!prpGenerator) {
       throw new Error('PRP generator not initialized');
