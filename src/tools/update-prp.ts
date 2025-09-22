@@ -144,8 +144,7 @@ export async function updatePRPToolHandler(params: unknown) {
         const archonResult = await integrationsManager.updatePRP(
           input.id,
           input.content,
-          [input.changeDescription || 'Updated via MCP tool'],
-          input.archonDocumentId
+          updateMetadata
         );
 
         result.archon = {

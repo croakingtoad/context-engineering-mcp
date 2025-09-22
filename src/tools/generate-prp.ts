@@ -355,7 +355,7 @@ export async function generatePRPToolHandler(args: unknown): Promise<{
                   title: task.title,
                   status: task.status,
                   created: task.created.toISOString(),
-                })) || [],
+                })) || [];
             };
           } catch (archonError) {
             result.archon = {
