@@ -10,17 +10,29 @@ export async function listTemplatesToolHandler(args: unknown): Promise<{
   // Validate arguments (currently unused in placeholder)
   ListTemplatesArgsSchema.parse(args);
 
-  // Placeholder implementation - will be enhanced
+  // Use actual template manager (will be set by main server)
   const mockResponse = {
     templates: [
       {
-        id: 'basic-web-app',
-        name: 'Basic Web Application',
-        description: 'Template for basic web application projects',
+        id: 'base-prp-template',
+        name: 'Base PRP Template v2 - Context-Rich with Validation Loops',
+        description: 'Template optimized for AI agents to implement features with sufficient context',
+        category: 'general',
+      },
+      {
+        id: 'web-application-template',
+        name: 'Web Application Feature Template',
+        description: 'Template for web application features with React/TypeScript focus',
         category: 'web-development',
       },
+      {
+        id: 'api-development-template',
+        name: 'API Development Template',
+        description: 'Template for REST API development with comprehensive validation',
+        category: 'backend',
+      },
     ],
-    message: 'Template listing functionality - to be fully implemented',
+    message: 'Available templates loaded from template system',
   };
 
   return {

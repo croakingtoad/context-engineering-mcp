@@ -72,6 +72,9 @@ export async function generatePRPToolHandler(args: unknown): Promise<{
     // Generate the PRP based on the selected mode
     let generatedContent: string;
 
+    // Default templateId if not provided
+    const templateId = input.templateId || 'base-prp-template';
+
     switch (input.generationMode) {
       case 'intelligent':
         if (!input.initialMdPath) {
@@ -80,7 +83,7 @@ export async function generatePRPToolHandler(args: unknown): Promise<{
         generatedContent = await prpGenerator.generateIntelligentPRP(
           input.initialMdPath,
           input.projectPath,
-          input.templateId,
+          templateId,
           input.domain || input.projectContext.domain,
           input.outputFormat
         );
@@ -89,7 +92,7 @@ export async function generatePRPToolHandler(args: unknown): Promise<{
       case 'contextual':
         generatedContent = await prpGenerator.generateContextualPRP(
           {
-            templateId: input.templateId,
+            templateId: templateId,
             projectContext: input.projectContext,
             customSections: input.customSections,
             outputFormat: input.outputFormat,
@@ -284,11 +287,18 @@ export async function generatePRPToolHandler(args: unknown): Promise<{
       ],
     };
   } catch (error) {
+    // Provide helpful error messages instead of generic ones
+    let errorMessage = `Error generating PRP: ${error instanceof Error ? error.message : 'Unknown error'}`;
+
+    if (error.message && error.message.includes('not found')) {
+      errorMessage += '\n\nAvailable templates:\n- base-prp-template (general purpose)\n- web-application-template (web development)\n- api-development-template (API development)\n\nUse list_templates tool to see all available templates.';
+    }
+
     return {
       content: [
         {
           type: 'text',
-          text: `Error generating PRP: ${error instanceof Error ? error.message : 'Unknown error'}`,
+          text: errorMessage,
         },
       ],
     };

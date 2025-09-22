@@ -37,7 +37,7 @@ export const ContextEngineeringWorkflowSchema = z.object({
 });
 
 export const PRPGenerationRequestSchema = z.object({
-  templateId: z.string(),
+  templateId: z.string().optional(),
   projectContext: z.object({
     name: z.string(),
     domain: z.string(),
