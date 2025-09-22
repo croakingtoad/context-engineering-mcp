@@ -19,7 +19,9 @@ export class QuestionEngine {
     this.loadDefaultTemplates();
   }
 
-  async generateContextualQuestions(projectAnalysis: ProjectAnalysis): Promise<Question[]> {
+  async generateContextualQuestions(
+    projectAnalysis: ProjectAnalysis
+  ): Promise<Question[]> {
     const questions: Question[] = [];
 
     // Add base questions that apply to all projects
@@ -32,7 +34,9 @@ export class QuestionEngine {
     questions.push(...this.getPatternQuestions(projectAnalysis.patterns));
 
     // Add architecture-specific questions
-    questions.push(...this.getArchitectureQuestions(projectAnalysis.architecture));
+    questions.push(
+      ...this.getArchitectureQuestions(projectAnalysis.architecture)
+    );
 
     // Add language-specific questions
     questions.push(...this.getLanguageQuestions(projectAnalysis.language));
@@ -75,7 +79,9 @@ export class QuestionEngine {
     if (question.dependsOn && question.dependsOn.length > 0) {
       const dependenciesMet = question.dependsOn.every(depId => {
         const depAnswer = session.answers[depId];
-        return depAnswer !== undefined && depAnswer !== '' && depAnswer !== false;
+        return (
+          depAnswer !== undefined && depAnswer !== '' && depAnswer !== false
+        );
       });
 
       if (!dependenciesMet) {
@@ -88,7 +94,11 @@ export class QuestionEngine {
     return question;
   }
 
-  answerQuestion(session: QuestionnaireSession, questionId: string, answer: any): AnswerResult {
+  answerQuestion(
+    session: QuestionnaireSession,
+    questionId: string,
+    answer: any
+  ): AnswerResult {
     const question = session.questions.find(q => q.id === questionId);
     if (!question) {
       return { success: false, error: 'Question not found' };
@@ -115,8 +125,13 @@ export class QuestionEngine {
     };
   }
 
-  async generateFollowUpQuestions(session: QuestionnaireSession, answeredQuestionId: string): Promise<Question[]> {
-    const answeredQuestion = session.questions.find(q => q.id === answeredQuestionId);
+  async generateFollowUpQuestions(
+    session: QuestionnaireSession,
+    answeredQuestionId: string
+  ): Promise<Question[]> {
+    const answeredQuestion = session.questions.find(
+      q => q.id === answeredQuestionId
+    );
     const answer = session.answers[answeredQuestionId];
 
     if (!answeredQuestion || !answer) {
@@ -135,7 +150,12 @@ export class QuestionEngine {
           category: 'technical',
           priority: 7,
           required: true,
-          options: ['localStorage', 'sessionStorage', 'httpOnly cookies', 'memory'],
+          options: [
+            'localStorage',
+            'sessionStorage',
+            'httpOnly cookies',
+            'memory',
+          ],
           context: { framework: session.context.framework },
         });
 
@@ -215,7 +235,10 @@ export class QuestionEngine {
     return answeredRequired.length === requiredQuestions.length;
   }
 
-  getQuestionsByCategory(questions: Question[], category: Question['category']): Question[] {
+  getQuestionsByCategory(
+    questions: Question[],
+    category: Question['category']
+  ): Question[] {
     return questions.filter(q => q.category === category);
   }
 
@@ -228,10 +251,15 @@ export class QuestionEngine {
 
     for (const template of this.templates.values()) {
       // Check if template applies to the project's frameworks
-      if (template.applicableFrameworks && template.applicableFrameworks.length > 0) {
+      if (
+        template.applicableFrameworks &&
+        template.applicableFrameworks.length > 0
+      ) {
         const projectFrameworks = projectAnalysis.framework?.split(', ') || [];
         const hasMatchingFramework = template.applicableFrameworks.some(fw =>
-          projectFrameworks.some(pf => pf.toLowerCase().includes(fw.toLowerCase()))
+          projectFrameworks.some(pf =>
+            pf.toLowerCase().includes(fw.toLowerCase())
+          )
         );
 
         if (hasMatchingFramework) {
@@ -240,9 +268,16 @@ export class QuestionEngine {
       }
 
       // Check if template applies to the project's patterns
-      if (template.applicablePatterns && template.applicablePatterns.length > 0) {
+      if (
+        template.applicablePatterns &&
+        template.applicablePatterns.length > 0
+      ) {
         const hasMatchingPattern = template.applicablePatterns.some(pattern =>
-          projectAnalysis.patterns.some(p => p.id === pattern || p.name.toLowerCase().includes(pattern.toLowerCase()))
+          projectAnalysis.patterns.some(
+            p =>
+              p.id === pattern ||
+              p.name.toLowerCase().includes(pattern.toLowerCase())
+          )
         );
 
         if (hasMatchingPattern) {
@@ -283,7 +318,14 @@ export class QuestionEngine {
           category: 'technical',
           priority: 8,
           required: true,
-          options: ['React State (useState/useReducer)', 'Redux Toolkit', 'Zustand', 'Jotai', 'Context API', 'None'],
+          options: [
+            'React State (useState/useReducer)',
+            'Redux Toolkit',
+            'Zustand',
+            'Jotai',
+            'Context API',
+            'None',
+          ],
         },
         {
           id: 'styling-approach',
@@ -292,7 +334,14 @@ export class QuestionEngine {
           category: 'technical',
           priority: 6,
           required: true,
-          options: ['CSS Modules', 'Styled Components', 'Emotion', 'Tailwind CSS', 'SCSS/Sass', 'Plain CSS'],
+          options: [
+            'CSS Modules',
+            'Styled Components',
+            'Emotion',
+            'Tailwind CSS',
+            'SCSS/Sass',
+            'Plain CSS',
+          ],
         },
       ],
       applicableFrameworks: ['react'],
@@ -321,7 +370,14 @@ export class QuestionEngine {
           category: 'technical',
           priority: 8,
           required: true,
-          options: ['Zod', 'Joi', 'Express Validator', 'Yup', 'Custom validation', 'None'],
+          options: [
+            'Zod',
+            'Joi',
+            'Express Validator',
+            'Yup',
+            'Custom validation',
+            'None',
+          ],
         },
         {
           id: 'error-handling',
@@ -330,7 +386,13 @@ export class QuestionEngine {
           category: 'technical',
           priority: 7,
           required: true,
-          options: ['Custom error middleware', 'Error-first callbacks', 'Try-catch with async/await', 'Third-party library', 'Built-in Express error handling'],
+          options: [
+            'Custom error middleware',
+            'Error-first callbacks',
+            'Try-catch with async/await',
+            'Third-party library',
+            'Built-in Express error handling',
+          ],
         },
       ],
       applicableFrameworks: ['express'],
@@ -350,7 +412,12 @@ export class QuestionEngine {
           category: 'technical',
           priority: 6,
           required: true,
-          options: ['Strict mode (recommended)', 'Moderate strictness', 'Loose configuration', 'Custom configuration'],
+          options: [
+            'Strict mode (recommended)',
+            'Moderate strictness',
+            'Loose configuration',
+            'Custom configuration',
+          ],
         },
         {
           id: 'type-definitions',
@@ -359,7 +426,12 @@ export class QuestionEngine {
           category: 'technical',
           priority: 5,
           required: false,
-          options: ['@types packages from DefinitelyTyped', 'Library built-in types', 'Custom type declarations', 'Skip typing for some libraries'],
+          options: [
+            '@types packages from DefinitelyTyped',
+            'Library built-in types',
+            'Custom type declarations',
+            'Skip typing for some libraries',
+          ],
         },
       ],
       applicableFrameworks: ['typescript'],
@@ -423,7 +495,13 @@ export class QuestionEngine {
         category: 'technical',
         priority: 7,
         required: false,
-        options: ['Hooks', 'Context API', 'Suspense', 'Concurrent Features', 'Server Components'],
+        options: [
+          'Hooks',
+          'Context API',
+          'Suspense',
+          'Concurrent Features',
+          'Server Components',
+        ],
         context: { framework: 'react' },
       });
     }
@@ -436,7 +514,14 @@ export class QuestionEngine {
         category: 'technical',
         priority: 7,
         required: false,
-        options: ['CORS', 'Body Parser', 'Rate Limiting', 'Compression', 'Security Headers', 'Logging'],
+        options: [
+          'CORS',
+          'Body Parser',
+          'Rate Limiting',
+          'Compression',
+          'Security Headers',
+          'Logging',
+        ],
         context: { framework: 'express' },
       });
     }
@@ -447,7 +532,9 @@ export class QuestionEngine {
   private getPatternQuestions(patterns: CodebasePattern[]): Question[] {
     const questions: Question[] = [];
 
-    const hasServicePattern = patterns.some(p => p.name.toLowerCase().includes('service'));
+    const hasServicePattern = patterns.some(p =>
+      p.name.toLowerCase().includes('service')
+    );
     if (hasServicePattern) {
       questions.push({
         id: 'service-dependencies',
@@ -456,12 +543,19 @@ export class QuestionEngine {
         category: 'technical',
         priority: 6,
         required: false,
-        options: ['Dependency Injection', 'Service Locator', 'Factory Pattern', 'Manual instantiation'],
+        options: [
+          'Dependency Injection',
+          'Service Locator',
+          'Factory Pattern',
+          'Manual instantiation',
+        ],
         context: { pattern: 'service-layer' },
       });
     }
 
-    const hasComponentPattern = patterns.some(p => p.name.toLowerCase().includes('component'));
+    const hasComponentPattern = patterns.some(p =>
+      p.name.toLowerCase().includes('component')
+    );
     if (hasComponentPattern) {
       questions.push({
         id: 'component-composition',
@@ -470,7 +564,13 @@ export class QuestionEngine {
         category: 'technical',
         priority: 6,
         required: false,
-        options: ['Higher-Order Components', 'Render Props', 'Custom Hooks', 'Component Libraries', 'Compound Components'],
+        options: [
+          'Higher-Order Components',
+          'Render Props',
+          'Custom Hooks',
+          'Component Libraries',
+          'Compound Components',
+        ],
         context: { pattern: 'component-based' },
       });
     }
@@ -489,7 +589,14 @@ export class QuestionEngine {
         category: 'technical',
         priority: 7,
         required: false,
-        options: ['HTTP/REST', 'GraphQL', 'Message Queues', 'Event Bus', 'gRPC', 'Direct function calls'],
+        options: [
+          'HTTP/REST',
+          'GraphQL',
+          'Message Queues',
+          'Event Bus',
+          'gRPC',
+          'Direct function calls',
+        ],
       });
     }
 
@@ -501,7 +608,13 @@ export class QuestionEngine {
         category: 'technical',
         priority: 6,
         required: false,
-        options: ['Unit tests', 'Integration tests', 'Visual regression tests', 'E2E tests', 'Accessibility tests'],
+        options: [
+          'Unit tests',
+          'Integration tests',
+          'Visual regression tests',
+          'E2E tests',
+          'Accessibility tests',
+        ],
       });
     }
 
@@ -519,7 +632,14 @@ export class QuestionEngine {
         category: 'technical',
         priority: 6,
         required: true,
-        options: ['tsc (TypeScript compiler)', 'Webpack', 'Vite', 'esbuild', 'Rollup', 'Parcel'],
+        options: [
+          'tsc (TypeScript compiler)',
+          'Webpack',
+          'Vite',
+          'esbuild',
+          'Rollup',
+          'Parcel',
+        ],
       });
     }
 
@@ -549,9 +669,15 @@ export class QuestionEngine {
     });
   }
 
-  private validateAnswer(question: Question, answer: any): { valid: boolean; error?: string } {
+  private validateAnswer(
+    question: Question,
+    answer: any
+  ): { valid: boolean; error?: string } {
     // Check required questions
-    if (question.required && (answer === undefined || answer === '' || answer === null)) {
+    if (
+      question.required &&
+      (answer === undefined || answer === '' || answer === null)
+    ) {
       return { valid: false, error: 'This question is required' };
     }
 
@@ -559,18 +685,27 @@ export class QuestionEngine {
     switch (question.type) {
       case 'multiple-choice':
         if (question.options && !question.options.includes(answer)) {
-          return { valid: false, error: `Answer must be one of: ${question.options.join(', ')}` };
+          return {
+            valid: false,
+            error: `Answer must be one of: ${question.options.join(', ')}`,
+          };
         }
         break;
 
       case 'multi-select':
         if (!Array.isArray(answer)) {
-          return { valid: false, error: 'Answer must be an array for multi-select questions' };
+          return {
+            valid: false,
+            error: 'Answer must be an array for multi-select questions',
+          };
         }
         if (question.options) {
           for (const selectedOption of answer) {
             if (!question.options.includes(selectedOption)) {
-              return { valid: false, error: `Invalid option: ${selectedOption}` };
+              return {
+                valid: false,
+                error: `Invalid option: ${selectedOption}`,
+              };
             }
           }
         }
@@ -584,7 +719,10 @@ export class QuestionEngine {
 
       case 'scale':
         if (typeof answer !== 'number' || answer < 1 || answer > 10) {
-          return { valid: false, error: 'Answer must be a number between 1 and 10' };
+          return {
+            valid: false,
+            error: 'Answer must be a number between 1 and 10',
+          };
         }
         break;
 

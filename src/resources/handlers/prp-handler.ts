@@ -43,14 +43,14 @@ export class PRPResourceHandler implements ResourceHandler {
               this.prpDocuments.set(document.id, document);
             }
           } catch (error) {
-            console.warn(`Failed to load PRP document ${file}:`, error);
+            // console.warn(`Failed to load PRP document ${file}:`, error);
           }
         }
       }
 
       this.lastScanTime = Date.now();
     } catch (error) {
-      console.warn('Failed to scan PRP directory:', error);
+      // console.warn('Failed to scan PRP directory:', error);
     }
   }
 
@@ -92,7 +92,7 @@ export class PRPResourceHandler implements ResourceHandler {
         };
       }
     } catch (error) {
-      console.warn(`Failed to load PRP document from ${filePath}:`, error);
+      // console.warn(`Failed to load PRP document from ${filePath}:`, error);
       return null;
     }
   }

@@ -43,14 +43,14 @@ export class InitialRequestHandler implements ResourceHandler {
               this.documents.set(document.id, document);
             }
           } catch (error) {
-            console.warn(`Failed to load initial document ${file}:`, error);
+            // console.warn(`Failed to load initial document ${file}:`, error);
           }
         }
       }
 
       this.lastScanTime = Date.now();
     } catch (error) {
-      console.warn('Failed to scan initial documents directory:', error);
+      // console.warn('Failed to scan initial documents directory:', error);
     }
   }
 
@@ -85,7 +85,7 @@ export class InitialRequestHandler implements ResourceHandler {
         };
       }
     } catch (error) {
-      console.warn(`Failed to load initial document from ${filePath}:`, error);
+      // console.warn(`Failed to load initial document from ${filePath}:`, error);
       return null;
     }
   }

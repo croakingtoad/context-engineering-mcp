@@ -46,14 +46,14 @@ export class RulesGlobalHandler implements ResourceHandler {
               }
             }
           } catch (error) {
-            console.warn(`Failed to load rule file ${file}:`, error);
+            // console.warn(`Failed to load rule file ${file}:`, error);
           }
         }
       }
 
       this.lastScanTime = Date.now();
     } catch (error) {
-      console.warn('Failed to scan rules directory:', error);
+      // console.warn('Failed to scan rules directory:', error);
     }
   }
 
@@ -90,7 +90,7 @@ export class RulesGlobalHandler implements ResourceHandler {
         updatedAt: rule.updatedAt ? new Date(rule.updatedAt) : new Date(),
       }));
     } catch (error) {
-      console.warn(`Failed to load rule file ${filePath}:`, error);
+      // console.warn(`Failed to load rule file ${filePath}:`, error);
       return null;
     }
   }
@@ -209,7 +209,7 @@ export class RulesGlobalHandler implements ResourceHandler {
       await fs.mkdir(this.rulesDirectory, { recursive: true });
       await fs.writeFile(filePath, JSON.stringify(rules, null, 2));
     } catch (error) {
-      console.warn('Failed to save default rules:', error);
+      // console.warn('Failed to save default rules:', error);
     }
   }
 

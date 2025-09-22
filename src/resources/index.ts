@@ -2,7 +2,7 @@ import {
   ReadResourceRequestSchema,
   ListResourcesRequestSchema,
   McpError,
-  ErrorCode
+  ErrorCode,
 } from '@modelcontextprotocol/sdk/types.js';
 import { Server } from '@modelcontextprotocol/sdk/server/index.js';
 import { ResourceManager } from './resource-manager.js';
@@ -62,7 +62,7 @@ export function registerResources(server: Server): void {
   });
 
   // Read specific resources
-  server.setRequestHandler(ReadResourceRequestSchema, async (request) => {
+  server.setRequestHandler(ReadResourceRequestSchema, async request => {
     const { uri } = request.params;
 
     try {
@@ -76,8 +76,12 @@ export function registerResources(server: Server): void {
       }
 
       // Convert other errors to MCP errors
-      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-      throw new McpError(ErrorCode.InternalError, `Failed to read resource ${uri}: ${errorMessage}`);
+      const errorMessage =
+        error instanceof Error ? error.message : 'Unknown error';
+      throw new McpError(
+        ErrorCode.InternalError,
+        `Failed to read resource ${uri}: ${errorMessage}`
+      );
     }
   });
 }

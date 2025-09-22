@@ -6,7 +6,8 @@ import { ResourceContent, ResourceHandler, ResourceInfo } from './types.js';
  */
 export class ResourceManager {
   private handlers: Map<string, ResourceHandler> = new Map();
-  private cache: Map<string, { content: ResourceContent; timestamp: number }> = new Map();
+  private cache: Map<string, { content: ResourceContent; timestamp: number }> =
+    new Map();
   private readonly CACHE_TTL = 5 * 60 * 1000; // 5 minutes
 
   /**
@@ -19,9 +20,16 @@ export class ResourceManager {
   /**
    * Parse a context URI and extract components
    */
-  private parseContextURI(uri: string): { scheme: string; path: string; params: Record<string, string> } {
+  private parseContextURI(uri: string): {
+    scheme: string;
+    path: string;
+    params: Record<string, string>;
+  } {
     if (!uri.startsWith('context://')) {
-      throw new McpError(ErrorCode.InvalidRequest, `Invalid context URI: ${uri}`);
+      throw new McpError(
+        ErrorCode.InvalidRequest,
+        `Invalid context URI: ${uri}`
+      );
     }
 
     const withoutProtocol = uri.slice(10); // Remove 'context://'
@@ -115,7 +123,10 @@ export class ResourceManager {
       const handler = this.handlers.get(scheme);
 
       if (!handler) {
-        throw new McpError(ErrorCode.InvalidRequest, `No handler registered for scheme: ${scheme}`);
+        throw new McpError(
+          ErrorCode.InvalidRequest,
+          `No handler registered for scheme: ${scheme}`
+        );
       }
 
       const content = await handler.readResource(path, params);
@@ -143,10 +154,11 @@ export class ResourceManager {
     const allResources = await this.listResources();
 
     const lowerQuery = query.toLowerCase();
-    return allResources.filter(resource =>
-      resource.name.toLowerCase().includes(lowerQuery) ||
-      resource.description.toLowerCase().includes(lowerQuery) ||
-      resource.uri.toLowerCase().includes(lowerQuery)
+    return allResources.filter(
+      resource =>
+        resource.name.toLowerCase().includes(lowerQuery) ||
+        resource.description.toLowerCase().includes(lowerQuery) ||
+        resource.uri.toLowerCase().includes(lowerQuery)
     );
   }
 
@@ -177,7 +189,10 @@ export class ResourceManager {
 
     for (const [scheme, handler] of Array.from(this.handlers.entries())) {
       try {
-        if ('healthCheck' in handler && typeof handler.healthCheck === 'function') {
+        if (
+          'healthCheck' in handler &&
+          typeof handler.healthCheck === 'function'
+        ) {
           health[scheme] = await handler.healthCheck();
         } else {
           // If no health check method, try to list resources as a basic health check

@@ -8,7 +8,7 @@ import {
   GeneratedContent,
   ProjectAnalysis,
   FileAnalysis,
-  CodebasePattern
+  CodebasePattern,
 } from '../types/index.js';
 
 /**
@@ -19,44 +19,135 @@ import {
 export class ContentSynthesizer {
   private readonly DOMAIN_KNOWLEDGE = {
     'web-development': {
-      patterns: ['MVC', 'Component-based architecture', 'RESTful APIs', 'State management'],
-      considerations: ['SEO optimization', 'Progressive enhancement', 'Cross-browser compatibility', 'Performance optimization'],
-      bestPractices: ['Semantic HTML', 'Responsive design', 'Accessibility compliance', 'Security headers']
+      patterns: [
+        'MVC',
+        'Component-based architecture',
+        'RESTful APIs',
+        'State management',
+      ],
+      considerations: [
+        'SEO optimization',
+        'Progressive enhancement',
+        'Cross-browser compatibility',
+        'Performance optimization',
+      ],
+      bestPractices: [
+        'Semantic HTML',
+        'Responsive design',
+        'Accessibility compliance',
+        'Security headers',
+      ],
     },
     'mobile-development': {
-      patterns: ['Native development', 'Cross-platform frameworks', 'Offline-first design', 'Push notifications'],
-      considerations: ['App store guidelines', 'Device fragmentation', 'Battery optimization', 'Network reliability'],
-      bestPractices: ['Touch-friendly interfaces', 'Performance optimization', 'Graceful degradation', 'Privacy compliance']
+      patterns: [
+        'Native development',
+        'Cross-platform frameworks',
+        'Offline-first design',
+        'Push notifications',
+      ],
+      considerations: [
+        'App store guidelines',
+        'Device fragmentation',
+        'Battery optimization',
+        'Network reliability',
+      ],
+      bestPractices: [
+        'Touch-friendly interfaces',
+        'Performance optimization',
+        'Graceful degradation',
+        'Privacy compliance',
+      ],
     },
     'ml-ai': {
-      patterns: ['Data pipelines', 'Model versioning', 'Feature engineering', 'A/B testing for models'],
-      considerations: ['Data quality', 'Model drift', 'Ethical AI', 'Computational resources'],
-      bestPractices: ['Cross-validation', 'Bias detection', 'Explainable AI', 'Continuous monitoring']
+      patterns: [
+        'Data pipelines',
+        'Model versioning',
+        'Feature engineering',
+        'A/B testing for models',
+      ],
+      considerations: [
+        'Data quality',
+        'Model drift',
+        'Ethical AI',
+        'Computational resources',
+      ],
+      bestPractices: [
+        'Cross-validation',
+        'Bias detection',
+        'Explainable AI',
+        'Continuous monitoring',
+      ],
     },
-    'fintech': {
+    fintech: {
       patterns: ['Event sourcing', 'CQRS', 'Microservices', 'Audit trails'],
-      considerations: ['Regulatory compliance', 'Data privacy', 'Transaction integrity', 'Real-time processing'],
-      bestPractices: ['PCI DSS compliance', 'SOX compliance', 'Fraud detection', 'Risk management']
+      considerations: [
+        'Regulatory compliance',
+        'Data privacy',
+        'Transaction integrity',
+        'Real-time processing',
+      ],
+      bestPractices: [
+        'PCI DSS compliance',
+        'SOX compliance',
+        'Fraud detection',
+        'Risk management',
+      ],
     },
-    'healthcare': {
-      patterns: ['HL7 FHIR', 'Interoperability', 'Clinical workflows', 'Patient data management'],
-      considerations: ['HIPAA compliance', 'Clinical safety', 'Interoperability', 'Regulatory approval'],
-      bestPractices: ['Data encryption', 'Audit logging', 'Clinical validation', 'Patient consent management']
+    healthcare: {
+      patterns: [
+        'HL7 FHIR',
+        'Interoperability',
+        'Clinical workflows',
+        'Patient data management',
+      ],
+      considerations: [
+        'HIPAA compliance',
+        'Clinical safety',
+        'Interoperability',
+        'Regulatory approval',
+      ],
+      bestPractices: [
+        'Data encryption',
+        'Audit logging',
+        'Clinical validation',
+        'Patient consent management',
+      ],
     },
     'e-commerce': {
-      patterns: ['Catalog management', 'Payment processing', 'Inventory management', 'Order fulfillment'],
-      considerations: ['PCI compliance', 'Scalability during peaks', 'International regulations', 'Customer experience'],
-      bestPractices: ['Abandoned cart recovery', 'Personalization', 'A/B testing', 'Performance optimization']
-    }
+      patterns: [
+        'Catalog management',
+        'Payment processing',
+        'Inventory management',
+        'Order fulfillment',
+      ],
+      considerations: [
+        'PCI compliance',
+        'Scalability during peaks',
+        'International regulations',
+        'Customer experience',
+      ],
+      bestPractices: [
+        'Abandoned cart recovery',
+        'Personalization',
+        'A/B testing',
+        'Performance optimization',
+      ],
+    },
   };
 
   private readonly ANTI_PATTERNS = {
-    'premature-optimization': 'Avoid over-engineering solutions before understanding actual performance requirements',
-    'golden-hammer': 'Don\'t apply the same technology solution to every problem without considering alternatives',
-    'big-design-upfront': 'Balance upfront planning with iterative development and feedback loops',
-    'vendor-lock-in': 'Consider portability and avoid excessive dependency on proprietary solutions',
-    'monolithic-thinking': 'Evaluate when monoliths vs microservices make sense for your scale and team',
-    'technology-driven': 'Let business requirements drive technology choices, not the other way around'
+    'premature-optimization':
+      'Avoid over-engineering solutions before understanding actual performance requirements',
+    'golden-hammer':
+      "Don't apply the same technology solution to every problem without considering alternatives",
+    'big-design-upfront':
+      'Balance upfront planning with iterative development and feedback loops',
+    'vendor-lock-in':
+      'Consider portability and avoid excessive dependency on proprietary solutions',
+    'monolithic-thinking':
+      'Evaluate when monoliths vs microservices make sense for your scale and team',
+    'technology-driven':
+      'Let business requirements drive technology choices, not the other way around',
   };
 
   /**
@@ -68,15 +159,25 @@ export class ContentSynthesizer {
     domain?: string
   ): Promise<ContentSynthesis> {
     const initialAnalysis = await this.analyzeInitialMd(initialMdPath);
-    const codebaseInsights = projectPath ? await this.analyzeCodebase(projectPath) : this.createEmptyCodebaseInsights();
-    const contextualEnrichment = await this.enrichContent(initialAnalysis, codebaseInsights, domain);
-    const generatedContent = await this.generateContent(initialAnalysis, codebaseInsights, contextualEnrichment);
+    const codebaseInsights = projectPath
+      ? await this.analyzeCodebase(projectPath)
+      : this.createEmptyCodebaseInsights();
+    const contextualEnrichment = await this.enrichContent(
+      initialAnalysis,
+      codebaseInsights,
+      domain
+    );
+    const generatedContent = await this.generateContent(
+      initialAnalysis,
+      codebaseInsights,
+      contextualEnrichment
+    );
 
     return {
       initialAnalysis,
       codebaseInsights,
       contextualEnrichment,
-      generatedContent
+      generatedContent,
     };
   }
 
@@ -97,7 +198,7 @@ export class ContentSynthesizer {
         extractedRequirements: [],
         stakeholders: [],
         constraints: [],
-        objectives: []
+        objectives: [],
       };
     }
   }
@@ -127,7 +228,7 @@ export class ContentSynthesizer {
       extractedRequirements,
       stakeholders,
       constraints,
-      objectives
+      objectives,
     };
   }
 
@@ -145,9 +246,14 @@ export class ContentSynthesizer {
 
       if (trimmedLine.startsWith('##')) {
         if (currentSection) {
-          sections[currentSection.toLowerCase()] = currentContent.join('\n').trim();
+          sections[currentSection.toLowerCase()] = currentContent
+            .join('\n')
+            .trim();
         }
-        currentSection = trimmedLine.replace(/^#+\s*/, '').replace(/[*:]/g, '').trim();
+        currentSection = trimmedLine
+          .replace(/^#+\s*/, '')
+          .replace(/[*:]/g, '')
+          .trim();
         currentContent = [];
       } else if (currentSection) {
         currentContent.push(line);
@@ -177,9 +283,13 @@ export class ContentSynthesizer {
 
     // Look for feature description in other sections
     const allContent = Object.values(sections).join(' ');
-    const featureMatch = allContent.match(/(?:feature|functionality|system|application|platform):\s*([^.\n]+)/i);
+    const featureMatch = allContent.match(
+      /(?:feature|functionality|system|application|platform):\s*([^.\n]+)/i
+    );
 
-    return featureMatch ? featureMatch[1].trim() : 'Feature description not provided';
+    return featureMatch
+      ? featureMatch[1].trim()
+      : 'Feature description not provided';
   }
 
   /**
@@ -196,13 +306,19 @@ export class ContentSynthesizer {
     // Bullet point examples
     const bulletMatches = examplesSection.match(/^[\s]*[-*+]\s(.+)$/gm);
     if (bulletMatches) {
-      examples.push(...bulletMatches.map(match => match.replace(/^[\s]*[-*+]\s/, '').trim()));
+      examples.push(
+        ...bulletMatches.map(match => match.replace(/^[\s]*[-*+]\s/, '').trim())
+      );
     }
 
     // Numbered examples
     const numberedMatches = examplesSection.match(/^[\s]*\d+\.\s(.+)$/gm);
     if (numberedMatches) {
-      examples.push(...numberedMatches.map(match => match.replace(/^[\s]*\d+\.\s/, '').trim()));
+      examples.push(
+        ...numberedMatches.map(match =>
+          match.replace(/^[\s]*\d+\.\s/, '').trim()
+        )
+      );
     }
 
     // File references
@@ -211,7 +327,12 @@ export class ContentSynthesizer {
       examples.push(...fileMatches);
     }
 
-    return examples.filter(ex => ex.length > 0 && !ex.includes('[') && !ex.toLowerCase().includes('provide'));
+    return examples.filter(
+      ex =>
+        ex.length > 0 &&
+        !ex.includes('[') &&
+        !ex.toLowerCase().includes('provide')
+    );
   }
 
   /**
@@ -231,13 +352,19 @@ export class ContentSynthesizer {
     }
 
     // Named documentation
-    const namedDocs = docSection.match(/(?:documentation|docs?|reference|guide):\s*([^.\n]+)/gi);
+    const namedDocs = docSection.match(
+      /(?:documentation|docs?|reference|guide):\s*([^.\n]+)/gi
+    );
     if (namedDocs) {
-      docs.push(...namedDocs.map(match => match.replace(/^[^:]+:\s*/, '').trim()));
+      docs.push(
+        ...namedDocs.map(match => match.replace(/^[^:]+:\s*/, '').trim())
+      );
     }
 
     // Framework/library documentation
-    const frameworkDocs = docSection.match(/(React|Vue|Angular|Django|Flask|Express|Spring|Rails)\s+(?:docs?|documentation|guide)/gi);
+    const frameworkDocs = docSection.match(
+      /(React|Vue|Angular|Django|Flask|Express|Spring|Rails)\s+(?:docs?|documentation|guide)/gi
+    );
     if (frameworkDocs) {
       docs.push(...frameworkDocs);
     }
@@ -249,7 +376,8 @@ export class ContentSynthesizer {
    * Extract considerations and gotchas
    */
   private extractConsiderations(sections: Record<string, string>): string[] {
-    const considerationsSection = sections['other considerations'] || sections['considerations'] || '';
+    const considerationsSection =
+      sections['other considerations'] || sections['considerations'] || '';
 
     if (!considerationsSection) return [];
 
@@ -260,9 +388,13 @@ export class ContentSynthesizer {
     considerations.push(...listItems);
 
     // Extract gotchas and warnings
-    const gotchaMatches = considerationsSection.match(/(?:gotcha|warning|caveat|important|note):\s*([^.\n]+)/gi);
+    const gotchaMatches = considerationsSection.match(
+      /(?:gotcha|warning|caveat|important|note):\s*([^.\n]+)/gi
+    );
     if (gotchaMatches) {
-      considerations.push(...gotchaMatches.map(match => match.replace(/^[^:]+:\s*/, '').trim()));
+      considerations.push(
+        ...gotchaMatches.map(match => match.replace(/^[^:]+:\s*/, '').trim())
+      );
     }
 
     return considerations.filter(c => c.length > 0 && !c.includes('['));
@@ -278,7 +410,7 @@ export class ContentSynthesizer {
     const functionalPatterns = [
       /(?:must|should|need to|require[ds]?)\s+([^.\n]+)/gi,
       /(?:user can|system shall|application will)\s+([^.\n]+)/gi,
-      /(?:feature|functionality|capability):\s*([^.\n]+)/gi
+      /(?:feature|functionality|capability):\s*([^.\n]+)/gi,
     ];
 
     functionalPatterns.forEach(pattern => {
@@ -304,7 +436,7 @@ export class ContentSynthesizer {
     const stakeholderPatterns = [
       /(?:stakeholders?|users?|team|developers?|clients?):\s*([^.\n]+)/gi,
       /(?:product manager|project manager|tech lead|developer|designer|qa|tester)/gi,
-      /(?:end user|admin|customer|client|business user)/gi
+      /(?:end user|admin|customer|client|business user)/gi,
     ];
 
     stakeholderPatterns.forEach(pattern => {
@@ -330,7 +462,7 @@ export class ContentSynthesizer {
     const constraintPatterns = [
       /(?:constraint|limitation|restriction):\s*([^.\n]+)/gi,
       /(?:cannot|must not|limited to|restricted to)\s+([^.\n]+)/gi,
-      /(?:budget|timeline|deadline|resource)\s+(?:constraint|limit):\s*([^.\n]+)/gi
+      /(?:budget|timeline|deadline|resource)\s+(?:constraint|limit):\s*([^.\n]+)/gi,
     ];
 
     constraintPatterns.forEach(pattern => {
@@ -349,18 +481,26 @@ export class ContentSynthesizer {
   /**
    * Infer project objectives from analysis
    */
-  private inferObjectives(feature: string, examples: string[], considerations: string[]): string[] {
+  private inferObjectives(
+    feature: string,
+    examples: string[],
+    considerations: string[]
+  ): string[] {
     const objectives: string[] = [];
 
     // Infer from feature description
     if (feature.toLowerCase().includes('improve')) {
-      objectives.push('Improve existing system performance and user experience');
+      objectives.push(
+        'Improve existing system performance and user experience'
+      );
     }
     if (feature.toLowerCase().includes('automate')) {
       objectives.push('Automate manual processes to increase efficiency');
     }
     if (feature.toLowerCase().includes('integrate')) {
-      objectives.push('Integrate systems for better data flow and user experience');
+      objectives.push(
+        'Integrate systems for better data flow and user experience'
+      );
     }
 
     // Infer from examples
@@ -391,12 +531,13 @@ export class ContentSynthesizer {
   /**
    * Analyze existing codebase for patterns and insights
    */
-  private async analyzeCodebase(projectPath: string): Promise<CodebaseInsights> {
+  private async analyzeCodebase(
+    projectPath: string
+  ): Promise<CodebaseInsights> {
     try {
       const analysis = await this.performCodebaseAnalysis(projectPath);
       return this.synthesizeCodebaseInsights(analysis);
     } catch (error) {
-      
       return this.createEmptyCodebaseInsights();
     }
   }
@@ -404,14 +545,18 @@ export class ContentSynthesizer {
   /**
    * Perform detailed codebase analysis
    */
-  private async performCodebaseAnalysis(projectPath: string): Promise<ProjectAnalysis> {
+  private async performCodebaseAnalysis(
+    projectPath: string
+  ): Promise<ProjectAnalysis> {
     const packageJsonPath = path.join(projectPath, 'package.json');
     let dependencies: Record<string, string> = {};
     let devDependencies: Record<string, string> = {};
     let language = 'javascript';
 
     try {
-      const packageJson = JSON.parse(await fs.readFile(packageJsonPath, 'utf-8'));
+      const packageJson = JSON.parse(
+        await fs.readFile(packageJsonPath, 'utf-8')
+      );
       dependencies = packageJson.dependencies || {};
       devDependencies = packageJson.devDependencies || {};
 
@@ -426,7 +571,10 @@ export class ContentSynthesizer {
     const patterns = this.identifyCodebasePatterns(fileAnalyses, dependencies);
     const architecture = this.inferArchitecture(fileAnalyses, dependencies);
     const conventions = this.identifyConventions(fileAnalyses);
-    const recommendations = this.generateCodebaseRecommendations(fileAnalyses, patterns);
+    const recommendations = this.generateCodebaseRecommendations(
+      fileAnalyses,
+      patterns
+    );
 
     return {
       rootPath: projectPath,
@@ -438,32 +586,31 @@ export class ContentSynthesizer {
       patterns,
       conventions,
       recommendations,
-      generatedAt: new Date()
+      generatedAt: new Date(),
     };
   }
 
   /**
    * Analyze project files
    */
-  private async analyzeProjectFiles(projectPath: string): Promise<FileAnalysis[]> {
+  private async analyzeProjectFiles(
+    projectPath: string
+  ): Promise<FileAnalysis[]> {
     const analyses: FileAnalysis[] = [];
 
     try {
       const files = await this.getSourceFiles(projectPath);
 
-      for (const filePath of files.slice(0, 20)) { // Limit to first 20 files
+      for (const filePath of files.slice(0, 20)) {
+        // Limit to first 20 files
         try {
           const analysis = await this.analyzeFile(filePath);
           if (analysis) {
             analyses.push(analysis);
           }
-        } catch (error) {
-          
-        }
+        } catch (error) {}
       }
-    } catch (error) {
-      
-    }
+    } catch (error) {}
 
     return analyses;
   }
@@ -473,16 +620,30 @@ export class ContentSynthesizer {
    */
   private async getSourceFiles(projectPath: string): Promise<string[]> {
     const files: string[] = [];
-    const sourceExtensions = ['.js', '.ts', '.jsx', '.tsx', '.py', '.java', '.go', '.rs', '.php'];
+    const sourceExtensions = [
+      '.js',
+      '.ts',
+      '.jsx',
+      '.tsx',
+      '.py',
+      '.java',
+      '.go',
+      '.rs',
+      '.php',
+    ];
 
-    const scanDirectory = async (dirPath: string, depth: number = 0): Promise<void> => {
+    const scanDirectory = async (
+      dirPath: string,
+      depth: number = 0
+    ): Promise<void> => {
       if (depth > 3) return; // Limit recursion depth
 
       try {
         const entries = await fs.readdir(dirPath, { withFileTypes: true });
 
         for (const entry of entries) {
-          if (entry.name.startsWith('.') || entry.name === 'node_modules') continue;
+          if (entry.name.startsWith('.') || entry.name === 'node_modules')
+            continue;
 
           const fullPath = path.join(dirPath, entry.name);
 
@@ -521,7 +682,7 @@ export class ContentSynthesizer {
         functions: this.extractFunctions(content, ext),
         classes: this.extractClasses(content, ext),
         patterns: this.detectFilePatterns(content, filePath),
-        metrics: this.calculateFileMetrics(content)
+        metrics: this.calculateFileMetrics(content),
       };
     } catch {
       return null;
@@ -541,7 +702,7 @@ export class ContentSynthesizer {
       '.java': 'java',
       '.go': 'go',
       '.rs': 'rust',
-      '.php': 'php'
+      '.php': 'php',
     };
 
     return languageMap[ext] || 'unknown';
@@ -552,12 +713,30 @@ export class ContentSynthesizer {
    */
   private detectFramework(content: string): string | undefined {
     const frameworks = [
-      { name: 'React', patterns: [/import.*react/i, /from ['"]react/i, /jsx/i] },
-      { name: 'Vue', patterns: [/import.*vue/i, /from ['"]vue/i, /<template>/i] },
-      { name: 'Angular', patterns: [/import.*@angular/i, /@Component/i, /@Injectable/i] },
-      { name: 'Express', patterns: [/express\(\)/i, /app\.get\(/i, /app\.post\(/i] },
-      { name: 'Django', patterns: [/from django/i, /django\.http/i, /models\.Model/i] },
-      { name: 'Flask', patterns: [/from flask/i, /Flask\(__name__\)/i, /@app\.route/i] }
+      {
+        name: 'React',
+        patterns: [/import.*react/i, /from ['"]react/i, /jsx/i],
+      },
+      {
+        name: 'Vue',
+        patterns: [/import.*vue/i, /from ['"]vue/i, /<template>/i],
+      },
+      {
+        name: 'Angular',
+        patterns: [/import.*@angular/i, /@Component/i, /@Injectable/i],
+      },
+      {
+        name: 'Express',
+        patterns: [/express\(\)/i, /app\.get\(/i, /app\.post\(/i],
+      },
+      {
+        name: 'Django',
+        patterns: [/from django/i, /django\.http/i, /models\.Model/i],
+      },
+      {
+        name: 'Flask',
+        patterns: [/from flask/i, /Flask\(__name__\)/i, /@app\.route/i],
+      },
     ];
 
     for (const framework of frameworks) {
@@ -576,20 +755,36 @@ export class ContentSynthesizer {
     const imports: string[] = [];
 
     if (ext === '.js' || ext === '.jsx' || ext === '.ts' || ext === '.tsx') {
-      const importMatches = content.match(/import\s+.*?\s+from\s+['"`]([^'"`]+)['"`]/gi);
+      const importMatches = content.match(
+        /import\s+.*?\s+from\s+['"`]([^'"`]+)['"`]/gi
+      );
       if (importMatches) {
-        imports.push(...importMatches.map(match => {
-          const moduleMatch = match.match(/from\s+['"`]([^'"`]+)['"`]/i);
-          return moduleMatch ? moduleMatch[1] : '';
-        }).filter(imp => imp));
+        imports.push(
+          ...importMatches
+            .map(match => {
+              const moduleMatch = match.match(/from\s+['"`]([^'"`]+)['"`]/i);
+              return moduleMatch ? moduleMatch[1] : '';
+            })
+            .filter(imp => imp)
+        );
       }
     } else if (ext === '.py') {
-      const importMatches = content.match(/^(?:from\s+(\S+)\s+)?import\s+(.+)$/gm);
+      const importMatches = content.match(
+        /^(?:from\s+(\S+)\s+)?import\s+(.+)$/gm
+      );
       if (importMatches) {
-        imports.push(...importMatches.map(match => {
-          const parts = match.split(/\s+/);
-          return parts[parts.indexOf('from') + 1] || parts[parts.indexOf('import') + 1] || '';
-        }).filter(imp => imp));
+        imports.push(
+          ...importMatches
+            .map(match => {
+              const parts = match.split(/\s+/);
+              return (
+                parts[parts.indexOf('from') + 1] ||
+                parts[parts.indexOf('import') + 1] ||
+                ''
+              );
+            })
+            .filter(imp => imp)
+        );
       }
     }
 
@@ -603,12 +798,20 @@ export class ContentSynthesizer {
     const exports: string[] = [];
 
     if (ext === '.js' || ext === '.jsx' || ext === '.ts' || ext === '.tsx') {
-      const exportMatches = content.match(/export\s+(?:default\s+)?(?:function|class|const|let|var)\s+(\w+)/gi);
+      const exportMatches = content.match(
+        /export\s+(?:default\s+)?(?:function|class|const|let|var)\s+(\w+)/gi
+      );
       if (exportMatches) {
-        exports.push(...exportMatches.map(match => {
-          const nameMatch = match.match(/(?:function|class|const|let|var)\s+(\w+)/i);
-          return nameMatch ? nameMatch[1] : '';
-        }).filter(exp => exp));
+        exports.push(
+          ...exportMatches
+            .map(match => {
+              const nameMatch = match.match(
+                /(?:function|class|const|let|var)\s+(\w+)/i
+              );
+              return nameMatch ? nameMatch[1] : '';
+            })
+            .filter(exp => exp)
+        );
       }
     }
 
@@ -618,7 +821,10 @@ export class ContentSynthesizer {
   /**
    * Extract functions from content
    */
-  private extractFunctions(content: string, ext: string): Array<{
+  private extractFunctions(
+    content: string,
+    ext: string
+  ): Array<{
     name: string;
     parameters: string[];
     returnType?: string;
@@ -634,7 +840,9 @@ export class ContentSynthesizer {
     }> = [];
 
     if (ext === '.js' || ext === '.jsx' || ext === '.ts' || ext === '.tsx') {
-      const functionMatches = content.match(/(async\s+)?function\s+(\w+)\s*\([^)]*\)/gi);
+      const functionMatches = content.match(
+        /(async\s+)?function\s+(\w+)\s*\([^)]*\)/gi
+      );
       if (functionMatches) {
         functionMatches.forEach(match => {
           const isAsync = match.includes('async');
@@ -645,7 +853,7 @@ export class ContentSynthesizer {
             name,
             parameters: [],
             isAsync,
-            complexity: this.calculateFunctionComplexity(match)
+            complexity: this.calculateFunctionComplexity(match),
           });
         });
       }
@@ -657,7 +865,10 @@ export class ContentSynthesizer {
   /**
    * Extract classes from content
    */
-  private extractClasses(content: string, ext: string): Array<{
+  private extractClasses(
+    content: string,
+    ext: string
+  ): Array<{
     name: string;
     methods: string[];
     properties: string[];
@@ -671,7 +882,9 @@ export class ContentSynthesizer {
     }> = [];
 
     if (ext === '.js' || ext === '.jsx' || ext === '.ts' || ext === '.tsx') {
-      const classMatches = content.match(/class\s+(\w+)(?:\s+extends\s+(\w+))?\s*{/gi);
+      const classMatches = content.match(
+        /class\s+(\w+)(?:\s+extends\s+(\w+))?\s*{/gi
+      );
       if (classMatches) {
         classMatches.forEach(match => {
           const nameMatch = match.match(/class\s+(\w+)/i);
@@ -682,7 +895,7 @@ export class ContentSynthesizer {
               name: nameMatch[1],
               methods: [],
               properties: [],
-              inheritance: extendsMatch ? [extendsMatch[1]] : undefined
+              inheritance: extendsMatch ? [extendsMatch[1]] : undefined,
             });
           }
         });
@@ -695,7 +908,10 @@ export class ContentSynthesizer {
   /**
    * Detect patterns in file content
    */
-  private detectFilePatterns(content: string, filePath: string): CodebasePattern[] {
+  private detectFilePatterns(
+    content: string,
+    filePath: string
+  ): CodebasePattern[] {
     const patterns: CodebasePattern[] = [];
 
     // MVC Pattern
@@ -706,12 +922,14 @@ export class ContentSynthesizer {
         description: 'Model-View-Controller pattern implementation',
         type: 'architectural',
         confidence: 0.8,
-        examples: [{
-          file: filePath,
-          snippet: 'Controller class implementation',
-          lineStart: 1,
-          lineEnd: 10
-        }]
+        examples: [
+          {
+            file: filePath,
+            snippet: 'Controller class implementation',
+            lineStart: 1,
+            lineEnd: 10,
+          },
+        ],
       });
     }
 
@@ -723,12 +941,14 @@ export class ContentSynthesizer {
         description: 'Data access abstraction pattern',
         type: 'design',
         confidence: 0.7,
-        examples: [{
-          file: filePath,
-          snippet: 'Repository pattern usage',
-          lineStart: 1,
-          lineEnd: 10
-        }]
+        examples: [
+          {
+            file: filePath,
+            snippet: 'Repository pattern usage',
+            lineStart: 1,
+            lineEnd: 10,
+          },
+        ],
       });
     }
 
@@ -744,22 +964,37 @@ export class ContentSynthesizer {
     maintainabilityIndex: number;
   } {
     const lines = content.split('\n');
-    const linesOfCode = lines.filter(line => line.trim() && !line.trim().startsWith('//')).length;
+    const linesOfCode = lines.filter(
+      line => line.trim() && !line.trim().startsWith('//')
+    ).length;
 
     // Simple complexity calculation based on control flow statements
-    const complexityKeywords = ['if', 'else', 'for', 'while', 'switch', 'catch', 'case'];
-    const cyclomaticComplexity = 1 + complexityKeywords.reduce((sum, keyword) => {
-      const matches = content.match(new RegExp(`\\b${keyword}\\b`, 'gi'));
-      return sum + (matches ? matches.length : 0);
-    }, 0);
+    const complexityKeywords = [
+      'if',
+      'else',
+      'for',
+      'while',
+      'switch',
+      'catch',
+      'case',
+    ];
+    const cyclomaticComplexity =
+      1 +
+      complexityKeywords.reduce((sum, keyword) => {
+        const matches = content.match(new RegExp(`\\b${keyword}\\b`, 'gi'));
+        return sum + (matches ? matches.length : 0);
+      }, 0);
 
     // Simple maintainability index (inverse of complexity per line)
-    const maintainabilityIndex = Math.max(0, 100 - (cyclomaticComplexity * 10) / Math.max(linesOfCode, 1));
+    const maintainabilityIndex = Math.max(
+      0,
+      100 - (cyclomaticComplexity * 10) / Math.max(linesOfCode, 1)
+    );
 
     return {
       linesOfCode,
       cyclomaticComplexity,
-      maintainabilityIndex: Math.round(maintainabilityIndex)
+      maintainabilityIndex: Math.round(maintainabilityIndex),
     };
   }
 
@@ -767,11 +1002,24 @@ export class ContentSynthesizer {
    * Calculate function complexity
    */
   private calculateFunctionComplexity(functionText: string): number {
-    const complexityKeywords = ['if', 'else', 'for', 'while', 'switch', 'catch', 'case'];
-    return 1 + complexityKeywords.reduce((sum, keyword) => {
-      const matches = functionText.match(new RegExp(`\\b${keyword}\\b`, 'gi'));
-      return sum + (matches ? matches.length : 0);
-    }, 0);
+    const complexityKeywords = [
+      'if',
+      'else',
+      'for',
+      'while',
+      'switch',
+      'catch',
+      'case',
+    ];
+    return (
+      1 +
+      complexityKeywords.reduce((sum, keyword) => {
+        const matches = functionText.match(
+          new RegExp(`\\b${keyword}\\b`, 'gi')
+        );
+        return sum + (matches ? matches.length : 0);
+      }, 0)
+    );
   }
 
   /**
@@ -803,8 +1051,8 @@ export class ContentSynthesizer {
             file: fa.path,
             snippet: 'React component',
             lineStart: 1,
-            lineEnd: 10
-          }))
+            lineEnd: 10,
+          })),
       });
     }
 
@@ -856,19 +1104,27 @@ export class ContentSynthesizer {
 
     let naming = 'mixed';
     if (hasKebabCase && !hasCamelCase && !hasPascalCase) naming = 'kebab-case';
-    else if (hasCamelCase && !hasKebabCase && !hasPascalCase) naming = 'camelCase';
-    else if (hasPascalCase && !hasKebabCase && !hasCamelCase) naming = 'PascalCase';
+    else if (hasCamelCase && !hasKebabCase && !hasPascalCase)
+      naming = 'camelCase';
+    else if (hasPascalCase && !hasKebabCase && !hasCamelCase)
+      naming = 'PascalCase';
 
     // Analyze structure conventions
     const structure: string[] = [];
     const directories = new Set(
-      fileAnalyses.map(fa => path.dirname(fa.path).split('/').pop()).filter(Boolean)
+      fileAnalyses
+        .map(fa => path.dirname(fa.path).split('/').pop())
+        .filter(Boolean)
     );
     structure.push(...directories);
 
     // Analyze import conventions
-    const hasRelativeImports = fileAnalyses.some(fa => fa.imports.some(imp => imp.startsWith('./')));
-    const hasAbsoluteImports = fileAnalyses.some(fa => fa.imports.some(imp => !imp.startsWith('./')));
+    const hasRelativeImports = fileAnalyses.some(fa =>
+      fa.imports.some(imp => imp.startsWith('./'))
+    );
+    const hasAbsoluteImports = fileAnalyses.some(fa =>
+      fa.imports.some(imp => !imp.startsWith('./'))
+    );
     let imports = 'mixed';
     if (hasRelativeImports && !hasAbsoluteImports) imports = 'relative';
     else if (hasAbsoluteImports && !hasRelativeImports) imports = 'absolute';
@@ -886,20 +1142,30 @@ export class ContentSynthesizer {
     const recommendations: string[] = [];
 
     // Check complexity
-    const highComplexityFiles = fileAnalyses.filter(fa => fa.metrics.cyclomaticComplexity > 10);
+    const highComplexityFiles = fileAnalyses.filter(
+      fa => fa.metrics.cyclomaticComplexity > 10
+    );
     if (highComplexityFiles.length > 0) {
-      recommendations.push('Consider refactoring high-complexity files to improve maintainability');
+      recommendations.push(
+        'Consider refactoring high-complexity files to improve maintainability'
+      );
     }
 
     // Check maintainability
-    const lowMaintainabilityFiles = fileAnalyses.filter(fa => fa.metrics.maintainabilityIndex < 50);
+    const lowMaintainabilityFiles = fileAnalyses.filter(
+      fa => fa.metrics.maintainabilityIndex < 50
+    );
     if (lowMaintainabilityFiles.length > 0) {
-      recommendations.push('Improve code maintainability by reducing complexity and adding documentation');
+      recommendations.push(
+        'Improve code maintainability by reducing complexity and adding documentation'
+      );
     }
 
     // Check patterns
     if (patterns.length === 0) {
-      recommendations.push('Consider adopting established design patterns for better code organization');
+      recommendations.push(
+        'Consider adopting established design patterns for better code organization'
+      );
     }
 
     return recommendations;
@@ -908,10 +1174,12 @@ export class ContentSynthesizer {
   /**
    * Synthesize codebase insights
    */
-  private synthesizeCodebaseInsights(analysis: ProjectAnalysis): CodebaseInsights {
+  private synthesizeCodebaseInsights(
+    analysis: ProjectAnalysis
+  ): CodebaseInsights {
     const technologies = [
       ...Object.keys(analysis.dependencies),
-      ...Object.keys(analysis.devDependencies)
+      ...Object.keys(analysis.devDependencies),
     ].slice(0, 10); // Top 10 technologies
 
     const complexity = this.assessCodebaseComplexity(analysis);
@@ -924,26 +1192,30 @@ export class ContentSynthesizer {
       conventions: [
         `Naming: ${analysis.conventions.naming}`,
         `Imports: ${analysis.conventions.imports}`,
-        `Structure: ${analysis.conventions.structure.join(', ')}`
+        `Structure: ${analysis.conventions.structure.join(', ')}`,
       ],
       complexity,
-      recommendations
+      recommendations,
     };
   }
 
   /**
    * Assess codebase complexity
    */
-  private assessCodebaseComplexity(analysis: ProjectAnalysis): 'low' | 'medium' | 'high' {
-    const avgComplexity = analysis.fileAnalyses.reduce(
-      (sum, fa) => sum + fa.metrics.cyclomaticComplexity,
-      0
-    ) / Math.max(analysis.fileAnalyses.length, 1);
+  private assessCodebaseComplexity(
+    analysis: ProjectAnalysis
+  ): 'low' | 'medium' | 'high' {
+    const avgComplexity =
+      analysis.fileAnalyses.reduce(
+        (sum, fa) => sum + fa.metrics.cyclomaticComplexity,
+        0
+      ) / Math.max(analysis.fileAnalyses.length, 1);
 
-    const avgMaintainability = analysis.fileAnalyses.reduce(
-      (sum, fa) => sum + fa.metrics.maintainabilityIndex,
-      0
-    ) / Math.max(analysis.fileAnalyses.length, 1);
+    const avgMaintainability =
+      analysis.fileAnalyses.reduce(
+        (sum, fa) => sum + fa.metrics.maintainabilityIndex,
+        0
+      ) / Math.max(analysis.fileAnalyses.length, 1);
 
     if (avgComplexity > 15 || avgMaintainability < 40) return 'high';
     if (avgComplexity > 8 || avgMaintainability < 60) return 'medium';
@@ -960,7 +1232,9 @@ export class ContentSynthesizer {
       technologies: [],
       conventions: [],
       complexity: 'low',
-      recommendations: ['This appears to be a new project - follow established patterns and best practices from the start']
+      recommendations: [
+        'This appears to be a new project - follow established patterns and best practices from the start',
+      ],
     };
   }
 
@@ -972,32 +1246,51 @@ export class ContentSynthesizer {
     codebaseInsights: CodebaseInsights,
     domain?: string
   ): Promise<ContextualEnrichment> {
-    const inferredDomain = domain || this.inferDomain(initialAnalysis, codebaseInsights);
+    const inferredDomain =
+      domain || this.inferDomain(initialAnalysis, codebaseInsights);
     const domainKnowledge = this.getDomainKnowledge(inferredDomain);
 
     return {
       domainKnowledge: domainKnowledge.bestPractices,
       industryBestPractices: this.getIndustryBestPractices(inferredDomain),
-      antiPatternWarnings: this.getAntiPatternWarnings(initialAnalysis, codebaseInsights),
-      scalabilityConsiderations: this.getScalabilityConsiderations(inferredDomain, codebaseInsights),
+      antiPatternWarnings: this.getAntiPatternWarnings(
+        initialAnalysis,
+        codebaseInsights
+      ),
+      scalabilityConsiderations: this.getScalabilityConsiderations(
+        inferredDomain,
+        codebaseInsights
+      ),
       securityConsiderations: this.getSecurityConsiderations(inferredDomain),
-      performanceConsiderations: this.getPerformanceConsiderations(inferredDomain, codebaseInsights)
+      performanceConsiderations: this.getPerformanceConsiderations(
+        inferredDomain,
+        codebaseInsights
+      ),
     };
   }
 
   /**
    * Infer domain from analysis
    */
-  private inferDomain(initialAnalysis: InitialMdAnalysis, codebaseInsights: CodebaseInsights): string {
+  private inferDomain(
+    initialAnalysis: InitialMdAnalysis,
+    codebaseInsights: CodebaseInsights
+  ): string {
     const allText = [
       initialAnalysis.feature,
       ...initialAnalysis.examples,
       ...initialAnalysis.considerations,
-      ...codebaseInsights.technologies
-    ].join(' ').toLowerCase();
+      ...codebaseInsights.technologies,
+    ]
+      .join(' ')
+      .toLowerCase();
 
     for (const [domain, knowledge] of Object.entries(this.DOMAIN_KNOWLEDGE)) {
-      if (knowledge.patterns.some(pattern => allText.includes(pattern.toLowerCase()))) {
+      if (
+        knowledge.patterns.some(pattern =>
+          allText.includes(pattern.toLowerCase())
+        )
+      ) {
         return domain;
       }
     }
@@ -1009,8 +1302,10 @@ export class ContentSynthesizer {
    * Get domain-specific knowledge
    */
   private getDomainKnowledge(domain: string): any {
-    return this.DOMAIN_KNOWLEDGE[domain as keyof typeof this.DOMAIN_KNOWLEDGE] ||
-           this.DOMAIN_KNOWLEDGE['web-development'];
+    return (
+      this.DOMAIN_KNOWLEDGE[domain as keyof typeof this.DOMAIN_KNOWLEDGE] ||
+      this.DOMAIN_KNOWLEDGE['web-development']
+    );
   }
 
   /**
@@ -1027,7 +1322,7 @@ export class ContentSynthesizer {
       'Use version control with meaningful commit messages',
       'Document APIs and complex business logic',
       'Implement proper error handling and logging',
-      'Follow security best practices and regular updates'
+      'Follow security best practices and regular updates',
     ];
   }
 
@@ -1041,10 +1336,9 @@ export class ContentSynthesizer {
     const warnings: string[] = [];
 
     // Check for common anti-patterns based on content
-    const allText = [
-      initialAnalysis.feature,
-      ...initialAnalysis.considerations
-    ].join(' ').toLowerCase();
+    const allText = [initialAnalysis.feature, ...initialAnalysis.considerations]
+      .join(' ')
+      .toLowerCase();
 
     for (const [pattern, warning] of Object.entries(this.ANTI_PATTERNS)) {
       if (allText.includes(pattern.replace('-', ' '))) {
@@ -1054,7 +1348,9 @@ export class ContentSynthesizer {
 
     // Add codebase-specific warnings
     if (codebaseInsights.complexity === 'high') {
-      warnings.push('High code complexity detected - consider refactoring for maintainability');
+      warnings.push(
+        'High code complexity detected - consider refactoring for maintainability'
+      );
     }
 
     return warnings;
@@ -1063,7 +1359,10 @@ export class ContentSynthesizer {
   /**
    * Get scalability considerations
    */
-  private getScalabilityConsiderations(domain: string, codebaseInsights: CodebaseInsights): string[] {
+  private getScalabilityConsiderations(
+    domain: string,
+    codebaseInsights: CodebaseInsights
+  ): string[] {
     const considerations = [];
 
     if (domain === 'e-commerce') {
@@ -1074,7 +1373,10 @@ export class ContentSynthesizer {
       );
     }
 
-    if (codebaseInsights.technologies.includes('react') || codebaseInsights.technologies.includes('vue')) {
+    if (
+      codebaseInsights.technologies.includes('react') ||
+      codebaseInsights.technologies.includes('vue')
+    ) {
       considerations.push(
         'Implement code splitting and lazy loading for better performance',
         'Consider server-side rendering for SEO and initial load performance'
@@ -1129,7 +1431,10 @@ export class ContentSynthesizer {
   /**
    * Get performance considerations
    */
-  private getPerformanceConsiderations(domain: string, codebaseInsights: CodebaseInsights): string[] {
+  private getPerformanceConsiderations(
+    domain: string,
+    codebaseInsights: CodebaseInsights
+  ): string[] {
     const considerations = [];
 
     if (codebaseInsights.technologies.includes('react')) {
@@ -1169,30 +1474,46 @@ export class ContentSynthesizer {
   ): Promise<GeneratedContent> {
     const sections: Record<string, string> = {};
 
-    sections['Project Overview'] = this.generateProjectOverview(initialAnalysis, codebaseInsights);
-    sections['Feature Specification'] = this.generateFeatureSpecification(initialAnalysis, contextualEnrichment);
-    sections['Technical Architecture'] = this.generateTechnicalArchitecture(codebaseInsights, contextualEnrichment);
-    sections['User Experience'] = this.generateUserExperience(initialAnalysis);
-    sections['Implementation Approach'] = this.generateImplementationApproach(initialAnalysis, codebaseInsights);
-    sections['Success Metrics'] = this.generateSuccessMetrics(initialAnalysis);
-    sections['Constraints & Considerations'] = this.generateConstraintsAndConsiderations(
+    sections['Project Overview'] = this.generateProjectOverview(
+      initialAnalysis,
+      codebaseInsights
+    );
+    sections['Feature Specification'] = this.generateFeatureSpecification(
       initialAnalysis,
       contextualEnrichment
     );
+    sections['Technical Architecture'] = this.generateTechnicalArchitecture(
+      codebaseInsights,
+      contextualEnrichment
+    );
+    sections['User Experience'] = this.generateUserExperience(initialAnalysis);
+    sections['Implementation Approach'] = this.generateImplementationApproach(
+      initialAnalysis,
+      codebaseInsights
+    );
+    sections['Success Metrics'] = this.generateSuccessMetrics(initialAnalysis);
+    sections['Constraints & Considerations'] =
+      this.generateConstraintsAndConsiderations(
+        initialAnalysis,
+        contextualEnrichment
+      );
 
     return {
       sections,
       metadata: {
         generationMethod: 'hybrid',
-        confidenceScore: this.calculateConfidenceScore(initialAnalysis, codebaseInsights),
+        confidenceScore: this.calculateConfidenceScore(
+          initialAnalysis,
+          codebaseInsights
+        ),
         sourcesUsed: [
           'INITIAL.md analysis',
           'Codebase pattern analysis',
           'Domain knowledge base',
-          'Industry best practices'
+          'Industry best practices',
         ],
-        generatedAt: new Date()
-      }
+        generatedAt: new Date(),
+      },
     };
   }
 
@@ -1252,12 +1573,16 @@ export class ContentSynthesizer {
     content += '\n';
 
     content += `### Non-Functional Requirements\n\n`;
-    contextualEnrichment.performanceConsiderations.slice(0, 3).forEach(consideration => {
-      content += `- ${consideration}\n`;
-    });
-    contextualEnrichment.securityConsiderations.slice(0, 2).forEach(consideration => {
-      content += `- ${consideration}\n`;
-    });
+    contextualEnrichment.performanceConsiderations
+      .slice(0, 3)
+      .forEach(consideration => {
+        content += `- ${consideration}\n`;
+      });
+    contextualEnrichment.securityConsiderations
+      .slice(0, 2)
+      .forEach(consideration => {
+        content += `- ${consideration}\n`;
+      });
     content += '\n';
 
     if (initialAnalysis.examples.length > 0) {
@@ -1408,7 +1733,10 @@ export class ContentSynthesizer {
     // Infer metrics from feature description
     const featureLower = initialAnalysis.feature.toLowerCase();
 
-    if (featureLower.includes('performance') || featureLower.includes('speed')) {
+    if (
+      featureLower.includes('performance') ||
+      featureLower.includes('speed')
+    ) {
       content += `- Response time < 200ms for API calls\n`;
       content += `- Page load time < 2 seconds\n`;
     }
@@ -1505,7 +1833,8 @@ export class ContentSynthesizer {
     let score = 0.5; // Base score
 
     // Boost confidence based on available information
-    if (initialAnalysis.feature && initialAnalysis.feature.length > 50) score += 0.2;
+    if (initialAnalysis.feature && initialAnalysis.feature.length > 50)
+      score += 0.2;
     if (initialAnalysis.examples.length > 0) score += 0.1;
     if (initialAnalysis.considerations.length > 0) score += 0.1;
     if (codebaseInsights.technologies.length > 0) score += 0.2;
@@ -1523,15 +1852,23 @@ export class ContentSynthesizer {
     // Extract bullet points
     const bulletMatches = content.match(/^[\s]*[-*+]\s(.+)$/gm);
     if (bulletMatches) {
-      items.push(...bulletMatches.map(match => match.replace(/^[\s]*[-*+]\s/, '').trim()));
+      items.push(
+        ...bulletMatches.map(match => match.replace(/^[\s]*[-*+]\s/, '').trim())
+      );
     }
 
     // Extract numbered lists
     const numberedMatches = content.match(/^[\s]*\d+\.\s(.+)$/gm);
     if (numberedMatches) {
-      items.push(...numberedMatches.map(match => match.replace(/^[\s]*\d+\.\s/, '').trim()));
+      items.push(
+        ...numberedMatches.map(match =>
+          match.replace(/^[\s]*\d+\.\s/, '').trim()
+        )
+      );
     }
 
-    return items.filter(item => item.length > 2 && !item.includes('[') && !item.includes(']'));
+    return items.filter(
+      item => item.length > 2 && !item.includes('[') && !item.includes(']')
+    );
   }
 }

@@ -26,7 +26,9 @@ export class InitialMdCreator {
     }
   }
 
-  async createFromQuestionnaire(session: QuestionnaireSession): Promise<string> {
+  async createFromQuestionnaire(
+    session: QuestionnaireSession
+  ): Promise<string> {
     const config = this.extractConfigFromSession(session);
 
     // Use lenient validation for questionnaire data
@@ -69,11 +71,17 @@ export class InitialMdCreator {
       errors.push('At least one objective is required');
     }
 
-    if (!config.technicalRequirements || config.technicalRequirements.length === 0) {
+    if (
+      !config.technicalRequirements ||
+      config.technicalRequirements.length === 0
+    ) {
       errors.push('At least one technical requirement is required');
     }
 
-    if (!config.businessRequirements || config.businessRequirements.length === 0) {
+    if (
+      !config.businessRequirements ||
+      config.businessRequirements.length === 0
+    ) {
       errors.push('At least one business requirement is required');
     }
 
@@ -107,8 +115,13 @@ export class InitialMdCreator {
   private selectTemplate(config: InitialMdConfig): InitialMdTemplate | null {
     // Find template that best matches the configuration
     for (const template of this.templates.values()) {
-      if (template.framework && config.framework &&
-          config.framework.toLowerCase().includes(template.framework.toLowerCase())) {
+      if (
+        template.framework &&
+        config.framework &&
+        config.framework
+          .toLowerCase()
+          .includes(template.framework.toLowerCase())
+      ) {
         return template;
       }
 
@@ -120,25 +133,50 @@ export class InitialMdCreator {
     return null;
   }
 
-  private createFromTemplate(template: InitialMdTemplate, config: InitialMdConfig): string {
+  private createFromTemplate(
+    template: InitialMdTemplate,
+    config: InitialMdConfig
+  ): string {
     return this.renderTemplate(template, config);
   }
 
-  private renderTemplate(template: InitialMdTemplate, config: InitialMdConfig): string {
+  private renderTemplate(
+    template: InitialMdTemplate,
+    config: InitialMdConfig
+  ): string {
     let content = template.template;
 
     // Replace placeholders with actual values
     content = content.replace(/{{projectName}}/g, config.projectName);
     content = content.replace(/{{projectType}}/g, config.projectType);
     content = content.replace(/{{domain}}/g, config.domain);
-    content = content.replace(/{{framework}}/g, config.framework || 'Not specified');
+    content = content.replace(
+      /{{framework}}/g,
+      config.framework || 'Not specified'
+    );
 
     // Handle list replacements
-    content = this.replaceBulletList(content, 'stakeholders', config.stakeholders);
-    content = this.replaceBulletList(content, 'constraints', config.constraints);
+    content = this.replaceBulletList(
+      content,
+      'stakeholders',
+      config.stakeholders
+    );
+    content = this.replaceBulletList(
+      content,
+      'constraints',
+      config.constraints
+    );
     content = this.replaceBulletList(content, 'objectives', config.objectives);
-    content = this.replaceBulletList(content, 'technicalRequirements', config.technicalRequirements);
-    content = this.replaceBulletList(content, 'businessRequirements', config.businessRequirements);
+    content = this.replaceBulletList(
+      content,
+      'technicalRequirements',
+      config.technicalRequirements
+    );
+    content = this.replaceBulletList(
+      content,
+      'businessRequirements',
+      config.businessRequirements
+    );
 
     // Handle custom sections
     if (config.customSections) {
@@ -186,13 +224,17 @@ export class InitialMdCreator {
     // Technical Requirements
     if (config.technicalRequirements.length > 0) {
       sections.push('\n## Technical Requirements\n');
-      sections.push(config.technicalRequirements.map(r => `- ${r}`).join('\n') + '\n');
+      sections.push(
+        config.technicalRequirements.map(r => `- ${r}`).join('\n') + '\n'
+      );
     }
 
     // Business Requirements
     if (config.businessRequirements.length > 0) {
       sections.push('\n## Business Requirements\n');
-      sections.push(config.businessRequirements.map(r => `- ${r}`).join('\n') + '\n');
+      sections.push(
+        config.businessRequirements.map(r => `- ${r}`).join('\n') + '\n'
+      );
     }
 
     // Add framework-specific sections
@@ -216,7 +258,10 @@ export class InitialMdCreator {
     return sections.join('');
   }
 
-  private addFrameworkSpecificSections(sections: string[], config: InitialMdConfig): void {
+  private addFrameworkSpecificSections(
+    sections: string[],
+    config: InitialMdConfig
+  ): void {
     if (!config.framework) return;
 
     const framework = config.framework.toLowerCase();
@@ -257,7 +302,11 @@ export class InitialMdCreator {
       sections.push('- Build configuration and tooling\n');
     }
 
-    if (framework.includes('database') || framework.includes('sql') || framework.includes('mongodb')) {
+    if (
+      framework.includes('database') ||
+      framework.includes('sql') ||
+      framework.includes('mongodb')
+    ) {
       sections.push('\n## Data Management\n');
       sections.push('- Database schema design\n');
       sections.push('- Data validation and constraints\n');
@@ -267,7 +316,9 @@ export class InitialMdCreator {
     }
   }
 
-  private extractConfigFromSession(session: QuestionnaireSession): InitialMdConfig {
+  private extractConfigFromSession(
+    session: QuestionnaireSession
+  ): InitialMdConfig {
     const answers = session.answers;
 
     // Extract basic information
@@ -306,7 +357,9 @@ export class InitialMdCreator {
 
     // Add requirements based on specific answers
     if (answers['authentication-type']) {
-      technicalRequirements.push(`Authentication: ${answers['authentication-type']}`);
+      technicalRequirements.push(
+        `Authentication: ${answers['authentication-type']}`
+      );
     }
 
     if (answers['database-type']) {
@@ -314,15 +367,21 @@ export class InitialMdCreator {
     }
 
     if (answers['state-management']) {
-      technicalRequirements.push(`State Management: ${answers['state-management']}`);
+      technicalRequirements.push(
+        `State Management: ${answers['state-management']}`
+      );
     }
 
     if (answers['api-validation']) {
-      technicalRequirements.push(`API Validation: ${answers['api-validation']}`);
+      technicalRequirements.push(
+        `API Validation: ${answers['api-validation']}`
+      );
     }
 
     if (answers['deployment-platform']) {
-      technicalRequirements.push(`Deployment: ${answers['deployment-platform']}`);
+      technicalRequirements.push(
+        `Deployment: ${answers['deployment-platform']}`
+      );
     }
 
     // Extract stakeholders
@@ -349,7 +408,10 @@ export class InitialMdCreator {
       objectives.push(`Success Criteria: ${successCriteria}`);
     }
     if (objectives.length === 0) {
-      objectives.push('Deliver functional application', 'Meet user requirements');
+      objectives.push(
+        'Deliver functional application',
+        'Meet user requirements'
+      );
     }
 
     // Extract constraints
@@ -364,19 +426,28 @@ export class InitialMdCreator {
       constraints.push(`Technology: ${answers['technology-constraints']}`);
     }
     if (constraints.length === 0) {
-      constraints.push('Development timeline', 'Technical standards compliance');
+      constraints.push(
+        'Development timeline',
+        'Technical standards compliance'
+      );
     }
 
     // Determine domain
     let domain = 'general';
-    if (projectName.toLowerCase().includes('e-commerce') ||
-        projectName.toLowerCase().includes('shop')) {
+    if (
+      projectName.toLowerCase().includes('e-commerce') ||
+      projectName.toLowerCase().includes('shop')
+    ) {
       domain = 'e-commerce';
-    } else if (projectName.toLowerCase().includes('blog') ||
-               projectName.toLowerCase().includes('cms')) {
+    } else if (
+      projectName.toLowerCase().includes('blog') ||
+      projectName.toLowerCase().includes('cms')
+    ) {
       domain = 'content-management';
-    } else if (projectName.toLowerCase().includes('task') ||
-               projectName.toLowerCase().includes('todo')) {
+    } else if (
+      projectName.toLowerCase().includes('task') ||
+      projectName.toLowerCase().includes('todo')
+    ) {
       domain = 'productivity';
     }
 
@@ -393,20 +464,27 @@ export class InitialMdCreator {
     };
   }
 
-  private enhanceWithAnalysis(markdown: string, analysis: ProjectAnalysis): string {
+  private enhanceWithAnalysis(
+    markdown: string,
+    analysis: ProjectAnalysis
+  ): string {
     const enhancements: string[] = [];
 
     // Add current architecture section
     if (analysis.architecture.length > 0) {
       enhancements.push('\n## Current Architecture\n');
-      enhancements.push(analysis.architecture.map(a => `- ${a}`).join('\n') + '\n');
+      enhancements.push(
+        analysis.architecture.map(a => `- ${a}`).join('\n') + '\n'
+      );
     }
 
     // Add detected patterns
     if (analysis.patterns.length > 0) {
       enhancements.push('\n## Detected Patterns\n');
       for (const pattern of analysis.patterns) {
-        enhancements.push(`- **${pattern.name}**: ${pattern.description} (${Math.round(pattern.confidence * 100)}% confidence)\n`);
+        enhancements.push(
+          `- **${pattern.name}**: ${pattern.description} (${Math.round(pattern.confidence * 100)}% confidence)\n`
+        );
       }
     }
 
@@ -415,40 +493,56 @@ export class InitialMdCreator {
     if (dependencies.length > 0) {
       enhancements.push('\n## Technology Stack\n');
       enhancements.push('**Dependencies:**\n');
-      for (const dep of dependencies.slice(0, 10)) { // Limit to top 10
+      for (const dep of dependencies.slice(0, 10)) {
+        // Limit to top 10
         enhancements.push(`- ${dep}: ${analysis.dependencies[dep]}\n`);
       }
     }
 
     // Add conventions
     enhancements.push('\n## Code Conventions\n');
-    enhancements.push(`- **Naming Convention**: ${analysis.conventions.naming}\n`);
+    enhancements.push(
+      `- **Naming Convention**: ${analysis.conventions.naming}\n`
+    );
     enhancements.push(`- **Import Style**: ${analysis.conventions.imports}\n`);
     if (analysis.conventions.structure.length > 0) {
       enhancements.push('- **Directory Structure**:\n');
-      enhancements.push(analysis.conventions.structure.map(s => `  - ${s}`).join('\n') + '\n');
+      enhancements.push(
+        analysis.conventions.structure.map(s => `  - ${s}`).join('\n') + '\n'
+      );
     }
 
     // Add recommendations
     if (analysis.recommendations.length > 0) {
       enhancements.push('\n## Recommendations\n');
       enhancements.push('Based on codebase analysis:\n');
-      enhancements.push(analysis.recommendations.map(r => `- ${r}`).join('\n') + '\n');
+      enhancements.push(
+        analysis.recommendations.map(r => `- ${r}`).join('\n') + '\n'
+      );
     }
 
     // Insert enhancements before success criteria or at the end
     const successCriteriaIndex = markdown.indexOf('## Success Criteria');
     if (successCriteriaIndex !== -1) {
-      return markdown.slice(0, successCriteriaIndex) +
-             enhancements.join('') +
-             markdown.slice(successCriteriaIndex);
+      return (
+        markdown.slice(0, successCriteriaIndex) +
+        enhancements.join('') +
+        markdown.slice(successCriteriaIndex)
+      );
     } else {
       return markdown + enhancements.join('');
     }
   }
 
-  private replaceBulletList(content: string, placeholder: string, items: string[]): string {
-    const pattern = new RegExp(`{{#${placeholder}}}([\\s\\S]*?){{/${placeholder}}}`, 'g');
+  private replaceBulletList(
+    content: string,
+    placeholder: string,
+    items: string[]
+  ): string {
+    const pattern = new RegExp(
+      `{{#${placeholder}}}([\\s\\S]*?){{/${placeholder}}}`,
+      'g'
+    );
     return content.replace(pattern, (match, template) => {
       return items.map(item => template.replace('{{.}}', item)).join('');
     });
@@ -520,7 +614,16 @@ export class InitialMdCreator {
 - [ ] Security standards compliance
 - [ ] User acceptance testing passed
 - [ ] Deployment and monitoring successful`,
-      placeholders: ['projectName', 'framework', 'domain', 'stakeholders', 'objectives', 'constraints', 'technicalRequirements', 'businessRequirements'],
+      placeholders: [
+        'projectName',
+        'framework',
+        'domain',
+        'stakeholders',
+        'objectives',
+        'constraints',
+        'technicalRequirements',
+        'businessRequirements',
+      ],
       requiredQuestions: ['project-name', 'framework', 'domain'],
     });
 
@@ -596,7 +699,16 @@ export class InitialMdCreator {
 - [ ] Security requirements met
 - [ ] Documentation complete
 - [ ] Production deployment successful`,
-      placeholders: ['projectName', 'framework', 'domain', 'stakeholders', 'objectives', 'constraints', 'technicalRequirements', 'businessRequirements'],
+      placeholders: [
+        'projectName',
+        'framework',
+        'domain',
+        'stakeholders',
+        'objectives',
+        'constraints',
+        'technicalRequirements',
+        'businessRequirements',
+      ],
       requiredQuestions: ['project-name', 'api-type', 'domain'],
     });
 
@@ -668,7 +780,16 @@ export class InitialMdCreator {
 - [ ] Performance requirements met
 - [ ] User acceptance testing passed
 - [ ] Analytics and monitoring implemented`,
-      placeholders: ['projectName', 'framework', 'domain', 'stakeholders', 'objectives', 'constraints', 'technicalRequirements', 'businessRequirements'],
+      placeholders: [
+        'projectName',
+        'framework',
+        'domain',
+        'stakeholders',
+        'objectives',
+        'constraints',
+        'technicalRequirements',
+        'businessRequirements',
+      ],
       requiredQuestions: ['project-name', 'mobile-platforms', 'domain'],
     });
   }

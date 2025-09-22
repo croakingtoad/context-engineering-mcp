@@ -36,8 +36,8 @@ async function demonstrateIntegration() {
     console.log('\n📝 Step 3: Creating INITIAL.md...');
     const initialMdCreator = new InitialMdCreator();
 
-    // Mock questionnaire session with analysis insights
-    const mockSession = {
+    // Demo questionnaire session with analysis insights
+    const demoSession = {
       id: 'demo-session',
       projectId: 'demo-project',
       startedAt: new Date(),
@@ -55,7 +55,7 @@ async function demonstrateIntegration() {
       context: analysis
     };
 
-    const initialMd = await initialMdCreator.createFromQuestionnaire(mockSession);
+    const initialMd = await initialMdCreator.createFromQuestionnaire(demoSession);
     console.log('   ✅ Generated comprehensive INITIAL.md');
     console.log(`   ✅ Document length: ${initialMd.length} characters`);
 

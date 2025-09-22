@@ -61,12 +61,12 @@ export class TemplateBaseHandler implements ResourceHandler {
               this.templates.set(template.id, template);
             }
           } catch (error) {
-            console.warn(`Failed to load template ${file}:`, error);
+            // console.warn(`Failed to load template ${file}:`, error);
           }
         }
       }
     } catch (error) {
-      console.warn(`Failed to scan template directory ${directory}:`, error);
+      // console.warn(`Failed to scan template directory ${directory}:`, error);
     }
   }
 
@@ -84,7 +84,7 @@ export class TemplateBaseHandler implements ResourceHandler {
       try {
         await this.scanTemplateDirectory(templatePath);
       } catch (error) {
-        console.warn(`Failed to scan external templates at ${templatePath}:`, error);
+        // console.warn(`Failed to scan external templates at ${templatePath}:`, error);
       }
     }
   }
@@ -124,7 +124,7 @@ export class TemplateBaseHandler implements ResourceHandler {
 
       return enhanced;
     } catch (error) {
-      console.warn(`Failed to load template file ${filePath}:`, error);
+      // console.warn(`Failed to load template file ${filePath}:`, error);
       return null;
     }
   }
@@ -231,7 +231,7 @@ export class TemplateBaseHandler implements ResourceHandler {
       await fs.mkdir(this.templatesDirectory, { recursive: true });
       await fs.writeFile(statsPath, JSON.stringify(stats, null, 2));
     } catch (error) {
-      console.warn('Failed to save usage stats:', error);
+      // console.warn('Failed to save usage stats:', error);
     }
   }
 

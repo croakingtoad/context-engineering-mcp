@@ -25,7 +25,9 @@ export async function validatePRPToolHandler(args: unknown): Promise<{
     }
 
     // Use real PRP validator
-    const validationResult = await prpValidator.validatePRP(validatedArgs.prpContent);
+    const validationResult = await prpValidator.validatePRP(
+      validatedArgs.prpContent
+    );
 
     const response = {
       isValid: validationResult.isValid,

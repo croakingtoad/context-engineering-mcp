@@ -6,21 +6,26 @@ import { TemplateManager } from '../lib/template-manager.js';
 let codebaseAnalyzer: CodebaseAnalyzer;
 let templateManager: TemplateManager;
 
-export function setAnalyzeContextDependencies(analyzer: CodebaseAnalyzer, manager: TemplateManager) {
+export function setAnalyzeContextDependencies(
+  analyzer: CodebaseAnalyzer,
+  manager: TemplateManager
+) {
   codebaseAnalyzer = analyzer;
   templateManager = manager;
 }
 
 const AnalyzeContextArgsSchema = z.object({
-  projectContext: z.object({
-    name: z.string(),
-    domain: z.string(),
-    description: z.string().optional(),
-    stakeholders: z.array(z.string()).optional(),
-    constraints: z.array(z.string()).optional(),
-    objectives: z.array(z.string()).optional(),
-    existingRequirements: z.string().optional(),
-  }).passthrough(),
+  projectContext: z
+    .object({
+      name: z.string(),
+      domain: z.string(),
+      description: z.string().optional(),
+      stakeholders: z.array(z.string()).optional(),
+      constraints: z.array(z.string()).optional(),
+      objectives: z.array(z.string()).optional(),
+      existingRequirements: z.string().optional(),
+    })
+    .passthrough(),
   projectPath: z.string().optional(),
   includeTemplateRecommendations: z.boolean().default(true),
 });
@@ -55,20 +60,33 @@ export async function analyzeContextToolHandler(args: unknown): Promise<{
 
       // Simple matching algorithm based on domain and description
       const domainKeywords = validatedArgs.projectContext.domain.toLowerCase();
-      const description = validatedArgs.projectContext.description?.toLowerCase() || '';
+      const description =
+        validatedArgs.projectContext.description?.toLowerCase() || '';
 
       for (const template of allTemplates) {
         let matchScore = 0;
 
         // Check category match
-        if (domainKeywords.includes('web') && template.category.includes('web')) matchScore += 40;
-        if (domainKeywords.includes('api') && template.category.includes('backend')) matchScore += 40;
-        if (description.includes('dashboard') && template.name.toLowerCase().includes('web')) matchScore += 30;
+        if (domainKeywords.includes('web') && template.category.includes('web'))
+          matchScore += 40;
+        if (
+          domainKeywords.includes('api') &&
+          template.category.includes('backend')
+        )
+          matchScore += 40;
+        if (
+          description.includes('dashboard') &&
+          template.name.toLowerCase().includes('web')
+        )
+          matchScore += 30;
 
         // Check tag matches
         if (template.tags) {
           for (const tag of template.tags) {
-            if (domainKeywords.includes(tag.toLowerCase()) || description.includes(tag.toLowerCase())) {
+            if (
+              domainKeywords.includes(tag.toLowerCase()) ||
+              description.includes(tag.toLowerCase())
+            ) {
               matchScore += 10;
             }
           }

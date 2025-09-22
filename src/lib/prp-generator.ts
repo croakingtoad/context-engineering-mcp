@@ -25,9 +25,13 @@ export class PRPGenerator {
     const validatedRequest = PRPGenerationRequestSchema.parse(request);
 
     // Get the template
-    const template = this.templateManager.getTemplate(validatedRequest.templateId);
+    const template = this.templateManager.getTemplate(
+      validatedRequest.templateId
+    );
     if (!template) {
-      throw new Error(`Template with ID ${validatedRequest.templateId} not found`);
+      throw new Error(
+        `Template with ID ${validatedRequest.templateId} not found`
+      );
     }
 
     // Generate the PRP content
@@ -55,7 +59,10 @@ export class PRPGenerator {
     );
 
     // Generate PRP content using synthesized insights
-    const prpContent = await this.buildIntelligentPRP(contentSynthesis, templateId);
+    const prpContent = await this.buildIntelligentPRP(
+      contentSynthesis,
+      templateId
+    );
 
     // Format according to requested output format
     return this.formatOutput(prpContent, outputFormat);
@@ -73,9 +80,13 @@ export class PRPGenerator {
     const validatedRequest = PRPGenerationRequestSchema.parse(request);
 
     // Get the template
-    const template = this.templateManager.getTemplate(validatedRequest.templateId);
+    const template = this.templateManager.getTemplate(
+      validatedRequest.templateId
+    );
     if (!template) {
-      throw new Error(`Template with ID ${validatedRequest.templateId} not found`);
+      throw new Error(
+        `Template with ID ${validatedRequest.templateId} not found`
+      );
     }
 
     let contentSynthesis: ContentSynthesis | undefined;
@@ -90,7 +101,11 @@ export class PRPGenerator {
     }
 
     // Build enhanced PRP content
-    const prpContent = await this.buildEnhancedPRP(template, validatedRequest, contentSynthesis);
+    const prpContent = await this.buildEnhancedPRP(
+      template,
+      validatedRequest,
+      contentSynthesis
+    );
 
     // Format according to requested output format
     return this.formatOutput(prpContent, validatedRequest.outputFormat);
@@ -168,7 +183,8 @@ export class PRPGenerator {
           domain: 'Inferred from analysis',
         },
         contentSynthesis: {
-          confidenceScore: contentSynthesis.generatedContent.metadata.confidenceScore,
+          confidenceScore:
+            contentSynthesis.generatedContent.metadata.confidenceScore,
           sourcesUsed: contentSynthesis.generatedContent.metadata.sourcesUsed,
         },
       },
@@ -191,7 +207,10 @@ export class PRPGenerator {
 
       if (contentSynthesis) {
         // Enhanced processing with synthesis
-        processedSection = await this.enhanceSectionWithSynthesis(section, contentSynthesis);
+        processedSection = await this.enhanceSectionWithSynthesis(
+          section,
+          contentSynthesis
+        );
         // Apply context substitution
         processedSection = await this.processSection(processedSection, request);
       } else {
@@ -210,15 +229,21 @@ export class PRPGenerator {
     return {
       sections,
       metadata: {
-        generationMethod: contentSynthesis ? 'enhanced-template' : 'template-based',
+        generationMethod: contentSynthesis
+          ? 'enhanced-template'
+          : 'template-based',
         template: template.name,
         templateVersion: template.version,
         generatedAt: new Date().toISOString(),
         projectContext: request.projectContext,
-        contentSynthesis: contentSynthesis ? {
-          confidenceScore: contentSynthesis.generatedContent.metadata.confidenceScore,
-          sourcesUsed: contentSynthesis.generatedContent.metadata.sourcesUsed,
-        } : undefined,
+        contentSynthesis: contentSynthesis
+          ? {
+              confidenceScore:
+                contentSynthesis.generatedContent.metadata.confidenceScore,
+              sourcesUsed:
+                contentSynthesis.generatedContent.metadata.sourcesUsed,
+            }
+          : undefined,
       },
     };
   }
@@ -260,10 +285,16 @@ export class PRPGenerator {
     let result = text;
 
     // Replace project name
-    result = result.replace(/\{\{projectName\}\}/g, context.name || 'Your Project');
+    result = result.replace(
+      /\{\{projectName\}\}/g,
+      context.name || 'Your Project'
+    );
 
     // Replace domain
-    result = result.replace(/\{\{domain\}\}/g, context.domain || 'software development');
+    result = result.replace(
+      /\{\{domain\}\}/g,
+      context.domain || 'software development'
+    );
 
     // Replace stakeholders
     if (context.stakeholders) {
@@ -277,7 +308,9 @@ export class PRPGenerator {
     if (context.objectives) {
       result = result.replace(
         /\{\{objectives\}\}/g,
-        context.objectives.map((obj: string, i: number) => `${i + 1}. ${obj}`).join('\n')
+        context.objectives
+          .map((obj: string, i: number) => `${i + 1}. ${obj}`)
+          .join('\n')
       );
     }
 
@@ -285,7 +318,9 @@ export class PRPGenerator {
     if (context.constraints) {
       result = result.replace(
         /\{\{constraints\}\}/g,
-        context.constraints.map((constraint: string, i: number) => `${i + 1}. ${constraint}`).join('\n')
+        context.constraints
+          .map((constraint: string, i: number) => `${i + 1}. ${constraint}`)
+          .join('\n')
       );
     }
 
@@ -315,7 +350,10 @@ export class PRPGenerator {
   /**
    * Format as Markdown
    */
-  private formatAsMarkdown(prpContent: { sections: PRPSection[]; metadata: any }): string {
+  private formatAsMarkdown(prpContent: {
+    sections: PRPSection[];
+    metadata: any;
+  }): string {
     let markdown = `# Product Requirements Prompt\n\n`;
 
     // Add metadata
@@ -361,8 +399,9 @@ export class PRPGenerator {
 
     // Find matching generated section
     const matchingGeneratedSection = Object.entries(generatedSections).find(
-      ([key]) => key.toLowerCase().includes(sectionTitleLower) ||
-                 sectionTitleLower.includes(key.toLowerCase())
+      ([key]) =>
+        key.toLowerCase().includes(sectionTitleLower) ||
+        sectionTitleLower.includes(key.toLowerCase())
     );
 
     if (matchingGeneratedSection) {
@@ -374,7 +413,8 @@ export class PRPGenerator {
         metadata: {
           ...section.metadata,
           enhanced: true,
-          synthesisConfidence: contentSynthesis.generatedContent.metadata.confidenceScore,
+          synthesisConfidence:
+            contentSynthesis.generatedContent.metadata.confidenceScore,
         },
       };
     }
@@ -385,7 +425,9 @@ export class PRPGenerator {
   /**
    * Create sections directly from synthesis
    */
-  private createSectionsFromSynthesis(contentSynthesis: ContentSynthesis): PRPSection[] {
+  private createSectionsFromSynthesis(
+    contentSynthesis: ContentSynthesis
+  ): PRPSection[] {
     const sections: PRPSection[] = [];
     const generatedSections = contentSynthesis.generatedContent.sections;
 
@@ -395,7 +437,8 @@ export class PRPGenerator {
         content,
         metadata: {
           generatedFromSynthesis: true,
-          synthesisConfidence: contentSynthesis.generatedContent.metadata.confidenceScore,
+          synthesisConfidence:
+            contentSynthesis.generatedContent.metadata.confidenceScore,
           sourcesUsed: contentSynthesis.generatedContent.metadata.sourcesUsed,
         },
       });
@@ -407,7 +450,10 @@ export class PRPGenerator {
   /**
    * Intelligently merge template content with generated content
    */
-  private mergeContent(templateContent: string, generatedContent: string): string {
+  private mergeContent(
+    templateContent: string,
+    generatedContent: string
+  ): string {
     // If template content has placeholders, replace them
     if (templateContent.includes('{{') || templateContent.includes('[')) {
       const placeholderPattern = /\{\{[^}]+\}\}|\[.*?\]/g;
@@ -420,8 +466,12 @@ export class PRPGenerator {
         placeholders.forEach(placeholder => {
           // Extract a relevant excerpt from generated content
           const lines = generatedContent.split('\n');
-          const relevantLine = lines.find(line => line.trim().length > 20) || lines[0] || '';
-          mergedContent = mergedContent.replace(placeholder, relevantLine.trim());
+          const relevantLine =
+            lines.find(line => line.trim().length > 20) || lines[0] || '';
+          mergedContent = mergedContent.replace(
+            placeholder,
+            relevantLine.trim()
+          );
         });
 
         // Append additional generated content
@@ -444,13 +494,18 @@ export class PRPGenerator {
     }
 
     // Default: prefer longer content
-    return templateContent.length > generatedContent.length ? templateContent : generatedContent;
+    return templateContent.length > generatedContent.length
+      ? templateContent
+      : generatedContent;
   }
 
   /**
    * Format as HTML
    */
-  private formatAsHTML(prpContent: { sections: PRPSection[]; metadata: any }): string {
+  private formatAsHTML(prpContent: {
+    sections: PRPSection[];
+    metadata: any;
+  }): string {
     let html = `<!DOCTYPE html>
 <html lang="en">
 <head>

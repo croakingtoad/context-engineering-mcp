@@ -61,7 +61,10 @@ export class IntegrationsManager {
   private healthCheckTimer: NodeJS.Timeout | null = null;
   private retryAttempts: Map<string, number> = new Map();
 
-  constructor(storageSystem: StorageSystem, config: Partial<IntegrationsConfig> = {}) {
+  constructor(
+    storageSystem: StorageSystem,
+    config: Partial<IntegrationsConfig> = {}
+  ) {
     this.storageSystem = storageSystem;
     this.config = {
       archonEnabled: config.archonEnabled ?? false,
@@ -101,7 +104,10 @@ export class IntegrationsManager {
   /**
    * Store PRP in Archon if available, fallback to local storage
    */
-  async storePRP(prp: any, metadata: FileMetadata): Promise<{ archonDocument?: ArchonDocument }> {
+  async storePRP(
+    prp: any,
+    metadata: FileMetadata
+  ): Promise<{ archonDocument?: ArchonDocument }> {
     if (this.isArchonAvailable()) {
       try {
         const document: ArchonDocument = {
@@ -128,7 +134,11 @@ export class IntegrationsManager {
   /**
    * Update PRP in Archon if available
    */
-  async updatePRP(prpId: string, prp: any, metadata: FileMetadata): Promise<{ archonDocument?: ArchonDocument }> {
+  async updatePRP(
+    prpId: string,
+    prp: any,
+    metadata: FileMetadata
+  ): Promise<{ archonDocument?: ArchonDocument }> {
     if (this.isArchonAvailable()) {
       try {
         const updates = {
@@ -151,7 +161,10 @@ export class IntegrationsManager {
   /**
    * Create Archon tasks from PRP sections
    */
-  async createTasksFromPRP(prp: any, projectId?: string): Promise<{ tasks?: ArchonTask[] }> {
+  async createTasksFromPRP(
+    prp: any,
+    projectId?: string
+  ): Promise<{ tasks?: ArchonTask[] }> {
     if (!this.isArchonAvailable() || !prp.sections) {
       return {};
     }
@@ -200,13 +213,21 @@ export class IntegrationsManager {
   /**
    * Get health status for tools
    */
-  getHealthStatus(): { isHealthy: boolean; lastCheck: Date | null; latency: number; error: string | null; capabilities: string[] } {
+  getHealthStatus(): {
+    isHealthy: boolean;
+    lastCheck: Date | null;
+    latency: number;
+    error: string | null;
+    capabilities: string[];
+  } {
     return {
       isHealthy: this.status.archonConnected,
       lastCheck: this.status.lastHealthCheck,
       latency: 0,
       error: this.status.lastError,
-      capabilities: this.status.archonConnected ? ['documents', 'tasks', 'projects'] : []
+      capabilities: this.status.archonConnected
+        ? ['documents', 'tasks', 'projects']
+        : [],
     };
   }
 
@@ -252,7 +273,8 @@ export class IntegrationsManager {
       this.status.lastError = null;
     } catch (error) {
       this.status.errorCount++;
-      this.status.lastError = error instanceof Error ? error.message : 'Unknown error';
+      this.status.lastError =
+        error instanceof Error ? error.message : 'Unknown error';
 
       if (this.status.errorCount >= 3) {
         this.status.archonConnected = false;

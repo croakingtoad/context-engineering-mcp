@@ -38,11 +38,11 @@ export async function listTemplatesToolHandler(args: unknown): Promise<{
         category: t.category,
         tags: t.tags,
         author: t.author,
-        version: t.version
+        version: t.version,
       })),
       totalCount: templates.length,
       filteredBy: validatedArgs.category || null,
-      message: `Found ${templates.length} templates`
+      message: `Found ${templates.length} templates`,
     };
 
     return {

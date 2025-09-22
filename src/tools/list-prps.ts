@@ -6,26 +6,49 @@ import { IntegrationsManager } from '../lib/integrations.js';
 let storageSystem: StorageSystem;
 let integrationsManager: IntegrationsManager;
 
-export function setStorageDependencies(storage: StorageSystem, integrations: IntegrationsManager) {
+export function setStorageDependencies(
+  storage: StorageSystem,
+  integrations: IntegrationsManager
+) {
   storageSystem = storage;
   integrationsManager = integrations;
 }
 
 // Input schema for list_prps tool
 export const ListPRPsInputSchema = z.object({
-  query: z.string().optional().describe('Search query to filter PRPs by name or tags'),
+  query: z
+    .string()
+    .optional()
+    .describe('Search query to filter PRPs by name or tags'),
   category: z.string().optional().describe('Filter PRPs by category'),
   tags: z.array(z.string()).optional().describe('Filter PRPs by specific tags'),
-  dateRange: z.object({
-    from: z.string().describe('Start date in ISO format'),
-    to: z.string().describe('End date in ISO format'),
-  }).optional().describe('Filter PRPs by date range'),
-  sortBy: z.enum(['name', 'created', 'modified', 'size']).default('modified').describe('Field to sort by'),
+  dateRange: z
+    .object({
+      from: z.string().describe('Start date in ISO format'),
+      to: z.string().describe('End date in ISO format'),
+    })
+    .optional()
+    .describe('Filter PRPs by date range'),
+  sortBy: z
+    .enum(['name', 'created', 'modified', 'size'])
+    .default('modified')
+    .describe('Field to sort by'),
   sortOrder: z.enum(['asc', 'desc']).default('desc').describe('Sort order'),
-  limit: z.number().min(1).max(100).default(20).describe('Maximum number of PRPs to return'),
+  limit: z
+    .number()
+    .min(1)
+    .max(100)
+    .default(20)
+    .describe('Maximum number of PRPs to return'),
   offset: z.number().min(0).default(0).describe('Number of PRPs to skip'),
-  includeStats: z.boolean().default(false).describe('Include storage statistics'),
-  includeArchonStatus: z.boolean().default(false).describe('Include Archon integration status'),
+  includeStats: z
+    .boolean()
+    .default(false)
+    .describe('Include storage statistics'),
+  includeArchonStatus: z
+    .boolean()
+    .default(false)
+    .describe('Include Archon integration status'),
 });
 
 export type ListPRPsInput = z.infer<typeof ListPRPsInputSchema>;
@@ -66,7 +89,8 @@ export async function listPRPsToolHandler(params: unknown) {
     }
 
     // Get PRPs from storage
-    const { files, total, hasMore } = await storageSystem.listPRPs(searchOptions);
+    const { files, total, hasMore } =
+      await storageSystem.listPRPs(searchOptions);
 
     const result: any = {
       prps: files.map(file => ({
@@ -136,7 +160,8 @@ export async function listPRPsToolHandler(params: unknown) {
 export function getListPRPsToolDefinition() {
   return {
     name: 'list_prps',
-    description: 'List and search PRPs with advanced filtering and sorting capabilities',
+    description:
+      'List and search PRPs with advanced filtering and sorting capabilities',
     inputSchema: {
       type: 'object',
       properties: {

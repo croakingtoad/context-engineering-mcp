@@ -1,7 +1,7 @@
 import {
   PRPValidationResult,
   SectionValidation,
-  AntiPattern
+  AntiPattern,
 } from '../types/index.js';
 
 /**
@@ -16,7 +16,7 @@ export class PRPValidator {
     'user experience',
     'implementation approach',
     'success metrics',
-    'constraints & considerations'
+    'constraints & considerations',
   ];
 
   private readonly SECTION_WEIGHTS = {
@@ -26,7 +26,7 @@ export class PRPValidator {
     'user experience': 15,
     'implementation approach': 10,
     'success metrics': 5,
-    'constraints & considerations': 5
+    'constraints & considerations': 5,
   };
 
   private readonly ANTI_PATTERNS = [
@@ -38,8 +38,8 @@ export class PRPValidator {
       patterns: [
         /should be (user-friendly|performant|scalable|maintainable|good|better|best|amazing|revolutionary)/gi,
         /handle (things|stuff|data|requests) (efficiently|well|properly)/gi,
-        /(fast|quick|responsive) (enough|system|solution)/gi
-      ]
+        /(fast|quick|responsive) (enough|system|solution)/gi,
+      ],
     },
     {
       id: 'buzzword-overuse',
@@ -49,8 +49,8 @@ export class PRPValidator {
       patterns: [
         /(cloud-native|AI-powered|machine learning|blockchain|microservices|serverless|containerized).*(cloud-native|AI-powered|machine learning|blockchain|microservices|serverless|containerized)/gi,
         /latest and greatest technologies/gi,
-        /revolutionary|game-changing|disruptive/gi
-      ]
+        /revolutionary|game-changing|disruptive/gi,
+      ],
     },
     {
       id: 'vague-language',
@@ -60,17 +60,18 @@ export class PRPValidator {
       patterns: [
         /\b(somehow|maybe|probably|perhaps|might|could|should|would)\b/gi,
         /\b(various|several|multiple|many|lots of|plenty of)\b(?!\s+(requirements|features|users|tests))/gi,
-        /\b(appropriate|suitable|proper|adequate|sufficient)\b(?!\s+for)/gi
-      ]
+        /\b(appropriate|suitable|proper|adequate|sufficient)\b(?!\s+for)/gi,
+      ],
     },
     {
       id: 'missing-acceptance-criteria',
       name: 'Missing Acceptance Criteria',
-      description: 'Features lack clear acceptance criteria or success conditions',
+      description:
+        'Features lack clear acceptance criteria or success conditions',
       severity: 'high' as const,
       patterns: [
-        /build|create|implement|develop.*(?!.*(?:acceptance criteria|success criteria|when|given|then|should))/gi
-      ]
+        /build|create|implement|develop.*(?!.*(?:acceptance criteria|success criteria|when|given|then|should))/gi,
+      ],
     },
     {
       id: 'unjustified-technology',
@@ -78,16 +79,17 @@ export class PRPValidator {
       description: 'Technology selections without reasoning or justification',
       severity: 'medium' as const,
       patterns: [
-        /(React|Angular|Vue|Node\.js|Python|Java|Go|Rust|PostgreSQL|MongoDB|Redis|Docker|Kubernetes).*(?!.*(?:because|since|due to|chosen for|selected for|reasons|justification))/gi
-      ]
+        /(React|Angular|Vue|Node\.js|Python|Java|Go|Rust|PostgreSQL|MongoDB|Redis|Docker|Kubernetes).*(?!.*(?:because|since|due to|chosen for|selected for|reasons|justification))/gi,
+      ],
     },
     {
       id: 'no-constraints',
       name: 'Missing Constraints',
-      description: 'Lack of identified technical, business, or resource constraints',
+      description:
+        'Lack of identified technical, business, or resource constraints',
       severity: 'medium' as const,
-      patterns: []
-    }
+      patterns: [],
+    },
   ];
 
   /**
@@ -102,12 +104,21 @@ export class PRPValidator {
     const sectionValidations = await this.validateSections(sections);
     const antiPatterns = await this.detectAntiPatterns(prpContent, sections);
 
-    const totalScore = sectionValidations.reduce((sum, sv) => sum + sv.score, 0);
-    const maxScore = sectionValidations.reduce((sum, sv) => sum + sv.maxScore, 0);
+    const totalScore = sectionValidations.reduce(
+      (sum, sv) => sum + sv.score,
+      0
+    );
+    const maxScore = sectionValidations.reduce(
+      (sum, sv) => sum + sv.maxScore,
+      0
+    );
 
-    const isValid = totalScore >= (maxScore * 0.7); // 70% threshold for validity
+    const isValid = totalScore >= maxScore * 0.7; // 70% threshold for validity
     const missingElements = this.identifyMissingElements(sections);
-    const recommendations = this.generateRecommendations(sectionValidations, antiPatterns);
+    const recommendations = this.generateRecommendations(
+      sectionValidations,
+      antiPatterns
+    );
 
     return {
       isValid,
@@ -116,14 +127,16 @@ export class PRPValidator {
       sections: sectionValidations,
       recommendations,
       missingElements,
-      antiPatterns
+      antiPatterns,
     };
   }
 
   /**
    * Extract sections from PRP content (supports markdown and JSON)
    */
-  private async extractSections(content: string): Promise<Record<string, string>> {
+  private async extractSections(
+    content: string
+  ): Promise<Record<string, string>> {
     const sections: Record<string, string> = {};
 
     try {
@@ -153,11 +166,16 @@ export class PRPValidator {
       if (trimmedLine.startsWith('## ') || trimmedLine.startsWith('### ')) {
         // Save previous section
         if (currentSection && currentContent.length > 0) {
-          sections[currentSection.toLowerCase()] = currentContent.join('\n').trim();
+          sections[currentSection.toLowerCase()] = currentContent
+            .join('\n')
+            .trim();
         }
 
         // Start new section
-        currentSection = trimmedLine.replace(/^#+\s*/, '').replace(/[*:]/g, '').trim();
+        currentSection = trimmedLine
+          .replace(/^#+\s*/, '')
+          .replace(/[*:]/g, '')
+          .trim();
         currentContent = [];
       } else if (currentSection) {
         currentContent.push(line);
@@ -175,13 +193,18 @@ export class PRPValidator {
   /**
    * Validate individual sections against Cole's standards
    */
-  private async validateSections(sections: Record<string, string>): Promise<SectionValidation[]> {
+  private async validateSections(
+    sections: Record<string, string>
+  ): Promise<SectionValidation[]> {
     const validations: SectionValidation[] = [];
 
     for (const coreSection of this.CORE_SECTIONS) {
       const sectionContent = sections[coreSection] || '';
       const isPresent = sectionContent.length > 0;
-      const validation = await this.validateSection(coreSection, sectionContent);
+      const validation = await this.validateSection(
+        coreSection,
+        sectionContent
+      );
 
       validations.push({
         sectionTitle: this.capitalizeSection(coreSection),
@@ -190,7 +213,7 @@ export class PRPValidator {
         score: validation.score,
         maxScore: this.SECTION_WEIGHTS[coreSection] || 10,
         issues: validation.issues,
-        recommendations: validation.recommendations
+        recommendations: validation.recommendations,
       });
     }
 
@@ -200,7 +223,10 @@ export class PRPValidator {
   /**
    * Validate individual section content
    */
-  private async validateSection(sectionName: string, content: string): Promise<{
+  private async validateSection(
+    sectionName: string,
+    content: string
+  ): Promise<{
     isComplete: boolean;
     score: number;
     issues: string[];
@@ -220,42 +246,74 @@ export class PRPValidator {
     // Section-specific validation
     switch (sectionName) {
       case 'project overview':
-        score = await this.validateProjectOverview(content, issues, recommendations);
+        score = await this.validateProjectOverview(
+          content,
+          issues,
+          recommendations
+        );
         break;
       case 'feature specification':
-        score = await this.validateFeatureSpecification(content, issues, recommendations);
+        score = await this.validateFeatureSpecification(
+          content,
+          issues,
+          recommendations
+        );
         break;
       case 'technical architecture':
-        score = await this.validateTechnicalArchitecture(content, issues, recommendations);
+        score = await this.validateTechnicalArchitecture(
+          content,
+          issues,
+          recommendations
+        );
         break;
       case 'user experience':
-        score = await this.validateUserExperience(content, issues, recommendations);
+        score = await this.validateUserExperience(
+          content,
+          issues,
+          recommendations
+        );
         break;
       case 'implementation approach':
-        score = await this.validateImplementationApproach(content, issues, recommendations);
+        score = await this.validateImplementationApproach(
+          content,
+          issues,
+          recommendations
+        );
         break;
       case 'success metrics':
-        score = await this.validateSuccessMetrics(content, issues, recommendations);
+        score = await this.validateSuccessMetrics(
+          content,
+          issues,
+          recommendations
+        );
         break;
       case 'constraints & considerations':
-        score = await this.validateConstraints(content, issues, recommendations);
+        score = await this.validateConstraints(
+          content,
+          issues,
+          recommendations
+        );
         break;
       default:
         score = Math.min(content.length / 100, maxScore); // Basic length scoring
     }
 
     return {
-      isComplete: score >= (maxScore * 0.7),
+      isComplete: score >= maxScore * 0.7,
       score: Math.min(score, maxScore),
       issues,
-      recommendations
+      recommendations,
     };
   }
 
   /**
    * Validate Project Overview section
    */
-  private async validateProjectOverview(content: string, issues: string[], recommendations: string[]): Promise<number> {
+  private async validateProjectOverview(
+    content: string,
+    issues: string[],
+    recommendations: string[]
+  ): Promise<number> {
     let score = 0;
     const maxScore = this.SECTION_WEIGHTS['project overview'];
 
@@ -276,7 +334,11 @@ export class PRPValidator {
     }
 
     // Check for stakeholders
-    if (content.includes('stakeholder') || content.includes('team') || content.includes('roles')) {
+    if (
+      content.includes('stakeholder') ||
+      content.includes('team') ||
+      content.includes('roles')
+    ) {
       score += 5;
     } else {
       issues.push('Missing stakeholder identification');
@@ -296,12 +358,20 @@ export class PRPValidator {
   /**
    * Validate Feature Specification section
    */
-  private async validateFeatureSpecification(content: string, issues: string[], recommendations: string[]): Promise<number> {
+  private async validateFeatureSpecification(
+    content: string,
+    issues: string[],
+    recommendations: string[]
+  ): Promise<number> {
     let score = 0;
     const maxScore = this.SECTION_WEIGHTS['feature specification'];
 
     // Check for functional requirements
-    if (content.includes('functional') || content.includes('requirements') || content.includes('features')) {
+    if (
+      content.includes('functional') ||
+      content.includes('requirements') ||
+      content.includes('features')
+    ) {
       score += 8;
     } else {
       issues.push('Missing functional requirements');
@@ -309,15 +379,26 @@ export class PRPValidator {
     }
 
     // Check for non-functional requirements
-    if (content.includes('non-functional') || content.includes('performance') || content.includes('scalability')) {
+    if (
+      content.includes('non-functional') ||
+      content.includes('performance') ||
+      content.includes('scalability')
+    ) {
       score += 8;
     } else {
       issues.push('Missing non-functional requirements');
-      recommendations.push('Include performance, scalability, and quality requirements');
+      recommendations.push(
+        'Include performance, scalability, and quality requirements'
+      );
     }
 
     // Check for user stories or acceptance criteria
-    if (content.includes('user story') || content.includes('acceptance') || content.includes('criteria') || content.includes('as a')) {
+    if (
+      content.includes('user story') ||
+      content.includes('acceptance') ||
+      content.includes('criteria') ||
+      content.includes('as a')
+    ) {
       score += 9;
     } else {
       recommendations.push('Add user stories and acceptance criteria');
@@ -329,12 +410,23 @@ export class PRPValidator {
   /**
    * Validate Technical Architecture section
    */
-  private async validateTechnicalArchitecture(content: string, issues: string[], recommendations: string[]): Promise<number> {
+  private async validateTechnicalArchitecture(
+    content: string,
+    issues: string[],
+    recommendations: string[]
+  ): Promise<number> {
     let score = 0;
     const maxScore = this.SECTION_WEIGHTS['technical architecture'];
 
     // Check for technology stack
-    const techKeywords = ['frontend', 'backend', 'database', 'api', 'framework', 'language'];
+    const techKeywords = [
+      'frontend',
+      'backend',
+      'database',
+      'api',
+      'framework',
+      'language',
+    ];
     if (techKeywords.some(keyword => content.toLowerCase().includes(keyword))) {
       score += 7;
     } else {
@@ -342,18 +434,35 @@ export class PRPValidator {
     }
 
     // Check for architecture patterns
-    const patterns = ['mvc', 'mvp', 'microservices', 'monolith', 'layered', 'event-driven', 'rest', 'graphql'];
+    const patterns = [
+      'mvc',
+      'mvp',
+      'microservices',
+      'monolith',
+      'layered',
+      'event-driven',
+      'rest',
+      'graphql',
+    ];
     if (patterns.some(pattern => content.toLowerCase().includes(pattern))) {
       score += 6;
     } else {
-      recommendations.push('Describe architectural patterns and design decisions');
+      recommendations.push(
+        'Describe architectural patterns and design decisions'
+      );
     }
 
     // Check for deployment/infrastructure
-    if (content.includes('deploy') || content.includes('cloud') || content.includes('infrastructure')) {
+    if (
+      content.includes('deploy') ||
+      content.includes('cloud') ||
+      content.includes('infrastructure')
+    ) {
       score += 7;
     } else {
-      recommendations.push('Include deployment and infrastructure considerations');
+      recommendations.push(
+        'Include deployment and infrastructure considerations'
+      );
     }
 
     return score;
@@ -362,19 +471,31 @@ export class PRPValidator {
   /**
    * Validate User Experience section
    */
-  private async validateUserExperience(content: string, issues: string[], recommendations: string[]): Promise<number> {
+  private async validateUserExperience(
+    content: string,
+    issues: string[],
+    recommendations: string[]
+  ): Promise<number> {
     let score = 0;
     const maxScore = this.SECTION_WEIGHTS['user experience'];
 
     // Check for user personas or roles
-    if (content.includes('user') || content.includes('persona') || content.includes('role')) {
+    if (
+      content.includes('user') ||
+      content.includes('persona') ||
+      content.includes('role')
+    ) {
       score += 8;
     } else {
       recommendations.push('Define user personas and roles');
     }
 
     // Check for user journeys or workflows
-    if (content.includes('journey') || content.includes('workflow') || content.includes('story')) {
+    if (
+      content.includes('journey') ||
+      content.includes('workflow') ||
+      content.includes('story')
+    ) {
       score += 7;
     } else {
       recommendations.push('Document user journeys and key workflows');
@@ -386,19 +507,33 @@ export class PRPValidator {
   /**
    * Validate Implementation Approach section
    */
-  private async validateImplementationApproach(content: string, issues: string[], recommendations: string[]): Promise<number> {
+  private async validateImplementationApproach(
+    content: string,
+    issues: string[],
+    recommendations: string[]
+  ): Promise<number> {
     let score = 0;
     const maxScore = this.SECTION_WEIGHTS['implementation approach'];
 
     // Check for phases or milestones
-    if (content.includes('phase') || content.includes('milestone') || content.includes('sprint')) {
+    if (
+      content.includes('phase') ||
+      content.includes('milestone') ||
+      content.includes('sprint')
+    ) {
       score += 5;
     } else {
-      recommendations.push('Break down implementation into phases or milestones');
+      recommendations.push(
+        'Break down implementation into phases or milestones'
+      );
     }
 
     // Check for testing strategy
-    if (content.includes('test') || content.includes('quality') || content.includes('validation')) {
+    if (
+      content.includes('test') ||
+      content.includes('quality') ||
+      content.includes('validation')
+    ) {
       score += 5;
     } else {
       recommendations.push('Include testing and quality assurance strategy');
@@ -410,19 +545,32 @@ export class PRPValidator {
   /**
    * Validate Success Metrics section
    */
-  private async validateSuccessMetrics(content: string, issues: string[], recommendations: string[]): Promise<number> {
+  private async validateSuccessMetrics(
+    content: string,
+    issues: string[],
+    recommendations: string[]
+  ): Promise<number> {
     let score = 0;
     const maxScore = this.SECTION_WEIGHTS['success metrics'];
 
     // Check for measurable metrics
-    if (content.includes('%') || content.includes('metric') || content.includes('kpi') || /\d+/.test(content)) {
+    if (
+      content.includes('%') ||
+      content.includes('metric') ||
+      content.includes('kpi') ||
+      /\d+/.test(content)
+    ) {
       score += 3;
     } else {
       recommendations.push('Define measurable success metrics and KPIs');
     }
 
     // Check for business value
-    if (content.includes('business') || content.includes('value') || content.includes('roi')) {
+    if (
+      content.includes('business') ||
+      content.includes('value') ||
+      content.includes('roi')
+    ) {
       score += 2;
     } else {
       recommendations.push('Connect metrics to business value');
@@ -434,17 +582,33 @@ export class PRPValidator {
   /**
    * Validate Constraints section
    */
-  private async validateConstraints(content: string, issues: string[], recommendations: string[]): Promise<number> {
+  private async validateConstraints(
+    content: string,
+    issues: string[],
+    recommendations: string[]
+  ): Promise<number> {
     let score = 0;
     const maxScore = this.SECTION_WEIGHTS['constraints & considerations'];
 
-    const constraintTypes = ['technical', 'business', 'timeline', 'budget', 'resource', 'security', 'compliance'];
-    const foundConstraints = constraintTypes.filter(type => content.toLowerCase().includes(type));
+    const constraintTypes = [
+      'technical',
+      'business',
+      'timeline',
+      'budget',
+      'resource',
+      'security',
+      'compliance',
+    ];
+    const foundConstraints = constraintTypes.filter(type =>
+      content.toLowerCase().includes(type)
+    );
 
     score += Math.min(foundConstraints.length, maxScore);
 
     if (foundConstraints.length === 0) {
-      recommendations.push('Identify technical, business, and resource constraints');
+      recommendations.push(
+        'Identify technical, business, and resource constraints'
+      );
     }
 
     return score;
@@ -453,21 +617,30 @@ export class PRPValidator {
   /**
    * Detect anti-patterns in the PRP
    */
-  private async detectAntiPatterns(content: string, sections: Record<string, string>): Promise<AntiPattern[]> {
+  private async detectAntiPatterns(
+    content: string,
+    sections: Record<string, string>
+  ): Promise<AntiPattern[]> {
     const detectedPatterns: AntiPattern[] = [];
 
     for (const antiPattern of this.ANTI_PATTERNS) {
-      const instances: Array<{ section: string; content: string; suggestion: string; }> = [];
+      const instances: Array<{
+        section: string;
+        content: string;
+        suggestion: string;
+      }> = [];
 
       if (antiPattern.id === 'no-constraints') {
         // Special handling for missing constraints
-        const hasConstraints = sections['constraints & considerations'] &&
-                              sections['constraints & considerations'].length > 50;
+        const hasConstraints =
+          sections['constraints & considerations'] &&
+          sections['constraints & considerations'].length > 50;
         if (!hasConstraints) {
           instances.push({
             section: 'Overall',
             content: 'No constraints section found',
-            suggestion: 'Add a comprehensive constraints and considerations section'
+            suggestion:
+              'Add a comprehensive constraints and considerations section',
           });
         }
       } else {
@@ -480,7 +653,10 @@ export class PRPValidator {
               instances.push({
                 section,
                 content: match,
-                suggestion: this.getSuggestionForAntiPattern(antiPattern.id, match)
+                suggestion: this.getSuggestionForAntiPattern(
+                  antiPattern.id,
+                  match
+                ),
               });
             }
           }
@@ -490,7 +666,7 @@ export class PRPValidator {
       if (instances.length > 0) {
         detectedPatterns.push({
           ...antiPattern,
-          instances
+          instances,
         });
       }
     }
@@ -501,7 +677,10 @@ export class PRPValidator {
   /**
    * Find which section contains specific content
    */
-  private findSectionForContent(content: string, sections: Record<string, string>): string {
+  private findSectionForContent(
+    content: string,
+    sections: Record<string, string>
+  ): string {
     for (const [sectionName, sectionContent] of Object.entries(sections)) {
       if (sectionContent.includes(content)) {
         return this.capitalizeSection(sectionName);
@@ -513,17 +692,25 @@ export class PRPValidator {
   /**
    * Get specific suggestions for anti-patterns
    */
-  private getSuggestionForAntiPattern(patternId: string, matchedContent: string): string {
+  private getSuggestionForAntiPattern(
+    patternId: string,
+    matchedContent: string
+  ): string {
     const suggestions: Record<string, string> = {
       'vague-requirements': `Replace "${matchedContent}" with specific, measurable criteria`,
       'buzzword-overuse': `Provide concrete justification for technology choices instead of "${matchedContent}"`,
       'vague-language': `Replace "${matchedContent}" with specific, actionable language`,
-      'missing-acceptance-criteria': 'Add clear acceptance criteria with Given/When/Then format',
+      'missing-acceptance-criteria':
+        'Add clear acceptance criteria with Given/When/Then format',
       'unjustified-technology': `Explain why "${matchedContent}" was chosen over alternatives`,
-      'no-constraints': 'Add specific technical, business, timeline, and resource constraints'
+      'no-constraints':
+        'Add specific technical, business, timeline, and resource constraints',
     };
 
-    return suggestions[patternId] || 'Consider making this more specific and actionable';
+    return (
+      suggestions[patternId] ||
+      'Consider making this more specific and actionable'
+    );
   }
 
   /**
@@ -578,7 +765,7 @@ export class PRPValidator {
       sections: [],
       recommendations: ['Add comprehensive PRP content with all core sections'],
       missingElements: this.CORE_SECTIONS.map(s => this.capitalizeSection(s)),
-      antiPatterns: []
+      antiPatterns: [],
     };
   }
 
@@ -586,8 +773,9 @@ export class PRPValidator {
    * Capitalize section names for display
    */
   private capitalizeSection(sectionName: string): string {
-    return sectionName.split(' ').map(word =>
-      word.charAt(0).toUpperCase() + word.slice(1)
-    ).join(' ');
+    return sectionName
+      .split(' ')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' ');
   }
 }

@@ -9,12 +9,28 @@ export function setPRPValidatorDependencies(validator: PRPValidator) {
 }
 
 export const ValidatePRPInputSchema = z.object({
-  prpContent: z.string().min(100).describe('The PRP content to validate (markdown or JSON)'),
-  includeDetailedFeedback: z.boolean().default(true).describe('Include detailed section-by-section feedback'),
-  includeAntiPatterns: z.boolean().default(true).describe('Include anti-pattern detection and warnings'),
-  includeRecommendations: z.boolean().default(true).describe('Include actionable improvement recommendations'),
-  validationLevel: z.enum(['basic', 'standard', 'comprehensive']).default('standard')
-    .describe('Level of validation detail: basic (score only), standard (sections + score), comprehensive (full analysis)')
+  prpContent: z
+    .string()
+    .min(100)
+    .describe('The PRP content to validate (markdown or JSON)'),
+  includeDetailedFeedback: z
+    .boolean()
+    .default(true)
+    .describe('Include detailed section-by-section feedback'),
+  includeAntiPatterns: z
+    .boolean()
+    .default(true)
+    .describe('Include anti-pattern detection and warnings'),
+  includeRecommendations: z
+    .boolean()
+    .default(true)
+    .describe('Include actionable improvement recommendations'),
+  validationLevel: z
+    .enum(['basic', 'standard', 'comprehensive'])
+    .default('standard')
+    .describe(
+      'Level of validation detail: basic (score only), standard (sections + score), comprehensive (full analysis)'
+    ),
 });
 
 export type ValidatePRPInput = z.infer<typeof ValidatePRPInputSchema>;
@@ -42,7 +58,7 @@ export async function validatePRPToolHandler(args: unknown): Promise<{
         maxScore: validationResult.maxScore,
         completeness: `${Math.round((validationResult.score / validationResult.maxScore) * 100)}%`,
         grade: getGrade(validationResult.score, validationResult.maxScore),
-      }
+      },
     };
 
     // Add detailed feedback for standard and comprehensive levels
@@ -55,7 +71,9 @@ export async function validatePRPToolHandler(args: unknown): Promise<{
         maxScore: section.maxScore,
         completeness: `${Math.round((section.score / section.maxScore) * 100)}%`,
         issues: input.includeDetailedFeedback ? section.issues : [],
-        recommendations: input.includeDetailedFeedback ? section.recommendations : []
+        recommendations: input.includeDetailedFeedback
+          ? section.recommendations
+          : [],
       }));
 
       result.missingElements = validationResult.missingElements;
@@ -69,7 +87,10 @@ export async function validatePRPToolHandler(args: unknown): Promise<{
         description: pattern.description,
         severity: pattern.severity,
         instanceCount: pattern.instances.length,
-        examples: input.validationLevel === 'comprehensive' ? pattern.instances.slice(0, 3) : []
+        examples:
+          input.validationLevel === 'comprehensive'
+            ? pattern.instances.slice(0, 3)
+            : [],
       }));
     }
 
@@ -78,8 +99,10 @@ export async function validatePRPToolHandler(args: unknown): Promise<{
       result.recommendations = {
         priority: categorizeRecommendations(validationResult.recommendations),
         actionItems: generateActionItems(validationResult),
-        improvementPlan: input.validationLevel === 'comprehensive' ?
-          generateImprovementPlan(validationResult) : undefined
+        improvementPlan:
+          input.validationLevel === 'comprehensive'
+            ? generateImprovementPlan(validationResult)
+            : undefined,
       };
     }
 
@@ -89,7 +112,7 @@ export async function validatePRPToolHandler(args: unknown): Promise<{
         strengths: identifyStrengths(validationResult),
         weaknesses: identifyWeaknesses(validationResult),
         riskAreas: identifyRiskAreas(validationResult),
-        qualityTrends: generateQualityTrends(validationResult)
+        qualityTrends: generateQualityTrends(validationResult),
       };
     }
 
@@ -97,18 +120,18 @@ export async function validatePRPToolHandler(args: unknown): Promise<{
       content: [
         {
           type: 'text',
-          text: JSON.stringify(result, null, 2)
-        }
-      ]
+          text: JSON.stringify(result, null, 2),
+        },
+      ],
     };
   } catch (error) {
     return {
       content: [
         {
           type: 'text',
-          text: `Error validating PRP: ${error instanceof Error ? error.message : 'Unknown error'}`
-        }
-      ]
+          text: `Error validating PRP: ${error instanceof Error ? error.message : 'Unknown error'}`,
+        },
+      ],
     };
   }
 }
@@ -147,11 +170,19 @@ function categorizeRecommendations(recommendations: string[]): {
   recommendations.forEach(rec => {
     const lowerRec = rec.toLowerCase();
 
-    if (lowerRec.includes('missing') || lowerRec.includes('required') ||
-        lowerRec.includes('critical') || lowerRec.includes('essential')) {
+    if (
+      lowerRec.includes('missing') ||
+      lowerRec.includes('required') ||
+      lowerRec.includes('critical') ||
+      lowerRec.includes('essential')
+    ) {
       high.push(rec);
-    } else if (lowerRec.includes('improve') || lowerRec.includes('enhance') ||
-               lowerRec.includes('add') || lowerRec.includes('include')) {
+    } else if (
+      lowerRec.includes('improve') ||
+      lowerRec.includes('enhance') ||
+      lowerRec.includes('add') ||
+      lowerRec.includes('include')
+    ) {
       medium.push(rec);
     } else {
       low.push(rec);
@@ -183,7 +214,7 @@ function generateActionItems(validationResult: any): Array<{
       action: `Add comprehensive ${element} section`,
       priority: 'high',
       effort: 'medium',
-      impact: 'high'
+      impact: 'high',
     });
   });
 
@@ -194,7 +225,7 @@ function generateActionItems(validationResult: any): Array<{
         action: `Address ${pattern.name}: ${pattern.description}`,
         priority: pattern.severity === 'critical' ? 'high' : 'medium',
         effort: 'medium',
-        impact: 'high'
+        impact: 'high',
       });
     }
   });
@@ -207,7 +238,7 @@ function generateActionItems(validationResult: any): Array<{
         action: `Enhance ${section.sectionTitle} section content`,
         priority: section.score === 0 ? 'high' : 'medium',
         effort: 'low',
-        impact: 'medium'
+        impact: 'medium',
       });
     });
 
@@ -218,9 +249,9 @@ function generateActionItems(validationResult: any): Array<{
  * Generate improvement plan with phases
  */
 function generateImprovementPlan(validationResult: any): {
-  phase1: { title: string; actions: string[]; timeframe: string; };
-  phase2: { title: string; actions: string[]; timeframe: string; };
-  phase3: { title: string; actions: string[]; timeframe: string; };
+  phase1: { title: string; actions: string[]; timeframe: string };
+  phase2: { title: string; actions: string[]; timeframe: string };
+  phase3: { title: string; actions: string[]; timeframe: string };
 } {
   const phase1Actions: string[] = [];
   const phase2Actions: string[] = [];
@@ -228,7 +259,13 @@ function generateImprovementPlan(validationResult: any): {
 
   // Phase 1: Address critical issues and missing core sections
   validationResult.missingElements.forEach((element: string) => {
-    if (['Project Overview', 'Feature Specification', 'Technical Architecture'].includes(element)) {
+    if (
+      [
+        'Project Overview',
+        'Feature Specification',
+        'Technical Architecture',
+      ].includes(element)
+    ) {
       phase1Actions.push(`Add ${element} section with comprehensive content`);
     } else {
       phase2Actions.push(`Add ${element} section`);
@@ -246,7 +283,9 @@ function generateImprovementPlan(validationResult: any): {
   validationResult.sections
     .filter((section: any) => !section.isComplete && section.isPresent)
     .forEach((section: any) => {
-      phase2Actions.push(`Enhance ${section.sectionTitle} with missing details`);
+      phase2Actions.push(
+        `Enhance ${section.sectionTitle} with missing details`
+      );
     });
 
   validationResult.antiPatterns
@@ -256,7 +295,9 @@ function generateImprovementPlan(validationResult: any): {
     });
 
   // Phase 3: Polish and optimization
-  phase3Actions.push('Review and polish all sections for clarity and completeness');
+  phase3Actions.push(
+    'Review and polish all sections for clarity and completeness'
+  );
   phase3Actions.push('Add examples and use cases where appropriate');
   phase3Actions.push('Ensure consistency across all sections');
 
@@ -270,18 +311,18 @@ function generateImprovementPlan(validationResult: any): {
     phase1: {
       title: 'Critical Foundation',
       actions: phase1Actions.slice(0, 5),
-      timeframe: '1-2 hours'
+      timeframe: '1-2 hours',
     },
     phase2: {
       title: 'Enhancement and Completion',
       actions: phase2Actions.slice(0, 5),
-      timeframe: '2-3 hours'
+      timeframe: '2-3 hours',
     },
     phase3: {
       title: 'Polish and Optimization',
       actions: phase3Actions.slice(0, 5),
-      timeframe: '1-2 hours'
-    }
+      timeframe: '1-2 hours',
+    },
   };
 }
 
@@ -292,9 +333,13 @@ function identifyStrengths(validationResult: any): string[] {
   const strengths: string[] = [];
 
   // Check for complete sections
-  const completeSections = validationResult.sections.filter((s: any) => s.isComplete);
+  const completeSections = validationResult.sections.filter(
+    (s: any) => s.isComplete
+  );
   if (completeSections.length > 0) {
-    strengths.push(`Strong foundation with ${completeSections.length} complete sections`);
+    strengths.push(
+      `Strong foundation with ${completeSections.length} complete sections`
+    );
   }
 
   // Check for high-scoring sections
@@ -302,7 +347,9 @@ function identifyStrengths(validationResult: any): string[] {
     (s: any) => s.score / s.maxScore >= 0.8
   );
   if (highScoringSections.length > 0) {
-    const sectionNames = highScoringSections.map((s: any) => s.sectionTitle).join(', ');
+    const sectionNames = highScoringSections
+      .map((s: any) => s.sectionTitle)
+      .join(', ');
     strengths.push(`Excellent content quality in: ${sectionNames}`);
   }
 
@@ -315,12 +362,15 @@ function identifyStrengths(validationResult: any): string[] {
   }
 
   // Overall score assessment
-  const scorePercentage = (validationResult.score / validationResult.maxScore) * 100;
+  const scorePercentage =
+    (validationResult.score / validationResult.maxScore) * 100;
   if (scorePercentage >= 70) {
     strengths.push('Solid overall structure and completeness');
   }
 
-  return strengths.length > 0 ? strengths : ['Document has potential for improvement'];
+  return strengths.length > 0
+    ? strengths
+    : ['Document has potential for improvement'];
 }
 
 /**
@@ -331,13 +381,19 @@ function identifyWeaknesses(validationResult: any): string[] {
 
   // Missing elements
   if (validationResult.missingElements.length > 0) {
-    weaknesses.push(`Missing ${validationResult.missingElements.length} core sections`);
+    weaknesses.push(
+      `Missing ${validationResult.missingElements.length} core sections`
+    );
   }
 
   // Incomplete sections
-  const incompleteSections = validationResult.sections.filter((s: any) => !s.isComplete);
+  const incompleteSections = validationResult.sections.filter(
+    (s: any) => !s.isComplete
+  );
   if (incompleteSections.length > 0) {
-    weaknesses.push(`${incompleteSections.length} sections need substantial improvement`);
+    weaknesses.push(
+      `${incompleteSections.length} sections need substantial improvement`
+    );
   }
 
   // Anti-patterns
@@ -345,7 +401,9 @@ function identifyWeaknesses(validationResult: any): string[] {
     (ap: any) => ap.severity === 'critical' || ap.severity === 'high'
   );
   if (criticalPatterns.length > 0) {
-    weaknesses.push(`${criticalPatterns.length} serious quality issues detected`);
+    weaknesses.push(
+      `${criticalPatterns.length} serious quality issues detected`
+    );
   }
 
   // Low-scoring sections
@@ -353,7 +411,9 @@ function identifyWeaknesses(validationResult: any): string[] {
     (s: any) => s.score / s.maxScore < 0.5
   );
   if (lowScoringSections.length > 0) {
-    const sectionNames = lowScoringSections.map((s: any) => s.sectionTitle).join(', ');
+    const sectionNames = lowScoringSections
+      .map((s: any) => s.sectionTitle)
+      .join(', ');
     weaknesses.push(`Weak content in: ${sectionNames}`);
   }
 
@@ -370,21 +430,33 @@ function identifyRiskAreas(validationResult: any): string[] {
   validationResult.antiPatterns
     .filter((ap: any) => ap.severity === 'high' || ap.severity === 'critical')
     .forEach((ap: any) => {
-      risks.push(`${ap.name}: Could lead to project failures or miscommunication`);
+      risks.push(
+        `${ap.name}: Could lead to project failures or miscommunication`
+      );
     });
 
   // Missing critical sections
-  const criticalMissing = validationResult.missingElements.filter((element: string) =>
-    ['Project Overview', 'Feature Specification', 'Technical Architecture'].includes(element)
+  const criticalMissing = validationResult.missingElements.filter(
+    (element: string) =>
+      [
+        'Project Overview',
+        'Feature Specification',
+        'Technical Architecture',
+      ].includes(element)
   );
   if (criticalMissing.length > 0) {
-    risks.push('Missing core sections may lead to unclear requirements and scope creep');
+    risks.push(
+      'Missing core sections may lead to unclear requirements and scope creep'
+    );
   }
 
   // Low overall score
-  const scorePercentage = (validationResult.score / validationResult.maxScore) * 100;
+  const scorePercentage =
+    (validationResult.score / validationResult.maxScore) * 100;
   if (scorePercentage < 50) {
-    risks.push('Low quality score may result in project delays and misunderstandings');
+    risks.push(
+      'Low quality score may result in project delays and misunderstandings'
+    );
   }
 
   return risks.length > 0 ? risks : ['No significant quality risks identified'];
@@ -399,14 +471,15 @@ function generateQualityTrends(validationResult: any): {
   antiPatternSeverity: string;
   readinessLevel: string;
 } {
-  const sectionsCompleteness = validationResult.sections.filter(
-    (s: any) => s.isComplete
-  ).length / validationResult.sections.length;
+  const sectionsCompleteness =
+    validationResult.sections.filter((s: any) => s.isComplete).length /
+    validationResult.sections.length;
 
-  const averageQuality = validationResult.sections.reduce(
-    (sum: number, s: any) => sum + (s.score / s.maxScore),
-    0
-  ) / validationResult.sections.length;
+  const averageQuality =
+    validationResult.sections.reduce(
+      (sum: number, s: any) => sum + s.score / s.maxScore,
+      0
+    ) / validationResult.sections.length;
 
   const criticalCount = validationResult.antiPatterns.filter(
     (ap: any) => ap.severity === 'critical'
@@ -420,7 +493,8 @@ function generateQualityTrends(validationResult: any): {
   else if (highCount > 2) antiPatternSeverity = 'high';
   else if (highCount > 0) antiPatternSeverity = 'medium';
 
-  const scorePercentage = (validationResult.score / validationResult.maxScore) * 100;
+  const scorePercentage =
+    (validationResult.score / validationResult.maxScore) * 100;
   let readinessLevel = 'not-ready';
   if (scorePercentage >= 85) readinessLevel = 'production-ready';
   else if (scorePercentage >= 70) readinessLevel = 'development-ready';
@@ -430,6 +504,6 @@ function generateQualityTrends(validationResult: any): {
     sectionsCompleteness: Math.round(sectionsCompleteness * 100) / 100,
     averageQuality: Math.round(averageQuality * 100) / 100,
     antiPatternSeverity,
-    readinessLevel
+    readinessLevel,
   };
 }

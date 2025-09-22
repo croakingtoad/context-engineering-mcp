@@ -2,15 +2,31 @@ import { z } from 'zod';
 import { CodebaseAnalyzer } from '../lib/codebase-analyzer.js';
 import { QuestionEngine } from '../lib/question-engine.js';
 import { InitialMdCreator } from '../lib/initial-md-creator.js';
-import { ProjectAnalysis, QuestionnaireSession, InitialMdConfig } from '../types/index.js';
+import {
+  ProjectAnalysis,
+  QuestionnaireSession,
+  InitialMdConfig,
+} from '../types/index.js';
 
 // Input schema for create_initial_md tool
 export const CreateInitialMdInputSchema = z.object({
   projectPath: z.string().describe('Path to the project to analyze'),
-  interactive: z.boolean().default(true).describe('Whether to run interactive questionnaire'),
-  outputPath: z.string().optional().describe('Path to save the INITIAL.md file'),
-  includeSampleQuestions: z.boolean().default(false).describe('Include sample questions in output'),
-  autoAnalyze: z.boolean().default(true).describe('Automatically analyze codebase'),
+  interactive: z
+    .boolean()
+    .default(true)
+    .describe('Whether to run interactive questionnaire'),
+  outputPath: z
+    .string()
+    .optional()
+    .describe('Path to save the INITIAL.md file'),
+  includeSampleQuestions: z
+    .boolean()
+    .default(false)
+    .describe('Include sample questions in output'),
+  autoAnalyze: z
+    .boolean()
+    .default(true)
+    .describe('Automatically analyze codebase'),
   templateId: z.string().optional().describe('Specific template to use'),
 });
 
@@ -47,9 +63,11 @@ export async function createInitialMdToolHandler(args: unknown): Promise<{
     // Step 1: Analyze codebase if requested
     if (input.autoAnalyze) {
       try {
-        projectAnalysis = await codebaseAnalyzer.analyzeProject(input.projectPath);
+        projectAnalysis = await codebaseAnalyzer.analyzeProject(
+          input.projectPath
+        );
       } catch (error) {
-        console.warn('Codebase analysis failed:', error);
+        // Codebase analysis failed
         // Continue without analysis
       }
     }
@@ -76,8 +94,11 @@ export async function createInitialMdToolHandler(args: unknown): Promise<{
     // Step 2: Generate contextual questions
     let questions: any[] = [];
     if (projectAnalysis) {
-      questions = await questionEngine.generateContextualQuestions(projectAnalysis);
-      result.steps.push(`✅ Generated ${questions.length} contextual questions`);
+      questions =
+        await questionEngine.generateContextualQuestions(projectAnalysis);
+      result.steps.push(
+        `✅ Generated ${questions.length} contextual questions`
+      );
     }
 
     // Step 3: Interactive questionnaire or auto-generation
@@ -95,11 +116,24 @@ export async function createInitialMdToolHandler(args: unknown): Promise<{
         sessionId: session.id,
         totalQuestions: session.questions.length,
         categorizedQuestions: {
-          business: questionEngine.getQuestionsByCategory(questions, 'business').length,
-          technical: questionEngine.getQuestionsByCategory(questions, 'technical').length,
-          functional: questionEngine.getQuestionsByCategory(questions, 'functional').length,
-          constraints: questionEngine.getQuestionsByCategory(questions, 'constraints').length,
-          stakeholders: questionEngine.getQuestionsByCategory(questions, 'stakeholders').length,
+          business: questionEngine.getQuestionsByCategory(questions, 'business')
+            .length,
+          technical: questionEngine.getQuestionsByCategory(
+            questions,
+            'technical'
+          ).length,
+          functional: questionEngine.getQuestionsByCategory(
+            questions,
+            'functional'
+          ).length,
+          constraints: questionEngine.getQuestionsByCategory(
+            questions,
+            'constraints'
+          ).length,
+          stakeholders: questionEngine.getQuestionsByCategory(
+            questions,
+            'stakeholders'
+          ).length,
         },
         sampleQuestions: input.includeSampleQuestions
           ? questions.slice(0, 5).map(q => ({
@@ -115,15 +149,21 @@ export async function createInitialMdToolHandler(args: unknown): Promise<{
 
       // For now, create INITIAL.md with placeholder answers
       // In a real implementation, this would wait for user responses
-      const defaultAnswers = generateDefaultAnswers(questions, projectAnalysis!);
+      const defaultAnswers = generateDefaultAnswers(
+        questions,
+        projectAnalysis!
+      );
       session.answers = defaultAnswers;
 
-      initialMdContent = await initialMdCreator.createFromQuestionnaire(session);
+      initialMdContent =
+        await initialMdCreator.createFromQuestionnaire(session);
       result.steps.push('✅ Generated INITIAL.md from questionnaire');
-
     } else {
       // Auto-generate without questionnaire
-      const config = generateConfigFromAnalysis(projectAnalysis, input.projectPath);
+      const config = generateConfigFromAnalysis(
+        projectAnalysis,
+        input.projectPath
+      );
       initialMdContent = await initialMdCreator.createInitialMd(config);
       result.steps.push('✅ Auto-generated INITIAL.md from analysis');
     }
@@ -141,7 +181,9 @@ export async function createInitialMdToolHandler(args: unknown): Promise<{
         await fs.writeFile(input.outputPath, initialMdContent, 'utf-8');
         result.steps.push(`✅ Saved INITIAL.md to ${input.outputPath}`);
       } catch (error) {
-        result.steps.push(`❌ Failed to save file: ${error instanceof Error ? error.message : 'Unknown error'}`);
+        result.steps.push(
+          `❌ Failed to save file: ${error instanceof Error ? error.message : 'Unknown error'}`
+        );
       }
     }
 
@@ -153,7 +195,6 @@ export async function createInitialMdToolHandler(args: unknown): Promise<{
         },
       ],
     };
-
   } catch (error) {
     return {
       content: [
@@ -167,26 +208,33 @@ export async function createInitialMdToolHandler(args: unknown): Promise<{
 }
 
 // Helper function to generate default answers from analysis
-function generateDefaultAnswers(questions: any[], analysis: ProjectAnalysis): Record<string, any> {
+function generateDefaultAnswers(
+  questions: any[],
+  analysis: ProjectAnalysis
+): Record<string, any> {
   const answers: Record<string, any> = {};
 
   for (const question of questions) {
     switch (question.id) {
       case 'project-name':
-        answers[question.id] = analysis.rootPath.split('/').pop() || 'My Project';
+        answers[question.id] =
+          analysis.rootPath.split('/').pop() || 'My Project';
         break;
       case 'project-description':
         const frameworks = analysis.framework?.split(', ') || [];
-        answers[question.id] = `A ${frameworks.join(' and ')} application with ${analysis.architecture.join(' and ')} architecture`;
+        answers[question.id] =
+          `A ${frameworks.join(' and ')} application with ${analysis.architecture.join(' and ')} architecture`;
         break;
       case 'target-users':
         answers[question.id] = 'End users and administrators';
         break;
       case 'main-objectives':
-        answers[question.id] = 'Deliver a functional and maintainable application';
+        answers[question.id] =
+          'Deliver a functional and maintainable application';
         break;
       case 'success-criteria':
-        answers[question.id] = 'User satisfaction > 4.0/5, Performance < 2s load time';
+        answers[question.id] =
+          'User satisfaction > 4.0/5, Performance < 2s load time';
         break;
       default:
         if (question.type === 'boolean') {
@@ -207,7 +255,10 @@ function generateDefaultAnswers(questions: any[], analysis: ProjectAnalysis): Re
 }
 
 // Helper function to generate config from analysis
-function generateConfigFromAnalysis(analysis: ProjectAnalysis | undefined, projectPath: string): InitialMdConfig {
+function generateConfigFromAnalysis(
+  analysis: ProjectAnalysis | undefined,
+  projectPath: string
+): InitialMdConfig {
   const projectName = projectPath.split('/').pop() || 'Untitled Project';
 
   if (!analysis) {
@@ -226,9 +277,17 @@ function generateConfigFromAnalysis(analysis: ProjectAnalysis | undefined, proje
   const frameworks = analysis.framework?.split(', ') || [];
   let projectType = 'application';
 
-  if (frameworks.includes('react') || frameworks.includes('vue') || frameworks.includes('angular')) {
+  if (
+    frameworks.includes('react') ||
+    frameworks.includes('vue') ||
+    frameworks.includes('angular')
+  ) {
     projectType = 'web-application';
-  } else if (frameworks.includes('express') || frameworks.includes('fastify') || frameworks.includes('nestjs')) {
+  } else if (
+    frameworks.includes('express') ||
+    frameworks.includes('fastify') ||
+    frameworks.includes('nestjs')
+  ) {
     projectType = 'api-service';
   }
 
@@ -278,7 +337,8 @@ function countMarkdownSections(markdown: string): number {
 
 export const createInitialMdToolDefinition = {
   name: 'create_initial_md',
-  description: 'Analyze a codebase and create an INITIAL.md file with intelligent requirements gathering',
+  description:
+    'Analyze a codebase and create an INITIAL.md file with intelligent requirements gathering',
   inputSchema: {
     type: 'object',
     properties: {

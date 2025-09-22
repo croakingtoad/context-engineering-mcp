@@ -106,7 +106,11 @@ export class StorageSystem {
   ): Promise<FileMetadata> {
     await this.ensureInitialized();
 
-    const filePath = path.join(this.config.baseDir, this.config.prpsDir, filename);
+    const filePath = path.join(
+      this.config.baseDir,
+      this.config.prpsDir,
+      filename
+    );
     const lockId = await this.acquireLock(filePath, 'write');
 
     try {
@@ -157,7 +161,9 @@ export class StorageSystem {
   /**
    * Read a file with concurrent access protection
    */
-  async readFile(filePath: string): Promise<{ content: string; metadata: FileMetadata }> {
+  async readFile(
+    filePath: string
+  ): Promise<{ content: string; metadata: FileMetadata }> {
     await this.ensureInitialized();
 
     const lockId = await this.acquireLock(filePath, 'read');
@@ -167,8 +173,9 @@ export class StorageSystem {
       const stats = await fs.stat(filePath);
 
       // Find metadata by path
-      let metadata = Array.from(this.metadataCache.values())
-        .find(m => m.path === filePath);
+      let metadata = Array.from(this.metadataCache.values()).find(
+        m => m.path === filePath
+      );
 
       if (!metadata) {
         // Generate metadata if not found
@@ -192,15 +199,17 @@ export class StorageSystem {
   }> {
     await this.ensureInitialized();
 
-    let files = Array.from(this.metadataCache.values())
-      .filter(f => f.category !== 'initial'); // Exclude INITIAL.md files
+    let files = Array.from(this.metadataCache.values()).filter(
+      f => f.category !== 'initial'
+    ); // Exclude INITIAL.md files
 
     // Apply search query
     if (options.query) {
       const query = options.query.toLowerCase();
-      files = files.filter(f =>
-        f.name.toLowerCase().includes(query) ||
-        f.tags.some(tag => tag.toLowerCase().includes(query))
+      files = files.filter(
+        f =>
+          f.name.toLowerCase().includes(query) ||
+          f.tags.some(tag => tag.toLowerCase().includes(query))
       );
     }
 
@@ -218,9 +227,10 @@ export class StorageSystem {
 
     // Apply date range filter
     if (options.dateRange) {
-      files = files.filter(f =>
-        f.modified >= options.dateRange!.from &&
-        f.modified <= options.dateRange!.to
+      files = files.filter(
+        f =>
+          f.modified >= options.dateRange!.from &&
+          f.modified <= options.dateRange!.to
       );
     }
 
@@ -389,7 +399,7 @@ export class StorageSystem {
       this.metadataCache.clear();
       for (const [id, metadata] of Object.entries(data)) {
         const meta = metadata as any;
-        const parsed: FileMetadata = ({
+        const parsed: FileMetadata = {
           id: meta.id,
           name: meta.name,
           path: meta.path,
@@ -401,7 +411,7 @@ export class StorageSystem {
           tags: meta.tags || [],
           category: meta.category,
           author: meta.author,
-        }) as FileMetadata;
+        } as FileMetadata;
 
         this.metadataCache.set(id, parsed);
       }
@@ -518,7 +528,10 @@ export class StorageSystem {
     }
   }
 
-  private async acquireLock(filePath: string, operation: string): Promise<string> {
+  private async acquireLock(
+    filePath: string,
+    operation: string
+  ): Promise<string> {
     if (!this.config.enableLocking) {
       return 'disabled';
     }

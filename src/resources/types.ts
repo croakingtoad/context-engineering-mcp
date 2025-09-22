@@ -39,7 +39,10 @@ export interface ResourceHandler {
    * @param path - The path portion of the URI (after the scheme)
    * @param params - Query parameters from the URI
    */
-  readResource(path: string, params: Record<string, string>): Promise<ResourceContent>;
+  readResource(
+    path: string,
+    params: Record<string, string>
+  ): Promise<ResourceContent>;
 
   /**
    * Optional health check method
@@ -127,7 +130,12 @@ export interface GlobalRule {
   id: string;
   name: string;
   description: string;
-  category: 'coding' | 'architecture' | 'documentation' | 'testing' | 'deployment';
+  category:
+    | 'coding'
+    | 'architecture'
+    | 'documentation'
+    | 'testing'
+    | 'deployment';
   rule: string;
   severity: 'error' | 'warning' | 'info';
   applicableLanguages?: string[];

@@ -20,41 +20,84 @@ export function setStorageDependencies(
 
 // Input schema for manage_storage tool
 export const ManageStorageInputSchema = z.object({
-  action: z.enum([
-    'get_stats',
-    'health_check',
-    'get_change_history',
-    'generate_diff',
-    'rollback',
-    'resolve_conflict',
-    'get_audit_trail',
-    'reconnect_archon',
-    'delete_prp',
-  ]).describe('Storage management action to perform'),
+  action: z
+    .enum([
+      'get_stats',
+      'health_check',
+      'get_change_history',
+      'generate_diff',
+      'rollback',
+      'resolve_conflict',
+      'get_audit_trail',
+      'reconnect_archon',
+      'delete_prp',
+    ])
+    .describe('Storage management action to perform'),
 
   // Parameters for different actions
-  fileId: z.string().optional().describe('File ID for file-specific operations'),
-  fromVersion: z.number().optional().describe('Starting version for diff/rollback operations'),
-  toVersion: z.number().optional().describe('Target version for diff/rollback operations'),
+  fileId: z
+    .string()
+    .optional()
+    .describe('File ID for file-specific operations'),
+  fromVersion: z
+    .number()
+    .optional()
+    .describe('Starting version for diff/rollback operations'),
+  toVersion: z
+    .number()
+    .optional()
+    .describe('Target version for diff/rollback operations'),
   targetVersion: z.number().optional().describe('Target version for rollback'),
-  diffFormat: z.enum(['unified', 'side-by-side', 'html']).optional().describe('Format for diff output'),
+  diffFormat: z
+    .enum(['unified', 'side-by-side', 'html'])
+    .optional()
+    .describe('Format for diff output'),
   rollbackReason: z.string().optional().describe('Reason for rollback'),
-  preserveChanges: z.boolean().optional().describe('Whether to preserve changes during rollback'),
-  createBackup: z.boolean().default(true).describe('Whether to create backup during operations'),
+  preserveChanges: z
+    .boolean()
+    .optional()
+    .describe('Whether to preserve changes during rollback'),
+  createBackup: z
+    .boolean()
+    .default(true)
+    .describe('Whether to create backup during operations'),
 
   // Conflict resolution parameters
   conflictId: z.string().optional().describe('Conflict ID for resolution'),
-  resolutionStrategy: z.enum(['accept-current', 'accept-incoming', 'merge', 'manual']).optional(),
-  mergedContent: z.string().optional().describe('Manually merged content for conflict resolution'),
+  resolutionStrategy: z
+    .enum(['accept-current', 'accept-incoming', 'merge', 'manual'])
+    .optional(),
+  mergedContent: z
+    .string()
+    .optional()
+    .describe('Manually merged content for conflict resolution'),
   resolvedBy: z.string().optional().describe('Person resolving the conflict'),
 
   // History and audit parameters
-  historyLimit: z.number().min(1).max(100).default(10).describe('Number of history entries to return'),
-  historyOffset: z.number().min(0).default(0).describe('Offset for history pagination'),
-  fromDate: z.string().optional().describe('Start date for audit trail (ISO format)'),
-  toDate: z.string().optional().describe('End date for audit trail (ISO format)'),
+  historyLimit: z
+    .number()
+    .min(1)
+    .max(100)
+    .default(10)
+    .describe('Number of history entries to return'),
+  historyOffset: z
+    .number()
+    .min(0)
+    .default(0)
+    .describe('Offset for history pagination'),
+  fromDate: z
+    .string()
+    .optional()
+    .describe('Start date for audit trail (ISO format)'),
+  toDate: z
+    .string()
+    .optional()
+    .describe('End date for audit trail (ISO format)'),
   author: z.string().optional().describe('Filter by author'),
-  changeType: z.enum(['create', 'update', 'delete', 'restore']).optional().describe('Filter by change type'),
+  changeType: z
+    .enum(['create', 'update', 'delete', 'restore'])
+    .optional()
+    .describe('Filter by change type'),
 });
 
 export type ManageStorageInput = z.infer<typeof ManageStorageInputSchema>;
@@ -84,20 +127,30 @@ export async function manageStorageToolHandler(params: unknown) {
         return await handleGetChangeHistory(input);
 
       case 'generate_diff':
-        if (!input.fileId || input.fromVersion === undefined || input.toVersion === undefined) {
-          throw new Error('fileId, fromVersion, and toVersion required for generate_diff action');
+        if (
+          !input.fileId ||
+          input.fromVersion === undefined ||
+          input.toVersion === undefined
+        ) {
+          throw new Error(
+            'fileId, fromVersion, and toVersion required for generate_diff action'
+          );
         }
         return await handleGenerateDiff(input);
 
       case 'rollback':
         if (!input.fileId || input.targetVersion === undefined) {
-          throw new Error('fileId and targetVersion required for rollback action');
+          throw new Error(
+            'fileId and targetVersion required for rollback action'
+          );
         }
         return await handleRollback(input);
 
       case 'resolve_conflict':
         if (!input.conflictId || !input.resolutionStrategy) {
-          throw new Error('conflictId and resolutionStrategy required for resolve_conflict action');
+          throw new Error(
+            'conflictId and resolutionStrategy required for resolve_conflict action'
+          );
         }
         return await handleResolveConflict(input);
 
@@ -191,7 +244,7 @@ async function handleHealthCheck() {
     },
     archon: archonHealth,
     overall: {
-      healthy: storageHealthy && (archonHealth?.healthy !== false),
+      healthy: storageHealthy && archonHealth?.healthy !== false,
     },
   };
 
@@ -499,7 +552,8 @@ async function handleDeletePRP(input: ManageStorageInput) {
 export function getManageStorageToolDefinition() {
   return {
     name: 'manage_storage',
-    description: 'Manage storage operations including versioning, change tracking, conflicts, and integrations',
+    description:
+      'Manage storage operations including versioning, change tracking, conflicts, and integrations',
     inputSchema: {
       type: 'object',
       properties: {

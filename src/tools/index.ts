@@ -1,4 +1,8 @@
-import { McpError, ErrorCode, CallToolRequestSchema } from '@modelcontextprotocol/sdk/types.js';
+import {
+  McpError,
+  ErrorCode,
+  CallToolRequestSchema,
+} from '@modelcontextprotocol/sdk/types.js';
 import { Server } from '@modelcontextprotocol/sdk/server/index.js';
 import { z } from 'zod';
 
@@ -12,15 +16,21 @@ import { analyzeContextToolHandler } from './analyze-context.js';
 
 // Import storage tools
 import { listPRPsToolHandler, getListPRPsToolDefinition } from './list-prps.js';
-import { updatePRPToolHandler, getUpdatePRPToolDefinition } from './update-prp.js';
-import { manageStorageToolHandler, getManageStorageToolDefinition } from './manage-storage.js';
+import {
+  updatePRPToolHandler,
+  getUpdatePRPToolDefinition,
+} from './update-prp.js';
+import {
+  manageStorageToolHandler,
+  getManageStorageToolDefinition,
+} from './manage-storage.js';
 
 /**
  * Register all MCP tools with the server
  */
 export function registerTools(server: Server): void {
   // Tool 1: List Available Templates
-  server.setRequestHandler(CallToolRequestSchema, async (request) => {
+  server.setRequestHandler(CallToolRequestSchema, async request => {
     const { name, arguments: args } = request.params;
 
     try {
@@ -88,7 +98,8 @@ export function getToolDefinitions(): Array<{
   return [
     {
       name: 'list_templates',
-      description: 'List all available PRP templates with optional filtering by category',
+      description:
+        'List all available PRP templates with optional filtering by category',
       inputSchema: {
         type: 'object',
         properties: {
@@ -102,7 +113,8 @@ export function getToolDefinitions(): Array<{
     },
     {
       name: 'generate_prp',
-      description: 'Generate a Product Requirements Prompt based on a template and project context with storage integration',
+      description:
+        'Generate a Product Requirements Prompt based on a template and project context with storage integration',
       inputSchema: {
         type: 'object',
         properties: {
@@ -115,7 +127,10 @@ export function getToolDefinitions(): Array<{
             description: 'Context information about the project',
             properties: {
               name: { type: 'string', description: 'Project name' },
-              domain: { type: 'string', description: 'Project domain/industry' },
+              domain: {
+                type: 'string',
+                description: 'Project domain/industry',
+              },
               stakeholders: {
                 type: 'array',
                 items: { type: 'string' },
@@ -279,7 +294,8 @@ export function getToolDefinitions(): Array<{
     },
     {
       name: 'analyze_context',
-      description: 'Analyze project context to recommend suitable templates and improvements',
+      description:
+        'Analyze project context to recommend suitable templates and improvements',
       inputSchema: {
         type: 'object',
         properties: {

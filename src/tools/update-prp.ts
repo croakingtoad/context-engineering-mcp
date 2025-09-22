@@ -22,11 +22,23 @@ export function setStorageDependencies(
 export const UpdatePRPInputSchema = z.object({
   id: z.string().describe('ID of the PRP to update'),
   content: z.string().describe('New content for the PRP'),
-  changeDescription: z.string().optional().describe('Description of the changes made'),
+  changeDescription: z
+    .string()
+    .optional()
+    .describe('Description of the changes made'),
   author: z.string().optional().describe('Author of the changes'),
-  updateArchon: z.boolean().default(false).describe('Whether to update Archon document if available'),
-  archonDocumentId: z.string().optional().describe('Archon document ID if updating in Archon'),
-  createBackup: z.boolean().default(true).describe('Whether to create a backup before updating'),
+  updateArchon: z
+    .boolean()
+    .default(false)
+    .describe('Whether to update Archon document if available'),
+  archonDocumentId: z
+    .string()
+    .optional()
+    .describe('Archon document ID if updating in Archon'),
+  createBackup: z
+    .boolean()
+    .default(true)
+    .describe('Whether to create a backup before updating'),
   tags: z.array(z.string()).optional().describe('Updated tags for the PRP'),
   category: z.string().optional().describe('Updated category for the PRP'),
 });
@@ -51,7 +63,7 @@ export async function updatePRPToolHandler(params: unknown) {
     // Get existing PRP to compare changes
     const existingFiles = await storageSystem.listPRPs({
       query: input.id,
-      limit: 1
+      limit: 1,
     });
 
     const existingFile = existingFiles.files.find(f => f.id === input.id);
@@ -60,7 +72,9 @@ export async function updatePRPToolHandler(params: unknown) {
     }
 
     // Read existing content for change tracking
-    const { content: existingContent } = await storageSystem.readFile(existingFile.path);
+    const { content: existingContent } = await storageSystem.readFile(
+      existingFile.path
+    );
 
     // Record the change before updating
     const changeRecord = await changeTracker.recordChange(
@@ -121,7 +135,11 @@ export async function updatePRPToolHandler(params: unknown) {
     };
 
     // Update in Archon if requested and available
-    if (input.updateArchon && integrationsManager?.isArchonAvailable() && input.archonDocumentId) {
+    if (
+      input.updateArchon &&
+      integrationsManager?.isArchonAvailable() &&
+      input.archonDocumentId
+    ) {
       try {
         const archonResult = await integrationsManager.updatePRP(
           input.id,
@@ -141,7 +159,10 @@ export async function updatePRPToolHandler(params: unknown) {
       } catch (error) {
         result.archon = {
           success: false,
-          error: error instanceof Error ? error.message : 'Failed to update in Archon',
+          error:
+            error instanceof Error
+              ? error.message
+              : 'Failed to update in Archon',
         };
       }
     }
@@ -173,7 +194,8 @@ export async function updatePRPToolHandler(params: unknown) {
 export function getUpdatePRPToolDefinition() {
   return {
     name: 'update_prp',
-    description: 'Update an existing PRP with change tracking and optional Archon synchronization',
+    description:
+      'Update an existing PRP with change tracking and optional Archon synchronization',
     inputSchema: {
       type: 'object',
       properties: {

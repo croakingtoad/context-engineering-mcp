@@ -18,21 +18,29 @@ export const PRPTemplateSchema = z.object({
   version: z.string(),
   author: z.string().optional(),
   tags: z.array(z.string()).optional(),
-  created: z.string().optional().transform((str) => str ? new Date(str) : undefined),
-  updated: z.string().optional().transform((str) => str ? new Date(str) : undefined),
+  created: z
+    .string()
+    .optional()
+    .transform(str => (str ? new Date(str) : undefined)),
+  updated: z
+    .string()
+    .optional()
+    .transform(str => (str ? new Date(str) : undefined)),
 });
 
 export const ContextEngineeringWorkflowSchema = z.object({
   id: z.string(),
   name: z.string(),
-  steps: z.array(z.object({
-    id: z.string(),
-    title: z.string(),
-    description: z.string(),
-    tool: z.string(),
-    parameters: z.record(z.any()).optional(),
-    dependencies: z.array(z.string()).optional(),
-  })),
+  steps: z.array(
+    z.object({
+      id: z.string(),
+      title: z.string(),
+      description: z.string(),
+      tool: z.string(),
+      parameters: z.record(z.any()).optional(),
+      dependencies: z.array(z.string()).optional(),
+    })
+  ),
   metadata: z.record(z.any()).optional(),
 });
 
@@ -52,7 +60,9 @@ export const PRPGenerationRequestSchema = z.object({
 // Export types
 export type PRPSection = z.infer<typeof PRPSectionSchema>;
 export type PRPTemplate = z.infer<typeof PRPTemplateSchema>;
-export type ContextEngineeringWorkflow = z.infer<typeof ContextEngineeringWorkflowSchema>;
+export type ContextEngineeringWorkflow = z.infer<
+  typeof ContextEngineeringWorkflowSchema
+>;
 export type PRPGenerationRequest = z.infer<typeof PRPGenerationRequestSchema>;
 
 // MCP Server specific types
@@ -158,7 +168,12 @@ export interface Question {
   id: string;
   text: string;
   type: 'multiple-choice' | 'text' | 'boolean' | 'scale' | 'multi-select';
-  category: 'functional' | 'technical' | 'business' | 'constraints' | 'stakeholders';
+  category:
+    | 'functional'
+    | 'technical'
+    | 'business'
+    | 'constraints'
+    | 'stakeholders';
   priority: number;
   required: boolean;
   options?: string[];
@@ -297,7 +312,12 @@ export interface ExecutionTask {
   dependencies: string[];
   estimatedHours: number;
   complexity: 'low' | 'medium' | 'high';
-  category: 'planning' | 'development' | 'testing' | 'documentation' | 'deployment';
+  category:
+    | 'planning'
+    | 'development'
+    | 'testing'
+    | 'documentation'
+    | 'deployment';
   agentTypes: string[];
 }
 
@@ -329,7 +349,14 @@ export interface ImplementationPhase {
 }
 
 export interface TechnologyRecommendation {
-  category: 'frontend' | 'backend' | 'database' | 'deployment' | 'monitoring' | 'testing' | 'ci-cd';
+  category:
+    | 'frontend'
+    | 'backend'
+    | 'database'
+    | 'deployment'
+    | 'monitoring'
+    | 'testing'
+    | 'ci-cd';
   technology: string;
   version?: string;
   reasoning: string;

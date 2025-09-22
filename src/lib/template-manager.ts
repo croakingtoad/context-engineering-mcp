@@ -43,9 +43,7 @@ export class TemplateManager {
           await this.loadTemplate(templatePath);
         }
       }
-    } catch (error) {
-      
-    }
+    } catch (error) {}
   }
 
   /**
@@ -58,9 +56,7 @@ export class TemplateManager {
       const template = PRPTemplateSchema.parse(templateData);
 
       this.templates.set(template.id, template);
-    } catch (error) {
-      
-    }
+    } catch (error) {}
   }
 
   /**
@@ -74,7 +70,9 @@ export class TemplateManager {
    * Get templates by category
    */
   getTemplatesByCategory(category: string): PRPTemplate[] {
-    return this.getAllTemplates().filter(template => template.category === category);
+    return this.getAllTemplates().filter(
+      template => template.category === category
+    );
   }
 
   /**
@@ -89,10 +87,11 @@ export class TemplateManager {
    */
   searchTemplates(query: string): PRPTemplate[] {
     const lowerQuery = query.toLowerCase();
-    return this.getAllTemplates().filter(template =>
-      template.name.toLowerCase().includes(lowerQuery) ||
-      template.description.toLowerCase().includes(lowerQuery) ||
-      template.tags?.some(tag => tag.toLowerCase().includes(lowerQuery))
+    return this.getAllTemplates().filter(
+      template =>
+        template.name.toLowerCase().includes(lowerQuery) ||
+        template.description.toLowerCase().includes(lowerQuery) ||
+        template.tags?.some(tag => tag.toLowerCase().includes(lowerQuery))
     );
   }
 
@@ -107,8 +106,15 @@ export class TemplateManager {
     this.templates.set(validatedTemplate.id, validatedTemplate);
 
     // Save to disk
-    const templatePath = path.join(this.templatesDir, `${validatedTemplate.id}.json`);
-    await fs.writeFile(templatePath, JSON.stringify(validatedTemplate, null, 2), 'utf-8');
+    const templatePath = path.join(
+      this.templatesDir,
+      `${validatedTemplate.id}.json`
+    );
+    await fs.writeFile(
+      templatePath,
+      JSON.stringify(validatedTemplate, null, 2),
+      'utf-8'
+    );
   }
 
   /**

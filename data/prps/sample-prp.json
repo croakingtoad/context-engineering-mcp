@@ -3,7 +3,7 @@
   "name": "Sample Product Requirements Prompt",
   "description": "A sample PRP demonstrating the structure and content expected",
   "content": "# Product Requirements Prompt: E-commerce Platform\n\n## Project Overview\nBuild a modern e-commerce platform with user authentication, product catalog, shopping cart, and payment processing.\n\n## Core Features\n- User registration and authentication\n- Product browsing and search\n- Shopping cart functionality\n- Secure payment processing\n- Order management\n- Admin dashboard\n\n## Technical Requirements\n- Responsive web design\n- Mobile-first approach\n- RESTful API architecture\n- Database optimization\n- Security best practices\n\n## Success Criteria\n- Support 10,000+ concurrent users\n- Page load times under 2 seconds\n- 99.9% uptime\n- PCI DSS compliance for payments",
-  "templateId": "ecommerce-basic",
+  "templateId": "base-prp-template",
   "projectContext": {
     "name": "ModernShop",
     "domain": "e-commerce",

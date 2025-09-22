@@ -129,7 +129,7 @@ export class PatternsHandler implements ResourceHandler {
             patterns.push(...analysis.patterns);
           }
         } catch (error) {
-          console.warn(`Failed to analyze file ${filePath}:`, error);
+          // console.warn(`Failed to analyze file ${filePath}:`, error);
         }
       }
 
@@ -234,7 +234,7 @@ export class PatternsHandler implements ResourceHandler {
 
       return analysis;
     } catch (error) {
-      console.warn(`Failed to analyze file ${filePath}:`, error);
+      // console.warn(`Failed to analyze file ${filePath}:`, error);
       return null;
     }
   }

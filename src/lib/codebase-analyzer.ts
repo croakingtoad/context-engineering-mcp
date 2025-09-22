@@ -48,13 +48,12 @@ export class CodebaseAnalyzer {
 
     // Analyze each file
     const fileAnalyses: FileAnalysis[] = [];
-    for (const file of files.slice(0, 50)) { // Limit to first 50 files for performance
+    for (const file of files.slice(0, 50)) {
+      // Limit to first 50 files for performance
       try {
         const analysis = await this.analyzeFile(file);
         fileAnalyses.push(analysis);
-      } catch (error) {
-        
-      }
+      } catch (error) {}
     }
 
     // Detect architectural patterns
@@ -64,7 +63,11 @@ export class CodebaseAnalyzer {
     const conventions = this.analyzeConventions(fileAnalyses);
 
     // Generate recommendations
-    const recommendations = this.generateRecommendations(fileAnalyses, patterns, conventions);
+    const recommendations = this.generateRecommendations(
+      fileAnalyses,
+      patterns,
+      conventions
+    );
 
     return {
       rootPath: absolutePath,
@@ -104,9 +107,17 @@ export class CodebaseAnalyzer {
 
     try {
       if (language === 'typescript' || language === 'javascript') {
-        analysis = await this.analyzeJavaScriptFile(absolutePath, content, analysis);
+        analysis = await this.analyzeJavaScriptFile(
+          absolutePath,
+          content,
+          analysis
+        );
       } else if (language === 'python') {
-        analysis = await this.analyzePythonFile(absolutePath, content, analysis);
+        analysis = await this.analyzePythonFile(
+          absolutePath,
+          content,
+          analysis
+        );
       }
 
       // Detect framework usage
@@ -117,10 +128,7 @@ export class CodebaseAnalyzer {
 
       // Calculate complexity metrics
       analysis.metrics = this.calculateMetrics(content, analysis);
-
-    } catch (error) {
-      
-    }
+    } catch (error) {}
 
     return analysis;
   }
@@ -138,7 +146,10 @@ export class CodebaseAnalyzer {
     patterns.push(...designPatterns);
 
     // Analyze for architectural patterns
-    const archPatterns = await this.detectArchitecturalPatterns(projectPath, files);
+    const archPatterns = await this.detectArchitecturalPatterns(
+      projectPath,
+      files
+    );
     patterns.push(...archPatterns);
 
     return patterns.sort((a, b) => b.confidence - a.confidence);
@@ -158,24 +169,24 @@ export class CodebaseAnalyzer {
 
       // Check for common frameworks
       const frameworkMap: Record<string, string[]> = {
-        'react': ['react', '@types/react'],
-        'vue': ['vue', '@vue/cli'],
-        'angular': ['@angular/core', '@angular/cli'],
-        'express': ['express', '@types/express'],
-        'nestjs': ['@nestjs/core', '@nestjs/common'],
-        'fastify': ['fastify'],
-        'next': ['next'],
-        'nuxt': ['nuxt'],
-        'svelte': ['svelte'],
-        'zod': ['zod'],
-        'joi': ['joi'],
-        'mongoose': ['mongoose'],
-        'prisma': ['prisma', '@prisma/client'],
-        'typeorm': ['typeorm'],
-        'jest': ['jest'],
-        'vitest': ['vitest'],
-        'cypress': ['cypress'],
-        'playwright': ['playwright'],
+        react: ['react', '@types/react'],
+        vue: ['vue', '@vue/cli'],
+        angular: ['@angular/core', '@angular/cli'],
+        express: ['express', '@types/express'],
+        nestjs: ['@nestjs/core', '@nestjs/common'],
+        fastify: ['fastify'],
+        next: ['next'],
+        nuxt: ['nuxt'],
+        svelte: ['svelte'],
+        zod: ['zod'],
+        joi: ['joi'],
+        mongoose: ['mongoose'],
+        prisma: ['prisma', '@prisma/client'],
+        typeorm: ['typeorm'],
+        jest: ['jest'],
+        vitest: ['vitest'],
+        cypress: ['cypress'],
+        playwright: ['playwright'],
       };
 
       for (const [framework, deps] of Object.entries(frameworkMap)) {
@@ -183,15 +194,14 @@ export class CodebaseAnalyzer {
           frameworks.push(framework);
         }
       }
-
-    } catch (error) {
-      
-    }
+    } catch (error) {}
 
     return frameworks;
   }
 
-  private async readPackageJson(projectPath: string): Promise<PackageJson | null> {
+  private async readPackageJson(
+    projectPath: string
+  ): Promise<PackageJson | null> {
     try {
       const packageJsonPath = path.join(projectPath, 'package.json');
       const content = await fs.promises.readFile(packageJsonPath, 'utf-8');
@@ -211,20 +221,26 @@ export class CodebaseAnalyzer {
     }
 
     // Also check for TypeScript config files
-    const hasTypeScriptConfig = files.some(f =>
-      f.endsWith('tsconfig.json') ||
-      f.endsWith('package.json') && f.includes('typescript')
+    const hasTypeScriptConfig = files.some(
+      f =>
+        f.endsWith('tsconfig.json') ||
+        (f.endsWith('package.json') && f.includes('typescript'))
     );
 
-    const sortedExtensions = Object.entries(extensionCounts)
-      .sort(([, a], [, b]) => b - a);
+    const sortedExtensions = Object.entries(extensionCounts).sort(
+      ([, a], [, b]) => b - a
+    );
 
     if (sortedExtensions.length === 0) return 'unknown';
 
     const primaryExtension = sortedExtensions[0][0];
 
     // Prefer TypeScript if we have TypeScript files or config
-    if (hasTypeScriptConfig || primaryExtension === '.ts' || primaryExtension === '.tsx') {
+    if (
+      hasTypeScriptConfig ||
+      primaryExtension === '.ts' ||
+      primaryExtension === '.tsx'
+    ) {
       return 'typescript';
     }
 
@@ -311,7 +327,8 @@ export class CodebaseAnalyzer {
     analysis: FileAnalysis
   ): Promise<FileAnalysis> {
     try {
-      const isTypeScript = filePath.endsWith('.ts') || filePath.endsWith('.tsx');
+      const isTypeScript =
+        filePath.endsWith('.ts') || filePath.endsWith('.tsx');
 
       // For TypeScript files, use regex-based parsing as fallback
       if (isTypeScript) {
@@ -350,12 +367,14 @@ export class CodebaseAnalyzer {
         classes,
       };
     } catch (error) {
-      
       return analysis;
     }
   }
 
-  private parseTypeScriptWithRegex(content: string, analysis: FileAnalysis): FileAnalysis {
+  private parseTypeScriptWithRegex(
+    content: string,
+    analysis: FileAnalysis
+  ): FileAnalysis {
     // Parse imports
     const imports = this.extractTypeScriptImports(content);
 
@@ -391,7 +410,8 @@ export class CodebaseAnalyzer {
 
   private extractTypeScriptExports(content: string): string[] {
     const exports: string[] = [];
-    const exportRegex = /export\s+(?:default\s+)?(?:class|function|const|let|var)\s+(\w+)/g;
+    const exportRegex =
+      /export\s+(?:default\s+)?(?:class|function|const|let|var)\s+(\w+)/g;
     let match;
 
     while ((match = exportRegex.exec(content)) !== null) {
@@ -401,8 +421,14 @@ export class CodebaseAnalyzer {
     return exports;
   }
 
-  private extractTypeScriptClasses(content: string): Array<{ name: string; methods: string[]; properties: string[]; }> {
-    const classes: Array<{ name: string; methods: string[]; properties: string[]; }> = [];
+  private extractTypeScriptClasses(
+    content: string
+  ): Array<{ name: string; methods: string[]; properties: string[] }> {
+    const classes: Array<{
+      name: string;
+      methods: string[];
+      properties: string[];
+    }> = [];
     const classRegex = /class\s+(\w+)[\s\S]*?\{([\s\S]*?)\n\s*\}/g;
     let match;
 
@@ -425,7 +451,8 @@ export class CodebaseAnalyzer {
 
   private extractClassMethods(classBody: string): string[] {
     const methods: string[] = [];
-    const methodRegex = /(?:public|private|protected)?\s*(?:static)?\s*(?:async)?\s*(\w+)\s*\([^)]*\)\s*(?::\s*\w+)?\s*\{/g;
+    const methodRegex =
+      /(?:public|private|protected)?\s*(?:static)?\s*(?:async)?\s*(\w+)\s*\([^)]*\)\s*(?::\s*\w+)?\s*\{/g;
     let match;
 
     while ((match = methodRegex.exec(classBody)) !== null) {
@@ -440,7 +467,8 @@ export class CodebaseAnalyzer {
 
   private extractClassProperties(classBody: string): string[] {
     const properties: string[] = [];
-    const propertyRegex = /(?:public|private|protected)?\s*(?:static)?\s*(?:readonly)?\s*(\w+)\s*[:=]/g;
+    const propertyRegex =
+      /(?:public|private|protected)?\s*(?:static)?\s*(?:readonly)?\s*(\w+)\s*[:=]/g;
     let match;
 
     while ((match = propertyRegex.exec(classBody)) !== null) {
@@ -450,18 +478,34 @@ export class CodebaseAnalyzer {
     return properties;
   }
 
-  private extractTypeScriptFunctions(content: string): Array<{ name: string; parameters: string[]; isAsync: boolean; complexity: number; }> {
-    const functions: Array<{ name: string; parameters: string[]; isAsync: boolean; complexity: number; }> = [];
+  private extractTypeScriptFunctions(content: string): Array<{
+    name: string;
+    parameters: string[];
+    isAsync: boolean;
+    complexity: number;
+  }> {
+    const functions: Array<{
+      name: string;
+      parameters: string[];
+      isAsync: boolean;
+      complexity: number;
+    }> = [];
 
     // Regular functions
-    const functionRegex = /(?:export\s+)?(?:async\s+)?function\s+(\w+)\s*\(([^)]*)\)/g;
+    const functionRegex =
+      /(?:export\s+)?(?:async\s+)?function\s+(\w+)\s*\(([^)]*)\)/g;
     let match;
 
     while ((match = functionRegex.exec(content)) !== null) {
       const functionName = match[1];
       const paramsString = match[2];
-      const parameters = paramsString.split(',').map(p => p.trim().split(':')[0].trim()).filter(p => p);
-      const isAsync = content.substring(match.index - 10, match.index).includes('async');
+      const parameters = paramsString
+        .split(',')
+        .map(p => p.trim().split(':')[0].trim())
+        .filter(p => p);
+      const isAsync = content
+        .substring(match.index - 10, match.index)
+        .includes('async');
 
       functions.push({
         name: functionName,
@@ -472,13 +516,19 @@ export class CodebaseAnalyzer {
     }
 
     // Class methods (including constructor)
-    const methodRegex = /(?:public|private|protected)?\s*(?:static)?\s*(?:async)?\s*(\w+)\s*\(([^)]*)\)\s*(?::\s*[\w<>[\]|]+)?\s*\{/g;
+    const methodRegex =
+      /(?:public|private|protected)?\s*(?:static)?\s*(?:async)?\s*(\w+)\s*\(([^)]*)\)\s*(?::\s*[\w<>[\]|]+)?\s*\{/g;
 
     while ((match = methodRegex.exec(content)) !== null) {
       const methodName = match[1];
       const paramsString = match[2];
-      const parameters = paramsString.split(',').map(p => p.trim().split(':')[0].trim()).filter(p => p);
-      const isAsync = content.substring(match.index - 10, match.index).includes('async');
+      const parameters = paramsString
+        .split(',')
+        .map(p => p.trim().split(':')[0].trim())
+        .filter(p => p);
+      const isAsync = content
+        .substring(match.index - 10, match.index)
+        .includes('async');
 
       functions.push({
         name: methodName,
@@ -549,7 +599,10 @@ export class CodebaseAnalyzer {
         if (node.id?.name) {
           context.functions.push({
             name: node.id.name,
-            parameters: node.params?.map((p: any) => p.name || p.pattern?.name || 'anonymous') || [],
+            parameters:
+              node.params?.map(
+                (p: any) => p.name || p.pattern?.name || 'anonymous'
+              ) || [],
             isAsync: node.async || false,
             complexity: 1,
           });
@@ -564,7 +617,10 @@ export class CodebaseAnalyzer {
             for (const member of node.body.body) {
               if (member.type === 'MethodDefinition' && member.key?.name) {
                 methods.push(member.key.name);
-              } else if (member.type === 'PropertyDefinition' && member.key?.name) {
+              } else if (
+                member.type === 'PropertyDefinition' &&
+                member.key?.name
+              ) {
                 properties.push(member.key.name);
               }
             }
@@ -601,7 +657,8 @@ export class CodebaseAnalyzer {
         if (node.id?.name) {
           context.functions.push({
             name: node.id.name,
-            parameters: node.params?.map((p: any) => p.name || 'anonymous') || [],
+            parameters:
+              node.params?.map((p: any) => p.name || 'anonymous') || [],
             isAsync: node.async || false,
             complexity: 1,
           });
@@ -626,7 +683,11 @@ export class CodebaseAnalyzer {
     for (const line of lines) {
       const trimmed = line.trim();
       if (trimmed.startsWith('import ')) {
-        const module = trimmed.replace('import ', '').split(' as ')[0].split(',')[0].trim();
+        const module = trimmed
+          .replace('import ', '')
+          .split(' as ')[0]
+          .split(',')[0]
+          .trim();
         imports.push(module);
       } else if (trimmed.startsWith('from ')) {
         const match = trimmed.match(/from\s+(\S+)/);
@@ -648,7 +709,10 @@ export class CodebaseAnalyzer {
       const match = trimmed.match(/def\s+(\w+)\s*\(([^)]*)\)/);
       if (match) {
         const name = match[1];
-        const params = match[2].split(',').map(p => p.trim()).filter(p => p);
+        const params = match[2]
+          .split(',')
+          .map(p => p.trim())
+          .filter(p => p);
         functions.push({
           name,
           parameters: params,
@@ -680,7 +744,10 @@ export class CodebaseAnalyzer {
     return classes;
   }
 
-  private detectFileFramework(content: string, imports: string[]): string | undefined {
+  private detectFileFramework(
+    content: string,
+    imports: string[]
+  ): string | undefined {
     if (imports.some(imp => imp.includes('react'))) return 'react';
     if (imports.some(imp => imp.includes('vue'))) return 'vue';
     if (imports.some(imp => imp.includes('angular'))) return 'angular';
@@ -691,7 +758,10 @@ export class CodebaseAnalyzer {
     return undefined;
   }
 
-  private detectFilePatterns(content: string, analysis: FileAnalysis): CodebasePattern[] {
+  private detectFilePatterns(
+    content: string,
+    analysis: FileAnalysis
+  ): CodebasePattern[] {
     const patterns: CodebasePattern[] = [];
 
     // Detect common patterns
@@ -702,12 +772,14 @@ export class CodebaseAnalyzer {
         description: 'Service class detected',
         type: 'design',
         confidence: 0.8,
-        examples: [{
-          file: analysis.path,
-          snippet: 'Service class pattern',
-          lineStart: 1,
-          lineEnd: 1,
-        }],
+        examples: [
+          {
+            file: analysis.path,
+            snippet: 'Service class pattern',
+            lineStart: 1,
+            lineEnd: 1,
+          },
+        ],
       });
     }
 
@@ -718,25 +790,38 @@ export class CodebaseAnalyzer {
         description: 'React hooks pattern detected',
         type: 'framework',
         confidence: 0.9,
-        examples: [{
-          file: analysis.path,
-          snippet: 'React hooks usage',
-          lineStart: 1,
-          lineEnd: 1,
-        }],
+        examples: [
+          {
+            file: analysis.path,
+            snippet: 'React hooks usage',
+            lineStart: 1,
+            lineEnd: 1,
+          },
+        ],
       });
     }
 
     return patterns;
   }
 
-  private calculateMetrics(content: string, analysis: FileAnalysis): FileAnalysis['metrics'] {
+  private calculateMetrics(
+    content: string,
+    analysis: FileAnalysis
+  ): FileAnalysis['metrics'] {
     const lines = content.split('\n');
     const nonEmptyLines = lines.filter(line => line.trim().length > 0);
 
     // Simplified complexity calculation
     let complexity = 1; // Base complexity
-    const complexityKeywords = ['if', 'else', 'for', 'while', 'case', 'catch', 'throw'];
+    const complexityKeywords = [
+      'if',
+      'else',
+      'for',
+      'while',
+      'case',
+      'catch',
+      'throw',
+    ];
 
     for (const line of lines) {
       for (const keyword of complexityKeywords) {
@@ -747,8 +832,13 @@ export class CodebaseAnalyzer {
     }
 
     // Simplified maintainability index (0-100 scale)
-    const avgLineLength = nonEmptyLines.reduce((sum, line) => sum + line.length, 0) / nonEmptyLines.length || 0;
-    const maintainabilityIndex = Math.max(0, Math.min(100, 100 - (complexity * 2) - (avgLineLength / 10)));
+    const avgLineLength =
+      nonEmptyLines.reduce((sum, line) => sum + line.length, 0) /
+        nonEmptyLines.length || 0;
+    const maintainabilityIndex = Math.max(
+      0,
+      Math.min(100, 100 - complexity * 2 - avgLineLength / 10)
+    );
 
     return {
       linesOfCode: nonEmptyLines.length,
@@ -773,13 +863,18 @@ export class CodebaseAnalyzer {
         description: 'Organized component structure detected',
         type: 'structure',
         confidence: 0.9,
-        examples: [{
-          file: 'Directory structure',
-          snippet: '/components/ directory found',
-          lineStart: 1,
-          lineEnd: 1,
-        }],
-        recommendations: ['Consider organizing components by feature', 'Use barrel exports for cleaner imports'],
+        examples: [
+          {
+            file: 'Directory structure',
+            snippet: '/components/ directory found',
+            lineStart: 1,
+            lineEnd: 1,
+          },
+        ],
+        recommendations: [
+          'Consider organizing components by feature',
+          'Use barrel exports for cleaner imports',
+        ],
       });
     }
 
@@ -790,20 +885,27 @@ export class CodebaseAnalyzer {
         description: 'Service layer architecture detected',
         type: 'architectural',
         confidence: 0.8,
-        examples: [{
-          file: 'Directory structure',
-          snippet: '/services/ directory found',
-          lineStart: 1,
-          lineEnd: 1,
-        }],
-        recommendations: ['Consider dependency injection', 'Use interfaces for service contracts'],
+        examples: [
+          {
+            file: 'Directory structure',
+            snippet: '/services/ directory found',
+            lineStart: 1,
+            lineEnd: 1,
+          },
+        ],
+        recommendations: [
+          'Consider dependency injection',
+          'Use interfaces for service contracts',
+        ],
       });
     }
 
     return patterns;
   }
 
-  private async detectDesignPatterns(files: string[]): Promise<CodebasePattern[]> {
+  private async detectDesignPatterns(
+    files: string[]
+  ): Promise<CodebasePattern[]> {
     const patterns: CodebasePattern[] = [];
 
     // Detect Schema Validation pattern
@@ -815,18 +917,32 @@ export class CodebaseAnalyzer {
         const content = await fs.promises.readFile(file, 'utf-8');
 
         // Check for schema validation libraries
-        if (content.includes('zod') || content.includes('joi') || content.includes('ajv') || content.includes('yup')) {
+        if (
+          content.includes('zod') ||
+          content.includes('joi') ||
+          content.includes('ajv') ||
+          content.includes('yup')
+        ) {
           hasSchemaValidation = true;
           validationScore += 0.3;
         }
 
         // Check for schema definitions
-        if (content.includes('.schema(') || content.includes('z.object') || content.includes('Joi.object') || content.includes('yup.object')) {
+        if (
+          content.includes('.schema(') ||
+          content.includes('z.object') ||
+          content.includes('Joi.object') ||
+          content.includes('yup.object')
+        ) {
           validationScore += 0.4;
         }
 
         // Check for validation calls
-        if (content.includes('.validate(') || content.includes('.safeParse(') || content.includes('.parse(')) {
+        if (
+          content.includes('.validate(') ||
+          content.includes('.safeParse(') ||
+          content.includes('.parse(')
+        ) {
           validationScore += 0.3;
         }
       } catch (error) {
@@ -838,28 +954,40 @@ export class CodebaseAnalyzer {
       patterns.push({
         id: 'schema-validation',
         name: 'Schema Validation',
-        description: 'Schema validation pattern detected with validation libraries',
+        description:
+          'Schema validation pattern detected with validation libraries',
         type: 'design',
         confidence: Math.min(validationScore, 1.0),
-        examples: files.filter(f => f.includes('schema') || f.includes('validation')).map(f => ({
-          file: f,
-          snippet: 'Schema validation detected',
-          lineStart: 1,
-          lineEnd: 1,
-        })),
+        examples: files
+          .filter(f => f.includes('schema') || f.includes('validation'))
+          .map(f => ({
+            file: f,
+            snippet: 'Schema validation detected',
+            lineStart: 1,
+            lineEnd: 1,
+          })),
       });
     }
 
     return patterns;
   }
 
-  private async detectArchitecturalPatterns(projectPath: string, files: string[]): Promise<CodebasePattern[]> {
+  private async detectArchitecturalPatterns(
+    projectPath: string,
+    files: string[]
+  ): Promise<CodebasePattern[]> {
     const patterns: CodebasePattern[] = [];
 
     // Check for MVC pattern
-    const hasModels = files.some(f => f.includes('/models/') || f.includes('/model/'));
-    const hasViews = files.some(f => f.includes('/views/') || f.includes('/view/'));
-    const hasControllers = files.some(f => f.includes('/controllers/') || f.includes('/controller/'));
+    const hasModels = files.some(
+      f => f.includes('/models/') || f.includes('/model/')
+    );
+    const hasViews = files.some(
+      f => f.includes('/views/') || f.includes('/view/')
+    );
+    const hasControllers = files.some(
+      f => f.includes('/controllers/') || f.includes('/controller/')
+    );
 
     if (hasModels && hasViews && hasControllers) {
       patterns.push({
@@ -868,28 +996,39 @@ export class CodebaseAnalyzer {
         description: 'MVC architectural pattern detected',
         type: 'architectural',
         confidence: 0.9,
-        examples: [{
-          file: 'Project structure',
-          snippet: 'MVC directories found',
-          lineStart: 1,
-          lineEnd: 1,
-        }],
-        recommendations: ['Ensure proper separation of concerns', 'Consider using middleware for cross-cutting concerns'],
+        examples: [
+          {
+            file: 'Project structure',
+            snippet: 'MVC directories found',
+            lineStart: 1,
+            lineEnd: 1,
+          },
+        ],
+        recommendations: [
+          'Ensure proper separation of concerns',
+          'Consider using middleware for cross-cutting concerns',
+        ],
       });
     }
 
     return patterns;
   }
 
-  private analyzeConventions(fileAnalyses: FileAnalysis[]): ProjectAnalysis['conventions'] {
+  private analyzeConventions(
+    fileAnalyses: FileAnalysis[]
+  ): ProjectAnalysis['conventions'] {
     // Analyze naming conventions
     const allNames = fileAnalyses.flatMap(f => [
       ...f.functions.map(fn => fn.name),
       ...f.classes.map(c => c.name),
     ]);
 
-    const isCamelCase = allNames.every(name => /^[a-z][a-zA-Z0-9]*$/.test(name));
-    const isPascalCase = allNames.every(name => /^[A-Z][a-zA-Z0-9]*$/.test(name));
+    const isCamelCase = allNames.every(name =>
+      /^[a-z][a-zA-Z0-9]*$/.test(name)
+    );
+    const isPascalCase = allNames.every(name =>
+      /^[A-Z][a-zA-Z0-9]*$/.test(name)
+    );
 
     let namingConvention = 'mixed';
     if (isCamelCase) namingConvention = 'camelCase';
@@ -897,12 +1036,16 @@ export class CodebaseAnalyzer {
 
     // Analyze import conventions
     const importStyles = fileAnalyses.map(f => f.imports).flat();
-    const hasRelativeImports = importStyles.some(imp => imp.startsWith('./') || imp.startsWith('../'));
+    const hasRelativeImports = importStyles.some(
+      imp => imp.startsWith('./') || imp.startsWith('../')
+    );
     const hasAbsoluteImports = importStyles.some(imp => !imp.startsWith('.'));
 
     let importConvention = 'mixed';
-    if (hasRelativeImports && !hasAbsoluteImports) importConvention = 'relative';
-    else if (!hasRelativeImports && hasAbsoluteImports) importConvention = 'absolute';
+    if (hasRelativeImports && !hasAbsoluteImports)
+      importConvention = 'relative';
+    else if (!hasRelativeImports && hasAbsoluteImports)
+      importConvention = 'absolute';
 
     // Analyze structure conventions
     const directories = fileAnalyses
@@ -916,7 +1059,10 @@ export class CodebaseAnalyzer {
     };
   }
 
-  private inferArchitecture(fileAnalyses: FileAnalysis[], patterns: CodebasePattern[]): string[] {
+  private inferArchitecture(
+    fileAnalyses: FileAnalysis[],
+    patterns: CodebasePattern[]
+  ): string[] {
     const architecture: string[] = [];
 
     // Infer from patterns
@@ -929,7 +1075,9 @@ export class CodebaseAnalyzer {
     // Infer from structure
     const hasComponents = fileAnalyses.some(f => f.path.includes('component'));
     const hasServices = fileAnalyses.some(f => f.path.includes('service'));
-    const hasControllers = fileAnalyses.some(f => f.path.includes('controller'));
+    const hasControllers = fileAnalyses.some(f =>
+      f.path.includes('controller')
+    );
 
     if (hasComponents) architecture.push('Component-based');
     if (hasServices) architecture.push('Service-oriented');
@@ -946,14 +1094,18 @@ export class CodebaseAnalyzer {
     const recommendations: string[] = [];
 
     // Code quality recommendations
-    const highComplexityFiles = fileAnalyses.filter(f => f.metrics.cyclomaticComplexity > 10);
+    const highComplexityFiles = fileAnalyses.filter(
+      f => f.metrics.cyclomaticComplexity > 10
+    );
     if (highComplexityFiles.length > 0) {
       recommendations.push(
         `Consider refactoring ${highComplexityFiles.length} files with high cyclomatic complexity (>10)`
       );
     }
 
-    const lowMaintainabilityFiles = fileAnalyses.filter(f => f.metrics.maintainabilityIndex < 50);
+    const lowMaintainabilityFiles = fileAnalyses.filter(
+      f => f.metrics.maintainabilityIndex < 50
+    );
     if (lowMaintainabilityFiles.length > 0) {
       recommendations.push(
         `Improve maintainability of ${lowMaintainabilityFiles.length} files with low maintainability index (<50)`
@@ -969,11 +1121,15 @@ export class CodebaseAnalyzer {
 
     // Convention recommendations
     if (conventions.naming === 'mixed') {
-      recommendations.push('Consider adopting a consistent naming convention (camelCase or PascalCase)');
+      recommendations.push(
+        'Consider adopting a consistent naming convention (camelCase or PascalCase)'
+      );
     }
 
     if (conventions.imports === 'mixed') {
-      recommendations.push('Consider adopting a consistent import style (relative or absolute paths)');
+      recommendations.push(
+        'Consider adopting a consistent import style (relative or absolute paths)'
+      );
     }
 
     return recommendations;
