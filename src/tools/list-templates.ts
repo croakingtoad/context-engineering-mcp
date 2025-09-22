@@ -1,4 +1,12 @@
 import { z } from 'zod';
+import { TemplateManager } from '../lib/template-manager.js';
+
+// Template manager will be injected by main server
+let templateManager: TemplateManager;
+
+export function setTemplateManagerDependency(manager: TemplateManager) {
+  templateManager = manager;
+}
 
 const ListTemplatesArgsSchema = z.object({
   category: z.string().optional(),
@@ -7,40 +15,52 @@ const ListTemplatesArgsSchema = z.object({
 export async function listTemplatesToolHandler(args: unknown): Promise<{
   content: Array<{ type: 'text'; text: string }>;
 }> {
-  // Validate arguments (currently unused in placeholder)
-  ListTemplatesArgsSchema.parse(args);
+  try {
+    const validatedArgs = ListTemplatesArgsSchema.parse(args);
 
-  // Use actual template manager (will be set by main server)
-  const mockResponse = {
-    templates: [
-      {
-        id: 'base-prp-template',
-        name: 'Base PRP Template v2 - Context-Rich with Validation Loops',
-        description: 'Template optimized for AI agents to implement features with sufficient context',
-        category: 'general',
-      },
-      {
-        id: 'web-application-template',
-        name: 'Web Application Feature Template',
-        description: 'Template for web application features with React/TypeScript focus',
-        category: 'web-development',
-      },
-      {
-        id: 'api-development-template',
-        name: 'API Development Template',
-        description: 'Template for REST API development with comprehensive validation',
-        category: 'backend',
-      },
-    ],
-    message: 'Available templates loaded from template system',
-  };
+    if (!templateManager) {
+      throw new Error('Template manager not initialized');
+    }
 
-  return {
-    content: [
-      {
-        type: 'text',
-        text: JSON.stringify(mockResponse, null, 2),
-      },
-    ],
-  };
+    // Get templates from real template manager
+    let templates = templateManager.getAllTemplates();
+
+    // Filter by category if specified
+    if (validatedArgs.category) {
+      templates = templates.filter(t => t.category === validatedArgs.category);
+    }
+
+    const response = {
+      templates: templates.map(t => ({
+        id: t.id,
+        name: t.name,
+        description: t.description,
+        category: t.category,
+        tags: t.tags,
+        author: t.author,
+        version: t.version
+      })),
+      totalCount: templates.length,
+      filteredBy: validatedArgs.category || null,
+      message: `Found ${templates.length} templates`
+    };
+
+    return {
+      content: [
+        {
+          type: 'text',
+          text: JSON.stringify(response, null, 2),
+        },
+      ],
+    };
+  } catch (error) {
+    return {
+      content: [
+        {
+          type: 'text',
+          text: `Error listing templates: ${error instanceof Error ? error.message : 'Unknown error'}`,
+        },
+      ],
+    };
+  }
 }

@@ -20,6 +20,7 @@ import { setStorageDependencies as setListPRPsDeps } from './tools/list-prps.js'
 import { setStorageDependencies as setUpdatePRPDeps } from './tools/update-prp.js';
 import { setStorageDependencies as setManageStorageDeps } from './tools/manage-storage.js';
 import { setPRPGeneratorDependencies } from './tools/generate-prp.js';
+import { setTemplateManagerDependency } from './tools/list-templates.js';
 
 // Server configuration
 const server = new Server(
@@ -87,6 +88,9 @@ async function initializeServer(): Promise<void> {
     // Initialize PRP generator
     prpGenerator = new PRPGenerator(templateManager);
     // PRP generator initialized
+
+    // Set template manager dependency for tools
+    setTemplateManagerDependency(templateManager);
 
     // Set dependencies for storage tools
     setListPRPsDeps(storageSystem, integrationsManager);
