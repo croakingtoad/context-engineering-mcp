@@ -19,8 +19,8 @@
     },
     {
       "title": "Goal",
-      "content": "{{project_goal}}\n\nSpecific end state: {{desired_outcome}}",
-      "requirements": ["Specific measurable goals", "Clear success definition"]
+      "content": "**Primary Goal**: {{primary_goal}}\n\n**Secondary Goals**:\n- {{secondary_goal_1}}\n- {{secondary_goal_2}}\n- {{secondary_goal_3}}\n\n**Specific End State**: {{desired_outcome}}\n\n**Success Definition**: {{success_definition}}",
+      "requirements": ["One clear primary goal", "Supporting secondary goals", "Measurable success criteria", "Specific end state description"]
     },
     {
       "title": "Why",

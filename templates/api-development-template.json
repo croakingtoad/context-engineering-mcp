@@ -19,8 +19,8 @@
     },
     {
       "title": "Goal",
-      "content": "Build secure, well-documented {{api_name}} API that provides {{api_functionality}} with {{performance_requirements}} and integrates seamlessly with {{existing_systems}}.",
-      "requirements": ["Performance targets", "Security requirements", "Integration needs"]
+      "content": "**Primary Goal**: Build secure, well-documented {{api_name}} API that provides {{api_functionality}} with {{performance_requirements}} and integrates seamlessly with {{existing_systems}}.\n\n**Secondary Goals**:\n- Ensure robust security with {{security_measures}}\n- Achieve {{performance_benchmarks}} performance targets\n- Provide comprehensive API documentation with {{documentation_features}}\n- Enable future extensibility for {{extensibility_requirements}}\n\n**Specific End State**: {{api_end_state}}\n\n**Success Definition**: API endpoints handle {{expected_load}} requests with {{response_time_target}} response times while maintaining {{security_standards}} security standards.",
+      "requirements": ["Clear API functionality goal", "Security and performance objectives", "Documentation requirements", "Measurable success metrics"]
     },
     {
       "title": "Why",

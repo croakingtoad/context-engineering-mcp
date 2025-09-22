@@ -19,8 +19,8 @@
     },
     {
       "title": "Goal",
-      "content": "Build {{feature_name}} that provides {{user_benefit}} while maintaining consistency with existing {{project_name}} design system and architecture.",
-      "requirements": ["Design system consistency", "User experience focus"]
+      "content": "**Primary Goal**: Build {{feature_name}} that provides {{user_benefit}} while maintaining consistency with existing {{project_name}} design system and architecture.\n\n**Secondary Goals**:\n- Improve user experience through {{ux_improvement}}\n- Enhance accessibility with {{accessibility_features}}\n- Optimize performance for {{performance_targets}}\n- Maintain code quality and testing standards\n\n**Specific End State**: {{specific_end_state}}\n\n**Success Definition**: Users can {{user_success_action}} and the feature integrates seamlessly with existing {{integration_points}}.",
+      "requirements": ["Clear primary feature goal", "UX and accessibility goals", "Performance objectives", "Integration requirements"]
     },
     {
       "title": "Why",
