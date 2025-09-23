@@ -349,13 +349,7 @@ export async function generatePRPToolHandler(args: unknown): Promise<{
                     created: archonResult.archonDocument.created.toISOString(),
                   }
                 : null,
-              tasks:
-                archonResult.tasks?.map(task => ({
-                  id: task.id,
-                  title: task.title,
-                  status: task.status,
-                  created: task.created.toISOString(),
-                })) || [];
+              tasks: []
             };
           } catch (archonError) {
             result.archon = {
