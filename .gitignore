@@ -55,3 +55,11 @@ Thumbs.db
 # Test artifacts
 test-results/
 junit.xml
+
+# Local markdown files (keep README.md, CONTRIBUTING.md, CLAUDE.md, and .github/*.md)
+*.md
+!README.md
+!CONTRIBUTING.md
+!CLAUDE.md
+!.github/**/*.md
+!LICENSE
