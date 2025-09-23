@@ -334,10 +334,8 @@ export async function generatePRPToolHandler(args: unknown): Promise<{
             }
 
             const archonResult = await integrationsManager.storePRP(
-              filename,
               generatedContent,
-              fileMetadata,
-              archonOptions
+              fileMetadata
             );
 
             result.archon = {
@@ -349,7 +347,7 @@ export async function generatePRPToolHandler(args: unknown): Promise<{
                     created: archonResult.archonDocument.created.toISOString(),
                   }
                 : null,
-              tasks: []
+              tasks: [],
             };
           } catch (archonError) {
             result.archon = {

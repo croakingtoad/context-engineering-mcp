@@ -226,7 +226,7 @@ async function handleHealthCheck() {
 
   let archonHealth = null;
   if (integrationsManager) {
-    const healthStatus = await integrationsManager.performHealthCheck();
+    const healthStatus = integrationsManager.getHealthStatus();
     archonHealth = {
       available: integrationsManager.isArchonAvailable(),
       healthy: healthStatus.isHealthy,
