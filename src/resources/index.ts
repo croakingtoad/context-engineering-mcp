@@ -26,7 +26,7 @@ export function setResourceDependencies(tm: TemplateManager): void {
 /**
  * Register all MCP resources with the server
  */
-export function registerResources(server: Server): void {
+export async function registerResources(server: Server): Promise<void> {
   // Initialize the resource manager
   resourceManager = new ResourceManager();
 
@@ -37,15 +37,13 @@ export function registerResources(server: Server): void {
   const templateHandler = new TemplateBaseHandler();
   const rulesHandler = new RulesGlobalHandler();
 
-  // Initialize handlers
-  Promise.all([
+  // Initialize handlers - fail fast on errors
+  await Promise.all([
     prpHandler.initialize(),
     initialHandler.initialize(),
     templateHandler.initialize(),
     rulesHandler.initialize(),
-  ]).catch(error => {
-    console.warn('Failed to initialize some resource handlers:', error);
-  });
+  ]);
 
   // Register resource handlers
   resourceManager.registerHandler('prps', prpHandler);

@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { McpError, ErrorCode } from '@modelcontextprotocol/sdk/types.js';
 import { PRPGenerationRequestSchema } from '../types/index.js';
 import { PRPGenerator } from '../lib/prp-generator.js';
 import { PRPValidator } from '../lib/prp-validator.js';
@@ -106,6 +107,21 @@ export async function generatePRPToolHandler(args: unknown): Promise<{
   try {
     const input = GeneratePRPInputSchema.parse(args);
 
+    // Validate dependencies first
+    if (!prpGenerator) {
+      throw new McpError(
+        ErrorCode.InternalError,
+        'PRP generator not initialized - server may not have started correctly'
+      );
+    }
+
+    if (!storageSystem && input.saveToStorage) {
+      throw new McpError(
+        ErrorCode.InternalError,
+        'Storage system not initialized - cannot save PRP'
+      );
+    }
+
     // Create a call signature to detect retries
     const callSignature = JSON.stringify({
       templateId: input.templateId,
@@ -120,21 +136,18 @@ export async function generatePRPToolHandler(args: unknown): Promise<{
     if (recent && now - recent.timestamp < CALL_WINDOW) {
       recent.count++;
       if (recent.count > MAX_RETRIES) {
-        return {
-          content: [
-            {
-              type: 'text',
-              text: `⚠️ RETRY LIMIT REACHED\n\nThis PRP generation has been attempted ${recent.count} times in the last 5 minutes.\n\nTo prevent infinite loops, please:\n1. Check the error messages above\n2. Use list_templates to verify available templates\n3. Modify your request parameters\n4. Wait a few minutes before trying again\n\nLast attempt parameters:\n- Template ID: ${input.templateId || 'not specified'}\n- Project: ${input.projectContext?.name || 'not specified'}\n- Domain: ${input.projectContext?.domain || 'not specified'}`,
-            },
-          ],
-        };
+        throw new McpError(
+          ErrorCode.InvalidRequest,
+          `Retry limit reached: This PRP generation has been attempted ${recent.count} times. Please check template ID and parameters, or wait before retrying.`,
+          {
+            attemptCount: recent.count,
+            templateId: input.templateId || 'not specified',
+            projectName: input.projectContext?.name || 'not specified',
+          }
+        );
       }
     } else {
       recentCalls.set(callSignature, { count: 1, timestamp: now });
-    }
-
-    if (!prpGenerator) {
-      throw new Error('PRP generator not initialized');
     }
 
     // Generate the PRP based on the selected mode
@@ -379,21 +392,27 @@ export async function generatePRPToolHandler(args: unknown): Promise<{
       ],
     };
   } catch (error) {
-    // Provide helpful error messages instead of generic ones
-    let errorMessage = `Error generating PRP: ${error instanceof Error ? error.message : 'Unknown error'}`;
-
-    if (error.message && error.message.includes('not found')) {
-      errorMessage +=
-        '\n\nAvailable templates:\n- base-prp-template (general purpose)\n- web-application-template (web development)\n- api-development-template (API development)\n\nUse list_templates tool to see all available templates.';
+    if (error instanceof McpError) {
+      throw error;
     }
 
-    return {
-      content: [
-        {
-          type: 'text',
-          text: errorMessage,
-        },
-      ],
-    };
+    // Provide helpful error messages for common issues
+    let errorMessage = error instanceof Error ? error.message : 'Unknown error';
+    const diagnostics: any = {};
+
+    if (errorMessage.includes('not found')) {
+      diagnostics.suggestion = 'Use list_templates tool to see all available templates';
+      diagnostics.commonTemplates = [
+        'base-prp-template',
+        'web-application-template',
+        'api-development-template',
+      ];
+    }
+
+    throw new McpError(
+      ErrorCode.InternalError,
+      `Failed to generate PRP: ${errorMessage}`,
+      diagnostics
+    );
   }
 }

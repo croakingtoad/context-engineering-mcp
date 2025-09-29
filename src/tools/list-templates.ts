@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { McpError, ErrorCode } from '@modelcontextprotocol/sdk/types.js';
 import { TemplateManager } from '../lib/template-manager.js';
 
 // Template manager will be injected by main server
@@ -19,11 +20,22 @@ export async function listTemplatesToolHandler(args: unknown): Promise<{
     const validatedArgs = ListTemplatesArgsSchema.parse(args);
 
     if (!templateManager) {
-      throw new Error('Template manager not initialized');
+      throw new McpError(
+        ErrorCode.InternalError,
+        'Template manager not initialized - server may not have started correctly'
+      );
     }
 
     // Get templates from real template manager
     let templates = templateManager.getAllTemplates();
+
+    // If no templates loaded, this is a critical error
+    if (templates.length === 0) {
+      throw new McpError(
+        ErrorCode.InternalError,
+        'No templates loaded from template directories. Check template paths and file formats.'
+      );
+    }
 
     // Filter by category if specified
     if (validatedArgs.category) {
@@ -54,13 +66,13 @@ export async function listTemplatesToolHandler(args: unknown): Promise<{
       ],
     };
   } catch (error) {
-    return {
-      content: [
-        {
-          type: 'text',
-          text: `Error listing templates: ${error instanceof Error ? error.message : 'Unknown error'}`,
-        },
-      ],
-    };
+    if (error instanceof McpError) {
+      throw error;
+    }
+    throw new McpError(
+      ErrorCode.InternalError,
+      `Failed to list templates: ${error instanceof Error ? error.message : 'Unknown error'}`,
+      { originalError: error instanceof Error ? error.stack : String(error) }
+    );
   }
 }

@@ -1,0 +1,18 @@
+{
+  "4c47a38622b20a0c9a45e914025ed8f3156815b2000a6c25652ea535db1c455c": {
+    "id": "4c47a38622b20a0c9a45e914025ed8f3156815b2000a6c25652ea535db1c455c",
+    "name": "prp_context_engineering_mcp_server_bug_fix_1759085868507.md",
+    "path": "data/prps/prp_context_engineering_mcp_server_bug_fix_1759085868507.md",
+    "size": 6126,
+    "created": "2025-09-28T18:57:48.504Z",
+    "modified": "2025-09-28T18:57:48.512Z",
+    "hash": "4c47a38622b20a0c9a45e914025ed8f3156815b2000a6c25652ea535db1c455c",
+    "version": 1,
+    "tags": [
+      "generated",
+      "Developer Tools"
+    ],
+    "category": "prp",
+    "author": "Claude (Multi-Agent Analysis Integration)"
+  }
+}

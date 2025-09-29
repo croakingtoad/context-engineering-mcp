@@ -2,6 +2,8 @@ import { Server } from '@modelcontextprotocol/sdk/server/index.js';
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
 import {
   ListToolsRequestSchema,
+  McpError,
+  ErrorCode,
 } from '@modelcontextprotocol/sdk/types.js';
 
 // Import our tool and resource registrations
@@ -64,7 +66,6 @@ async function initializeServer(): Promise<void> {
       maxConcurrentOperations: 10,
     });
     await storageSystem.initialize();
-    // Storage system initialized
 
     // Initialize change tracker
     changeTracker = new ChangeTracker({
@@ -73,7 +74,6 @@ async function initializeServer(): Promise<void> {
       enableDiffGeneration: true,
     });
     await changeTracker.initialize();
-    // Change tracker initialized
 
     // Initialize integrations manager
     integrationsManager = new IntegrationsManager(storageSystem, {
@@ -82,16 +82,13 @@ async function initializeServer(): Promise<void> {
       fallbackToLocal: true,
     });
     await integrationsManager.initialize();
-    // Integrations manager initialized
 
     // Initialize template manager
     templateManager = new TemplateManager(templatesDir, externalTemplatesDir);
     await templateManager.initialize();
-    // Template manager initialized
 
     // Initialize PRP generator
     prpGenerator = new PRPGenerator(templateManager);
-    // PRP generator initialized
 
     // Initialize codebase analyzer
     const codebaseAnalyzer = new (await import('./lib/codebase-analyzer.js')).CodebaseAnalyzer();
@@ -115,16 +112,37 @@ async function initializeServer(): Promise<void> {
     const executionGuidance = new (await import('./lib/execution-guidance.js')).ExecutionGuidance();
 
     setPRPGeneratorDependencies(prpGenerator, prpValidator, executionGuidance, storageSystem, integrationsManager, changeTracker);
-    
 
     // Set dependencies for resource handlers
     setResourceDependencies(templateManager);
-    
 
-    
+    // Register resources (must happen after dependencies are set)
+    await registerResources(server);
+
+    // Perform health checks on all critical services
+    const healthChecks = [];
+
+    if (!templateManager.isHealthy()) {
+      healthChecks.push('Template manager has no templates loaded');
+    }
+
+    if (healthChecks.length > 0) {
+      throw new McpError(
+        ErrorCode.InternalError,
+        'Server initialization failed health checks',
+        {
+          failures: healthChecks,
+          templateDiagnostics: templateManager.getDiagnostics(),
+        }
+      );
+    }
   } catch (error) {
-    
-    process.exit(1);
+    // If initialization fails, we must not let the server start
+    throw new McpError(
+      ErrorCode.InternalError,
+      `Failed to initialize server: ${error instanceof Error ? error.message : 'Unknown error'}`,
+      { originalError: error instanceof Error ? error.stack : String(error) }
+    );
   }
 }
 
@@ -135,13 +153,11 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
   };
 });
 
-// Register tools and resources
+// Register tools
 registerTools(server);
-registerResources(server);
 
 // Error handlers
 process.on('SIGINT', async () => {
-  
   if (integrationsManager) {
     await integrationsManager.shutdown();
   }
@@ -150,7 +166,6 @@ process.on('SIGINT', async () => {
 });
 
 process.on('SIGTERM', async () => {
-  
   if (integrationsManager) {
     await integrationsManager.shutdown();
   }
@@ -159,12 +174,14 @@ process.on('SIGTERM', async () => {
 });
 
 process.on('uncaughtException', (error) => {
-  
+  // Write to stderr since stdout is used for JSON-RPC
+  process.stderr.write(`Uncaught exception: ${error.message}\n${error.stack}\n`);
   process.exit(1);
 });
 
 process.on('unhandledRejection', (reason, promise) => {
-  
+  // Write to stderr since stdout is used for JSON-RPC
+  process.stderr.write(`Unhandled rejection: ${reason}\n`);
   process.exit(1);
 });
 
@@ -178,8 +195,6 @@ async function startServer(): Promise<void> {
   // Create transport and start server
   const transport = new StdioServerTransport();
   await server.connect(transport);
-
-  
 }
 
 // Export for testing and external use
@@ -195,7 +210,7 @@ export {
 // Start server if this file is run directly
 if (process.argv[1] && process.argv[1].endsWith('index.js')) {
   startServer().catch((error) => {
-    
+    process.stderr.write(`Failed to start server: ${error.message}\n${error.stack}\n`);
     process.exit(1);
   });
 }

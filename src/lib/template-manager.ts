@@ -43,7 +43,11 @@ export class TemplateManager {
           await this.loadTemplate(templatePath);
         }
       }
-    } catch (error) {}
+    } catch (error) {
+      throw new Error(
+        `Failed to load templates from directory ${directory}: ${error instanceof Error ? error.message : 'Unknown error'}`
+      );
+    }
   }
 
   /**
@@ -56,7 +60,11 @@ export class TemplateManager {
       const template = PRPTemplateSchema.parse(templateData);
 
       this.templates.set(template.id, template);
-    } catch (error) {}
+    } catch (error) {
+      throw new Error(
+        `Failed to load template from ${templatePath}: ${error instanceof Error ? error.message : 'Unknown error'}`
+      );
+    }
   }
 
   /**
@@ -132,5 +140,25 @@ export class TemplateManager {
   async refresh(): Promise<void> {
     this.templates.clear();
     await this.loadTemplates();
+  }
+
+  /**
+   * Health check - verify template manager is operational
+   */
+  isHealthy(): boolean {
+    return this.templates.size > 0;
+  }
+
+  /**
+   * Get diagnostic info for debugging
+   */
+  getDiagnostics() {
+    return {
+      templatesLoaded: this.templates.size,
+      templatesDir: this.templatesDir,
+      externalTemplatesDir: this.externalTemplatesDir,
+      categories: this.getCategories(),
+      templateIds: Array.from(this.templates.keys()),
+    };
   }
 }

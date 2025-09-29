@@ -100,7 +100,11 @@ export class ResourceManager {
         const resources = await handler.listResources();
         allResources.push(...resources);
       } catch (error) {
-        console.warn(`Failed to list resources for scheme ${scheme}:`, error);
+        throw new McpError(
+          ErrorCode.InternalError,
+          `Failed to list resources for scheme ${scheme}: ${error instanceof Error ? error.message : 'Unknown error'}`,
+          { scheme, originalError: error instanceof Error ? error.stack : String(error) }
+        );
       }
     }
 

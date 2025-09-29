@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { McpError, ErrorCode } from '@modelcontextprotocol/sdk/types.js';
 import { TemplateManager } from '../lib/template-manager.js';
 
 // Template manager will be injected by main server
@@ -20,7 +21,10 @@ export async function searchTemplatesToolHandler(args: unknown): Promise<{
     const validatedArgs = SearchTemplatesArgsSchema.parse(args);
 
     if (!templateManager) {
-      throw new Error('Template manager not initialized');
+      throw new McpError(
+        ErrorCode.InternalError,
+        'Template manager not initialized - server may not have started correctly'
+      );
     }
 
     // Search real templates
@@ -54,13 +58,13 @@ export async function searchTemplatesToolHandler(args: unknown): Promise<{
       ],
     };
   } catch (error) {
-    return {
-      content: [
-        {
-          type: 'text',
-          text: `Error searching templates: ${error instanceof Error ? error.message : 'Unknown error'}`,
-        },
-      ],
-    };
+    if (error instanceof McpError) {
+      throw error;
+    }
+    throw new McpError(
+      ErrorCode.InternalError,
+      `Failed to search templates: ${error instanceof Error ? error.message : 'Unknown error'}`,
+      { originalError: error instanceof Error ? error.stack : String(error) }
+    );
   }
 }

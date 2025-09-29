@@ -1,0 +1,2140 @@
+[
+  {
+    "id": "3c9ac50cc522688971aa2da19c5f12d2",
+    "fileId": "4c47a38622b20a0c9a45e914025ed8f3156815b2000a6c25652ea535db1c455c",
+    "version": 1,
+    "timestamp": "2025-09-28T18:57:48.518Z",
+    "author": "Claude (Multi-Agent Analysis Integration)",
+    "description": "Generated PRP from template base-prp-template",
+    "changeType": "create",
+    "changes": [
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 1,
+        "lineEnd": 1,
+        "contentAfter": "# Product Requirements Prompt",
+        "summary": "Added line: # Product Requirements Prompt..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 2,
+        "lineEnd": 2,
+        "contentAfter": "",
+        "summary": "Added line: ..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 3,
+        "lineEnd": 3,
+        "contentAfter": "> **Generated from:** Base PRP Template v2 - Context-Rich with Validation Loops",
+        "summary": "Added line: > **Generated from:** Base PRP Template v2 - Conte..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 4,
+        "lineEnd": 4,
+        "contentAfter": "> **Project:** Context Engineering MCP Server Bug Fix",
+        "summary": "Added line: > **Project:** Context Engineering MCP Server Bug ..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 5,
+        "lineEnd": 5,
+        "contentAfter": "> **Domain:** Developer Tools",
+        "summary": "Added line: > **Domain:** Developer Tools..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 6,
+        "lineEnd": 6,
+        "contentAfter": "> **Generated at:** 2025-09-28T18:57:48.506Z",
+        "summary": "Added line: > **Generated at:** 2025-09-28T18:57:48.506Z..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 7,
+        "lineEnd": 7,
+        "contentAfter": "",
+        "summary": "Added line: ..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 8,
+        "lineEnd": 8,
+        "contentAfter": "## Purpose",
+        "summary": "Added line: ## Purpose..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 9,
+        "lineEnd": 9,
+        "contentAfter": "",
+        "summary": "Added line: ..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 10,
+        "lineEnd": 10,
+        "contentAfter": "Template optimized for AI agents to implement {{feature_type}} with sufficient context and self-validation capabilities to achieve working code through iterative refinement.",
+        "summary": "Added line: Template optimized for AI agents to implement {{fe..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 11,
+        "lineEnd": 11,
+        "contentAfter": "",
+        "summary": "Added line: ..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 12,
+        "lineEnd": 12,
+        "contentAfter": "### Requirements",
+        "summary": "Added line: ### Requirements..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 13,
+        "lineEnd": 13,
+        "contentAfter": "",
+        "summary": "Added line: ..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 14,
+        "lineEnd": 14,
+        "contentAfter": "- Clear feature definition",
+        "summary": "Added line: - Clear feature definition..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 15,
+        "lineEnd": 15,
+        "contentAfter": "- Implementation context",
+        "summary": "Added line: - Implementation context..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 16,
+        "lineEnd": 16,
+        "contentAfter": "",
+        "summary": "Added line: ..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 17,
+        "lineEnd": 17,
+        "contentAfter": "## Core Principles",
+        "summary": "Added line: ## Core Principles..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 18,
+        "lineEnd": 18,
+        "contentAfter": "",
+        "summary": "Added line: ..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 19,
+        "lineEnd": 19,
+        "contentAfter": "1. Context is King: Include ALL necessary documentation, examples, and caveats",
+        "summary": "Added line: 1. Context is King: Include ALL necessary document..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 20,
+        "lineEnd": 20,
+        "contentAfter": "2. Validation Loops: Provide executable tests/lints the AI can run and fix",
+        "summary": "Added line: 2. Validation Loops: Provide executable tests/lint..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 21,
+        "lineEnd": 21,
+        "contentAfter": "3. Information Dense: Use keywords and patterns from the codebase",
+        "summary": "Added line: 3. Information Dense: Use keywords and patterns fr..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 22,
+        "lineEnd": 22,
+        "contentAfter": "4. Progressive Success: Start simple, validate, then enhance",
+        "summary": "Added line: 4. Progressive Success: Start simple, validate, th..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 23,
+        "lineEnd": 23,
+        "contentAfter": "5. Global rules: Be sure to follow all rules in CLAUDE.md",
+        "summary": "Added line: 5. Global rules: Be sure to follow all rules in CL..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 24,
+        "lineEnd": 24,
+        "contentAfter": "",
+        "summary": "Added line: ..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 25,
+        "lineEnd": 25,
+        "contentAfter": "### Requirements",
+        "summary": "Added line: ### Requirements..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 26,
+        "lineEnd": 26,
+        "contentAfter": "",
+        "summary": "Added line: ..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 27,
+        "lineEnd": 27,
+        "contentAfter": "- Follow established patterns",
+        "summary": "Added line: - Follow established patterns..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 28,
+        "lineEnd": 28,
+        "contentAfter": "- Include validation steps",
+        "summary": "Added line: - Include validation steps..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 29,
+        "lineEnd": 29,
+        "contentAfter": "",
+        "summary": "Added line: ..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 30,
+        "lineEnd": 30,
+        "contentAfter": "## Goal",
+        "summary": "Added line: ## Goal..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 31,
+        "lineEnd": 31,
+        "contentAfter": "",
+        "summary": "Added line: ..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 32,
+        "lineEnd": 32,
+        "contentAfter": "**Primary Goal**: {{primary_goal}}",
+        "summary": "Added line: **Primary Goal**: {{primary_goal}}..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 33,
+        "lineEnd": 33,
+        "contentAfter": "",
+        "summary": "Added line: ..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 34,
+        "lineEnd": 34,
+        "contentAfter": "**Secondary Goals**:",
+        "summary": "Added line: **Secondary Goals**:..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 35,
+        "lineEnd": 35,
+        "contentAfter": "- {{secondary_goal_1}}",
+        "summary": "Added line: - {{secondary_goal_1}}..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 36,
+        "lineEnd": 36,
+        "contentAfter": "- {{secondary_goal_2}}",
+        "summary": "Added line: - {{secondary_goal_2}}..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 37,
+        "lineEnd": 37,
+        "contentAfter": "- {{secondary_goal_3}}",
+        "summary": "Added line: - {{secondary_goal_3}}..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 38,
+        "lineEnd": 38,
+        "contentAfter": "",
+        "summary": "Added line: ..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 39,
+        "lineEnd": 39,
+        "contentAfter": "**Specific End State**: {{desired_outcome}}",
+        "summary": "Added line: **Specific End State**: {{desired_outcome}}..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 40,
+        "lineEnd": 40,
+        "contentAfter": "",
+        "summary": "Added line: ..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 41,
+        "lineEnd": 41,
+        "contentAfter": "**Success Definition**: {{success_definition}}",
+        "summary": "Added line: **Success Definition**: {{success_definition}}..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 42,
+        "lineEnd": 42,
+        "contentAfter": "",
+        "summary": "Added line: ..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 43,
+        "lineEnd": 43,
+        "contentAfter": "### Requirements",
+        "summary": "Added line: ### Requirements..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 44,
+        "lineEnd": 44,
+        "contentAfter": "",
+        "summary": "Added line: ..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 45,
+        "lineEnd": 45,
+        "contentAfter": "- One clear primary goal",
+        "summary": "Added line: - One clear primary goal..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 46,
+        "lineEnd": 46,
+        "contentAfter": "- Supporting secondary goals",
+        "summary": "Added line: - Supporting secondary goals..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 47,
+        "lineEnd": 47,
+        "contentAfter": "- Measurable success criteria",
+        "summary": "Added line: - Measurable success criteria..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 48,
+        "lineEnd": 48,
+        "contentAfter": "- Specific end state description",
+        "summary": "Added line: - Specific end state description..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 49,
+        "lineEnd": 49,
+        "contentAfter": "",
+        "summary": "Added line: ..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 50,
+        "lineEnd": 50,
+        "contentAfter": "## Why",
+        "summary": "Added line: ## Why..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 51,
+        "lineEnd": 51,
+        "contentAfter": "",
+        "summary": "Added line: ..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 52,
+        "lineEnd": 52,
+        "contentAfter": "- Business value: {{business_value}}",
+        "summary": "Added line: - Business value: {{business_value}}..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 53,
+        "lineEnd": 53,
+        "contentAfter": "- User impact: {{user_impact}}",
+        "summary": "Added line: - User impact: {{user_impact}}..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 54,
+        "lineEnd": 54,
+        "contentAfter": "- Integration benefits: {{integration_benefits}}",
+        "summary": "Added line: - Integration benefits: {{integration_benefits}}..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 55,
+        "lineEnd": 55,
+        "contentAfter": "- Problems solved: {{problems_solved}}",
+        "summary": "Added line: - Problems solved: {{problems_solved}}..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 56,
+        "lineEnd": 56,
+        "contentAfter": "",
+        "summary": "Added line: ..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 57,
+        "lineEnd": 57,
+        "contentAfter": "### Requirements",
+        "summary": "Added line: ### Requirements..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 58,
+        "lineEnd": 58,
+        "contentAfter": "",
+        "summary": "Added line: ..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 59,
+        "lineEnd": 59,
+        "contentAfter": "- Business justification",
+        "summary": "Added line: - Business justification..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 60,
+        "lineEnd": 60,
+        "contentAfter": "- User value proposition",
+        "summary": "Added line: - User value proposition..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 61,
+        "lineEnd": 61,
+        "contentAfter": "",
+        "summary": "Added line: ..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 62,
+        "lineEnd": 62,
+        "contentAfter": "## What",
+        "summary": "Added line: ## What..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 63,
+        "lineEnd": 63,
+        "contentAfter": "",
+        "summary": "Added line: ..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 64,
+        "lineEnd": 64,
+        "contentAfter": "User-visible behavior:",
+        "summary": "Added line: User-visible behavior:..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 65,
+        "lineEnd": 65,
+        "contentAfter": "{{user_visible_behavior}}",
+        "summary": "Added line: {{user_visible_behavior}}..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 66,
+        "lineEnd": 66,
+        "contentAfter": "",
+        "summary": "Added line: ..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 67,
+        "lineEnd": 67,
+        "contentAfter": "Technical requirements:",
+        "summary": "Added line: Technical requirements:..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 68,
+        "lineEnd": 68,
+        "contentAfter": "{{technical_requirements}}",
+        "summary": "Added line: {{technical_requirements}}..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 69,
+        "lineEnd": 69,
+        "contentAfter": "",
+        "summary": "Added line: ..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 70,
+        "lineEnd": 70,
+        "contentAfter": "### Success Criteria",
+        "summary": "Added line: ### Success Criteria..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 71,
+        "lineEnd": 71,
+        "contentAfter": "{{success_criteria}}",
+        "summary": "Added line: {{success_criteria}}..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 72,
+        "lineEnd": 72,
+        "contentAfter": "",
+        "summary": "Added line: ..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 73,
+        "lineEnd": 73,
+        "contentAfter": "### Requirements",
+        "summary": "Added line: ### Requirements..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 74,
+        "lineEnd": 74,
+        "contentAfter": "",
+        "summary": "Added line: ..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 75,
+        "lineEnd": 75,
+        "contentAfter": "- Observable behaviors",
+        "summary": "Added line: - Observable behaviors..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 76,
+        "lineEnd": 76,
+        "contentAfter": "- Measurable outcomes",
+        "summary": "Added line: - Measurable outcomes..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 77,
+        "lineEnd": 77,
+        "contentAfter": "",
+        "summary": "Added line: ..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 78,
+        "lineEnd": 78,
+        "contentAfter": "## All Needed Context",
+        "summary": "Added line: ## All Needed Context..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 79,
+        "lineEnd": 79,
+        "contentAfter": "",
+        "summary": "Added line: ..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 80,
+        "lineEnd": 80,
+        "contentAfter": "### Documentation & References",
+        "summary": "Added line: ### Documentation & References..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 81,
+        "lineEnd": 81,
+        "contentAfter": "{{documentation_references}}",
+        "summary": "Added line: {{documentation_references}}..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 82,
+        "lineEnd": 82,
+        "contentAfter": "",
+        "summary": "Added line: ..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 83,
+        "lineEnd": 83,
+        "contentAfter": "### Current Codebase Tree",
+        "summary": "Added line: ### Current Codebase Tree..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 84,
+        "lineEnd": 84,
+        "contentAfter": "{{current_codebase_structure}}",
+        "summary": "Added line: {{current_codebase_structure}}..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 85,
+        "lineEnd": 85,
+        "contentAfter": "",
+        "summary": "Added line: ..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 86,
+        "lineEnd": 86,
+        "contentAfter": "### Desired Codebase Tree",
+        "summary": "Added line: ### Desired Codebase Tree..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 87,
+        "lineEnd": 87,
+        "contentAfter": "{{desired_codebase_structure}}",
+        "summary": "Added line: {{desired_codebase_structure}}..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 88,
+        "lineEnd": 88,
+        "contentAfter": "",
+        "summary": "Added line: ..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 89,
+        "lineEnd": 89,
+        "contentAfter": "### Known Gotchas & Library Quirks",
+        "summary": "Added line: ### Known Gotchas & Library Quirks..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 90,
+        "lineEnd": 90,
+        "contentAfter": "{{known_challenges}}",
+        "summary": "Added line: {{known_challenges}}..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 91,
+        "lineEnd": 91,
+        "contentAfter": "",
+        "summary": "Added line: ..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 92,
+        "lineEnd": 92,
+        "contentAfter": "### Requirements",
+        "summary": "Added line: ### Requirements..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 93,
+        "lineEnd": 93,
+        "contentAfter": "",
+        "summary": "Added line: ..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 94,
+        "lineEnd": 94,
+        "contentAfter": "- Complete documentation",
+        "summary": "Added line: - Complete documentation..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 95,
+        "lineEnd": 95,
+        "contentAfter": "- Codebase context",
+        "summary": "Added line: - Codebase context..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 96,
+        "lineEnd": 96,
+        "contentAfter": "- Implementation challenges",
+        "summary": "Added line: - Implementation challenges..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 97,
+        "lineEnd": 97,
+        "contentAfter": "",
+        "summary": "Added line: ..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 98,
+        "lineEnd": 98,
+        "contentAfter": "## Implementation Blueprint",
+        "summary": "Added line: ## Implementation Blueprint..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 99,
+        "lineEnd": 99,
+        "contentAfter": "",
+        "summary": "Added line: ..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 100,
+        "lineEnd": 100,
+        "contentAfter": "### Data Models and Structure",
+        "summary": "Added line: ### Data Models and Structure..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 101,
+        "lineEnd": 101,
+        "contentAfter": "{{data_models}}",
+        "summary": "Added line: {{data_models}}..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 102,
+        "lineEnd": 102,
+        "contentAfter": "",
+        "summary": "Added line: ..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 103,
+        "lineEnd": 103,
+        "contentAfter": "### Tasks List",
+        "summary": "Added line: ### Tasks List..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 104,
+        "lineEnd": 104,
+        "contentAfter": "{{task_breakdown}}",
+        "summary": "Added line: {{task_breakdown}}..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 105,
+        "lineEnd": 105,
+        "contentAfter": "",
+        "summary": "Added line: ..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 106,
+        "lineEnd": 106,
+        "contentAfter": "### Per-Task Pseudocode",
+        "summary": "Added line: ### Per-Task Pseudocode..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 107,
+        "lineEnd": 107,
+        "contentAfter": "{{implementation_pseudocode}}",
+        "summary": "Added line: {{implementation_pseudocode}}..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 108,
+        "lineEnd": 108,
+        "contentAfter": "",
+        "summary": "Added line: ..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 109,
+        "lineEnd": 109,
+        "contentAfter": "### Integration Points",
+        "summary": "Added line: ### Integration Points..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 110,
+        "lineEnd": 110,
+        "contentAfter": "{{integration_points}}",
+        "summary": "Added line: {{integration_points}}..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 111,
+        "lineEnd": 111,
+        "contentAfter": "",
+        "summary": "Added line: ..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 112,
+        "lineEnd": 112,
+        "contentAfter": "### Requirements",
+        "summary": "Added line: ### Requirements..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 113,
+        "lineEnd": 113,
+        "contentAfter": "",
+        "summary": "Added line: ..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 114,
+        "lineEnd": 114,
+        "contentAfter": "- Detailed implementation plan",
+        "summary": "Added line: - Detailed implementation plan..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 115,
+        "lineEnd": 115,
+        "contentAfter": "- Clear task breakdown",
+        "summary": "Added line: - Clear task breakdown..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 116,
+        "lineEnd": 116,
+        "contentAfter": "",
+        "summary": "Added line: ..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 117,
+        "lineEnd": 117,
+        "contentAfter": "## Validation Loop",
+        "summary": "Added line: ## Validation Loop..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 118,
+        "lineEnd": 118,
+        "contentAfter": "",
+        "summary": "Added line: ..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 119,
+        "lineEnd": 119,
+        "contentAfter": "### Level 1: Syntax & Style",
+        "summary": "Added line: ### Level 1: Syntax & Style..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 120,
+        "lineEnd": 120,
+        "contentAfter": "{{syntax_style_checks}}",
+        "summary": "Added line: {{syntax_style_checks}}..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 121,
+        "lineEnd": 121,
+        "contentAfter": "",
+        "summary": "Added line: ..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 122,
+        "lineEnd": 122,
+        "contentAfter": "### Level 2: Unit Tests",
+        "summary": "Added line: ### Level 2: Unit Tests..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 123,
+        "lineEnd": 123,
+        "contentAfter": "{{unit_tests}}",
+        "summary": "Added line: {{unit_tests}}..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 124,
+        "lineEnd": 124,
+        "contentAfter": "",
+        "summary": "Added line: ..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 125,
+        "lineEnd": 125,
+        "contentAfter": "### Level 3: Integration Tests",
+        "summary": "Added line: ### Level 3: Integration Tests..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 126,
+        "lineEnd": 126,
+        "contentAfter": "{{integration_tests}}",
+        "summary": "Added line: {{integration_tests}}..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 127,
+        "lineEnd": 127,
+        "contentAfter": "",
+        "summary": "Added line: ..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 128,
+        "lineEnd": 128,
+        "contentAfter": "### Requirements",
+        "summary": "Added line: ### Requirements..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 129,
+        "lineEnd": 129,
+        "contentAfter": "",
+        "summary": "Added line: ..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 130,
+        "lineEnd": 130,
+        "contentAfter": "- Automated validation",
+        "summary": "Added line: - Automated validation..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 131,
+        "lineEnd": 131,
+        "contentAfter": "- Progressive testing",
+        "summary": "Added line: - Progressive testing..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 132,
+        "lineEnd": 132,
+        "contentAfter": "",
+        "summary": "Added line: ..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 133,
+        "lineEnd": 133,
+        "contentAfter": "## Final Validation Checklist",
+        "summary": "Added line: ## Final Validation Checklist..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 134,
+        "lineEnd": 134,
+        "contentAfter": "",
+        "summary": "Added line: ..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 135,
+        "lineEnd": 135,
+        "contentAfter": "{{final_validation_checklist}}",
+        "summary": "Added line: {{final_validation_checklist}}..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 136,
+        "lineEnd": 136,
+        "contentAfter": "",
+        "summary": "Added line: ..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 137,
+        "lineEnd": 137,
+        "contentAfter": "### Requirements",
+        "summary": "Added line: ### Requirements..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 138,
+        "lineEnd": 138,
+        "contentAfter": "",
+        "summary": "Added line: ..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 139,
+        "lineEnd": 139,
+        "contentAfter": "- Complete verification steps",
+        "summary": "Added line: - Complete verification steps..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 140,
+        "lineEnd": 140,
+        "contentAfter": "",
+        "summary": "Added line: ..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 141,
+        "lineEnd": 141,
+        "contentAfter": "## Anti-Patterns to Avoid",
+        "summary": "Added line: ## Anti-Patterns to Avoid..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 142,
+        "lineEnd": 142,
+        "contentAfter": "",
+        "summary": "Added line: ..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 143,
+        "lineEnd": 143,
+        "contentAfter": "{{anti_patterns}}",
+        "summary": "Added line: {{anti_patterns}}..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 144,
+        "lineEnd": 144,
+        "contentAfter": "",
+        "summary": "Added line: ..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 145,
+        "lineEnd": 145,
+        "contentAfter": "### Requirements",
+        "summary": "Added line: ### Requirements..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 146,
+        "lineEnd": 146,
+        "contentAfter": "",
+        "summary": "Added line: ..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 147,
+        "lineEnd": 147,
+        "contentAfter": "- Common pitfalls",
+        "summary": "Added line: - Common pitfalls..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 148,
+        "lineEnd": 148,
+        "contentAfter": "- What not to do",
+        "summary": "Added line: - What not to do..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 149,
+        "lineEnd": 149,
+        "contentAfter": "",
+        "summary": "Added line: ..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 150,
+        "lineEnd": 150,
+        "contentAfter": "## Root Cause Analysis",
+        "summary": "Added line: ## Root Cause Analysis..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 151,
+        "lineEnd": 151,
+        "contentAfter": "",
+        "summary": "Added line: ..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 152,
+        "lineEnd": 152,
+        "contentAfter": "## Multi-Agent Consensus Findings",
+        "summary": "Added line: ## Multi-Agent Consensus Findings..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 153,
+        "lineEnd": 153,
+        "contentAfter": "",
+        "summary": "Added line: ..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 154,
+        "lineEnd": 154,
+        "contentAfter": "All three analysis agents (Haiku, Sonnet, Opus) identified the same core issues:",
+        "summary": "Added line: All three analysis agents (Haiku, Sonnet, Opus) id..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 155,
+        "lineEnd": 155,
+        "contentAfter": "",
+        "summary": "Added line: ..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 156,
+        "lineEnd": 156,
+        "contentAfter": "### Primary Issue: Silent Failure Cascade",
+        "summary": "Added line: ### Primary Issue: Silent Failure Cascade..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 157,
+        "lineEnd": 157,
+        "contentAfter": "- Empty catch blocks swallow all errors",
+        "summary": "Added line: - Empty catch blocks swallow all errors..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 158,
+        "lineEnd": 158,
+        "contentAfter": "- Services initialize asynchronously but dependency injection is synchronous",
+        "summary": "Added line: - Services initialize asynchronously but dependenc..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 159,
+        "lineEnd": 159,
+        "contentAfter": "- Template system fails to load external templates but continues silently",
+        "summary": "Added line: - Template system fails to load external templates..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 160,
+        "lineEnd": 160,
+        "contentAfter": "- Tools report success with invalid/undefined state",
+        "summary": "Added line: - Tools report success with invalid/undefined stat..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 161,
+        "lineEnd": 161,
+        "contentAfter": "",
+        "summary": "Added line: ..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 162,
+        "lineEnd": 162,
+        "contentAfter": "### Secondary Issues:",
+        "summary": "Added line: ### Secondary Issues:..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 163,
+        "lineEnd": 163,
+        "contentAfter": "- MCP protocol violations (console.log breaking JSON-RPC)",
+        "summary": "Added line: - MCP protocol violations (console.log breaking JS..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 164,
+        "lineEnd": 164,
+        "contentAfter": "- Inconsistent response formats across tools",
+        "summary": "Added line: - Inconsistent response formats across tools..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 165,
+        "lineEnd": 165,
+        "contentAfter": "- Template ID resolution conflicts between internal/external templates",
+        "summary": "Added line: - Template ID resolution conflicts between interna..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 166,
+        "lineEnd": 166,
+        "contentAfter": "- Missing diagnostic information for troubleshooting",
+        "summary": "Added line: - Missing diagnostic information for troubleshooti..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 167,
+        "lineEnd": 167,
+        "contentAfter": "",
+        "summary": "Added line: ..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 168,
+        "lineEnd": 168,
+        "contentAfter": "### Token Waste Pattern:",
+        "summary": "Added line: ### Token Waste Pattern:..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 169,
+        "lineEnd": 169,
+        "contentAfter": "1. list_templates → Returns empty array (silent dependency failure)",
+        "summary": "Added line: 1. list_templates → Returns empty array (silent de..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 170,
+        "lineEnd": 170,
+        "contentAfter": "2. Claude Desktop expects templates → Calls search_templates",
+        "summary": "Added line: 2. Claude Desktop expects templates → Calls search..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 171,
+        "lineEnd": 171,
+        "contentAfter": "3. search_templates → Also returns empty (same dependency issue)",
+        "summary": "Added line: 3. search_templates → Also returns empty (same dep..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 172,
+        "lineEnd": 172,
+        "contentAfter": "4. Claude Desktop thinks temporary failure → Retries list_templates",
+        "summary": "Added line: 4. Claude Desktop thinks temporary failure → Retri..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 173,
+        "lineEnd": 173,
+        "contentAfter": "5. Infinite loop consuming tokens without progress",
+        "summary": "Added line: 5. Infinite loop consuming tokens without progress..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 174,
+        "lineEnd": 174,
+        "contentAfter": "",
+        "summary": "Added line: ..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 175,
+        "lineEnd": 175,
+        "contentAfter": "### Requirements",
+        "summary": "Added line: ### Requirements..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 176,
+        "lineEnd": 176,
+        "contentAfter": "",
+        "summary": "Added line: ..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 177,
+        "lineEnd": 177,
+        "contentAfter": "- Replace all empty catch blocks with proper error handling",
+        "summary": "Added line: - Replace all empty catch blocks with proper error..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 178,
+        "lineEnd": 178,
+        "contentAfter": "- Add dependency validation before tool execution",
+        "summary": "Added line: - Add dependency validation before tool execution..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 179,
+        "lineEnd": 179,
+        "contentAfter": "- Implement fail-fast initialization",
+        "summary": "Added line: - Implement fail-fast initialization..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 180,
+        "lineEnd": 180,
+        "contentAfter": "- Fix external template directory loading",
+        "summary": "Added line: - Fix external template directory loading..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 181,
+        "lineEnd": 181,
+        "contentAfter": "- Add structured error responses with diagnostics",
+        "summary": "Added line: - Add structured error responses with diagnostics..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 182,
+        "lineEnd": 182,
+        "contentAfter": "",
+        "summary": "Added line: ..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 183,
+        "lineEnd": 183,
+        "contentAfter": "## Template System Architecture Fix",
+        "summary": "Added line: ## Template System Architecture Fix..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 184,
+        "lineEnd": 184,
+        "contentAfter": "",
+        "summary": "Added line: ..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 185,
+        "lineEnd": 185,
+        "contentAfter": "## Current Broken Pattern",
+        "summary": "Added line: ## Current Broken Pattern..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 186,
+        "lineEnd": 186,
+        "contentAfter": "",
+        "summary": "Added line: ..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 187,
+        "lineEnd": 187,
+        "contentAfter": "```typescript",
+        "summary": "Added line: ```typescript..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 188,
+        "lineEnd": 188,
+        "contentAfter": "// BROKEN: Silent failure",
+        "summary": "Added line: // BROKEN: Silent failure..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 189,
+        "lineEnd": 189,
+        "contentAfter": "try {",
+        "summary": "Added line: try {..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 190,
+        "lineEnd": 190,
+        "contentAfter": "  await this.loadExternalTemplates();",
+        "summary": "Added line:   await this.loadExternalTemplates();..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 191,
+        "lineEnd": 191,
+        "contentAfter": "} catch (error) {",
+        "summary": "Added line: } catch (error) {..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 192,
+        "lineEnd": 192,
+        "contentAfter": "  // Empty catch - error swallowed",
+        "summary": "Added line:   // Empty catch - error swallowed..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 193,
+        "lineEnd": 193,
+        "contentAfter": "}",
+        "summary": "Added line: }..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 194,
+        "lineEnd": 194,
+        "contentAfter": "```",
+        "summary": "Added line: ```..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 195,
+        "lineEnd": 195,
+        "contentAfter": "",
+        "summary": "Added line: ..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 196,
+        "lineEnd": 196,
+        "contentAfter": "## Required Pattern",
+        "summary": "Added line: ## Required Pattern..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 197,
+        "lineEnd": 197,
+        "contentAfter": "",
+        "summary": "Added line: ..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 198,
+        "lineEnd": 198,
+        "contentAfter": "```typescript",
+        "summary": "Added line: ```typescript..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 199,
+        "lineEnd": 199,
+        "contentAfter": "// FIXED: Proper error handling",
+        "summary": "Added line: // FIXED: Proper error handling..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 200,
+        "lineEnd": 200,
+        "contentAfter": "try {",
+        "summary": "Added line: try {..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 201,
+        "lineEnd": 201,
+        "contentAfter": "  await this.loadExternalTemplates();",
+        "summary": "Added line:   await this.loadExternalTemplates();..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 202,
+        "lineEnd": 202,
+        "contentAfter": "} catch (error) {",
+        "summary": "Added line: } catch (error) {..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 203,
+        "lineEnd": 203,
+        "contentAfter": "  this.logger.error('Template loading failed', error);",
+        "summary": "Added line:   this.logger.error('Template loading failed', err..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 204,
+        "lineEnd": 204,
+        "contentAfter": "  throw new MCPError(",
+        "summary": "Added line:   throw new MCPError(..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 205,
+        "lineEnd": 205,
+        "contentAfter": "    ErrorCode.InternalError,",
+        "summary": "Added line:     ErrorCode.InternalError,..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 206,
+        "lineEnd": 206,
+        "contentAfter": "    `Template system initialization failed: ${error.message}`",
+        "summary": "Added line:     `Template system initialization failed: ${erro..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 207,
+        "lineEnd": 207,
+        "contentAfter": "  );",
+        "summary": "Added line:   );..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 208,
+        "lineEnd": 208,
+        "contentAfter": "}",
+        "summary": "Added line: }..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 209,
+        "lineEnd": 209,
+        "contentAfter": "```",
+        "summary": "Added line: ```..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 210,
+        "lineEnd": 210,
+        "contentAfter": "",
+        "summary": "Added line: ..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 211,
+        "lineEnd": 211,
+        "contentAfter": "## Template Loading Strategy",
+        "summary": "Added line: ## Template Loading Strategy..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 212,
+        "lineEnd": 212,
+        "contentAfter": "",
+        "summary": "Added line: ..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 213,
+        "lineEnd": 213,
+        "contentAfter": "1. **Atomic Loading**: All templates load successfully or server fails to start",
+        "summary": "Added line: 1. **Atomic Loading**: All templates load successf..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 214,
+        "lineEnd": 214,
+        "contentAfter": "2. **Dependency Validation**: Verify all required services before tool registration",
+        "summary": "Added line: 2. **Dependency Validation**: Verify all required ..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 215,
+        "lineEnd": 215,
+        "contentAfter": "3. **Circuit Breaker**: Stop attempting operations after repeated failures",
+        "summary": "Added line: 3. **Circuit Breaker**: Stop attempting operations..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 216,
+        "lineEnd": 216,
+        "contentAfter": "4. **Health Checks**: Provide diagnostic endpoints for troubleshooting",
+        "summary": "Added line: 4. **Health Checks**: Provide diagnostic endpoints..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 217,
+        "lineEnd": 217,
+        "contentAfter": "",
+        "summary": "Added line: ..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 218,
+        "lineEnd": 218,
+        "contentAfter": "### Requirements",
+        "summary": "Added line: ### Requirements..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 219,
+        "lineEnd": 219,
+        "contentAfter": "",
+        "summary": "Added line: ..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 220,
+        "lineEnd": 220,
+        "contentAfter": "- Implement atomic template loading with rollback",
+        "summary": "Added line: - Implement atomic template loading with rollback..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 221,
+        "lineEnd": 221,
+        "contentAfter": "- Add service health validation before tool execution",
+        "summary": "Added line: - Add service health validation before tool execut..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 222,
+        "lineEnd": 222,
+        "contentAfter": "- Create circuit breaker pattern for failed services",
+        "summary": "Added line: - Create circuit breaker pattern for failed servic..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 223,
+        "lineEnd": 223,
+        "contentAfter": "- Add template system health check endpoints",
+        "summary": "Added line: - Add template system health check endpoints..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 224,
+        "lineEnd": 224,
+        "contentAfter": "",
+        "summary": "Added line: ..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 225,
+        "lineEnd": 225,
+        "contentAfter": "## MCP Protocol Compliance",
+        "summary": "Added line: ## MCP Protocol Compliance..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 226,
+        "lineEnd": 226,
+        "contentAfter": "",
+        "summary": "Added line: ..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 227,
+        "lineEnd": 227,
+        "contentAfter": "## Current Violations",
+        "summary": "Added line: ## Current Violations..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 228,
+        "lineEnd": 228,
+        "contentAfter": "",
+        "summary": "Added line: ..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 229,
+        "lineEnd": 229,
+        "contentAfter": "- Console.log statements breaking JSON-RPC",
+        "summary": "Added line: - Console.log statements breaking JSON-RPC..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 230,
+        "lineEnd": 230,
+        "contentAfter": "- Inconsistent error response formats",
+        "summary": "Added line: - Inconsistent error response formats..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 231,
+        "lineEnd": 231,
+        "contentAfter": "- Missing error codes for different failure types",
+        "summary": "Added line: - Missing error codes for different failure types..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 232,
+        "lineEnd": 232,
+        "contentAfter": "- No diagnostic information in responses",
+        "summary": "Added line: - No diagnostic information in responses..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 233,
+        "lineEnd": 233,
+        "contentAfter": "",
+        "summary": "Added line: ..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 234,
+        "lineEnd": 234,
+        "contentAfter": "## Required Compliance",
+        "summary": "Added line: ## Required Compliance..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 235,
+        "lineEnd": 235,
+        "contentAfter": "",
+        "summary": "Added line: ..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 236,
+        "lineEnd": 236,
+        "contentAfter": "### Error Response Format",
+        "summary": "Added line: ### Error Response Format..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 237,
+        "lineEnd": 237,
+        "contentAfter": "```typescript",
+        "summary": "Added line: ```typescript..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 238,
+        "lineEnd": 238,
+        "contentAfter": "interface MCPErrorResponse {",
+        "summary": "Added line: interface MCPErrorResponse {..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 239,
+        "lineEnd": 239,
+        "contentAfter": "  error: {",
+        "summary": "Added line:   error: {..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 240,
+        "lineEnd": 240,
+        "contentAfter": "    code: number;",
+        "summary": "Added line:     code: number;..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 241,
+        "lineEnd": 241,
+        "contentAfter": "    message: string;",
+        "summary": "Added line:     message: string;..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 242,
+        "lineEnd": 242,
+        "contentAfter": "    data?: {",
+        "summary": "Added line:     data?: {..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 243,
+        "lineEnd": 243,
+        "contentAfter": "      category: 'template_loading' | 'dependency_injection' | 'validation';",
+        "summary": "Added line:       category: 'template_loading' | 'dependency_i..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 244,
+        "lineEnd": 244,
+        "contentAfter": "      details: string;",
+        "summary": "Added line:       details: string;..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 245,
+        "lineEnd": 245,
+        "contentAfter": "      suggestions: string[];",
+        "summary": "Added line:       suggestions: string[];..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 246,
+        "lineEnd": 246,
+        "contentAfter": "    };",
+        "summary": "Added line:     };..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 247,
+        "lineEnd": 247,
+        "contentAfter": "  };",
+        "summary": "Added line:   };..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 248,
+        "lineEnd": 248,
+        "contentAfter": "}",
+        "summary": "Added line: }..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 249,
+        "lineEnd": 249,
+        "contentAfter": "```",
+        "summary": "Added line: ```..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 250,
+        "lineEnd": 250,
+        "contentAfter": "",
+        "summary": "Added line: ..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 251,
+        "lineEnd": 251,
+        "contentAfter": "### Tool Response Consistency",
+        "summary": "Added line: ### Tool Response Consistency..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 252,
+        "lineEnd": 252,
+        "contentAfter": "All tools must return structured responses with:",
+        "summary": "Added line: All tools must return structured responses with:..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 253,
+        "lineEnd": 253,
+        "contentAfter": "- Success/failure status",
+        "summary": "Added line: - Success/failure status..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 254,
+        "lineEnd": 254,
+        "contentAfter": "- Consistent data format",
+        "summary": "Added line: - Consistent data format..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 255,
+        "lineEnd": 255,
+        "contentAfter": "- Error details when applicable",
+        "summary": "Added line: - Error details when applicable..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 256,
+        "lineEnd": 256,
+        "contentAfter": "- Diagnostic information for debugging",
+        "summary": "Added line: - Diagnostic information for debugging..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 257,
+        "lineEnd": 257,
+        "contentAfter": "",
+        "summary": "Added line: ..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 258,
+        "lineEnd": 258,
+        "contentAfter": "### Requirements",
+        "summary": "Added line: ### Requirements..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 259,
+        "lineEnd": 259,
+        "contentAfter": "",
+        "summary": "Added line: ..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 260,
+        "lineEnd": 260,
+        "contentAfter": "- Remove all console.log/error/warn statements",
+        "summary": "Added line: - Remove all console.log/error/warn statements..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 261,
+        "lineEnd": 261,
+        "contentAfter": "- Implement consistent MCP error response format",
+        "summary": "Added line: - Implement consistent MCP error response format..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 262,
+        "lineEnd": 262,
+        "contentAfter": "- Add diagnostic data to all error responses",
+        "summary": "Added line: - Add diagnostic data to all error responses..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 263,
+        "lineEnd": 263,
+        "contentAfter": "- Ensure all tools follow same response pattern",
+        "summary": "Added line: - Ensure all tools follow same response pattern..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 264,
+        "lineEnd": 264,
+        "contentAfter": "",
+        "summary": "Added line: ..."
+      },
+      {
+        "type": "addition",
+        "section": "content",
+        "lineStart": 265,
+        "lineEnd": 265,
+        "contentAfter": "",
+        "summary": "Added line: ..."
+      }
+    ],
+    "metadata": {
+      "sizeBefore": 0,
+      "sizeAfter": 6126,
+      "linesBefore": 1,
+      "linesAfter": 265,
+      "hashAfter": "4c47a38622b20a0c9a45e914025ed8f3156815b2000a6c25652ea535db1c455c"
+    }
+  }
+]
