@@ -315,7 +315,6 @@ export class PRPValidator {
     recommendations: string[]
   ): Promise<number> {
     let score = 0;
-    const maxScore = this.SECTION_WEIGHTS['project overview'];
 
     // Check for project name
     if (content.includes('project name') || content.includes('**project:**')) {
@@ -364,7 +363,6 @@ export class PRPValidator {
     recommendations: string[]
   ): Promise<number> {
     let score = 0;
-    const maxScore = this.SECTION_WEIGHTS['feature specification'];
 
     // Check for functional requirements
     if (
@@ -416,7 +414,6 @@ export class PRPValidator {
     recommendations: string[]
   ): Promise<number> {
     let score = 0;
-    const maxScore = this.SECTION_WEIGHTS['technical architecture'];
 
     // Check for technology stack
     const techKeywords = [
@@ -477,7 +474,6 @@ export class PRPValidator {
     recommendations: string[]
   ): Promise<number> {
     let score = 0;
-    const maxScore = this.SECTION_WEIGHTS['user experience'];
 
     // Check for user personas or roles
     if (
@@ -513,7 +509,6 @@ export class PRPValidator {
     recommendations: string[]
   ): Promise<number> {
     let score = 0;
-    const maxScore = this.SECTION_WEIGHTS['implementation approach'];
 
     // Check for phases or milestones
     if (
@@ -551,7 +546,6 @@ export class PRPValidator {
     recommendations: string[]
   ): Promise<number> {
     let score = 0;
-    const maxScore = this.SECTION_WEIGHTS['success metrics'];
 
     // Check for measurable metrics
     if (
@@ -588,7 +582,6 @@ export class PRPValidator {
     recommendations: string[]
   ): Promise<number> {
     let score = 0;
-    const maxScore = this.SECTION_WEIGHTS['constraints & considerations'];
 
     const constraintTypes = [
       'technical',
@@ -603,7 +596,7 @@ export class PRPValidator {
       content.toLowerCase().includes(type)
     );
 
-    score += Math.min(foundConstraints.length, maxScore);
+    score += Math.min(foundConstraints.length * 2, 10);
 
     if (foundConstraints.length === 0) {
       recommendations.push(

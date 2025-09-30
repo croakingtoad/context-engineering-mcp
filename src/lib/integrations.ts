@@ -1,4 +1,3 @@
-import { PRPTemplate, PRPSection } from '../types/index.js';
 import { FileMetadata } from './storage.js';
 import { StorageSystem } from './storage.js';
 
@@ -58,7 +57,7 @@ export class IntegrationsManager {
   private config: IntegrationsConfig;
   private status: IntegrationsStatus;
   private archonClient: any = null;
-  private healthCheckTimer: NodeJS.Timeout | null = null;
+  private healthCheckTimer: ReturnType<typeof setTimeout> | null = null;
   private retryAttempts: Map<string, number> = new Map();
 
   constructor(

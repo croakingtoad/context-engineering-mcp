@@ -322,7 +322,7 @@ export class ContentSynthesizer {
     }
 
     // File references
-    const fileMatches = examplesSection.match(/examples?\/([\w\-\.\/]+)/gi);
+    const fileMatches = examplesSection.match(/examples?\/[\w-.]+/gi);
     if (fileMatches) {
       examples.push(...fileMatches);
     }
@@ -608,9 +608,17 @@ export class ContentSynthesizer {
           if (analysis) {
             analyses.push(analysis);
           }
-        } catch (error) {}
+        } catch (error) {
+          // Skip files that can't be analyzed
+          process.stderr.write(
+            `Failed to analyze example file ${filePath}: ${error}\n`
+          );
+        }
       }
-    } catch (error) {}
+    } catch (error) {
+      // Return empty array if examples directory can't be read
+      process.stderr.write(`Failed to read examples directory: ${error}\n`);
+    }
 
     return analyses;
   }

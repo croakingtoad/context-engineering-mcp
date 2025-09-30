@@ -53,7 +53,10 @@ export class CodebaseAnalyzer {
       try {
         const analysis = await this.analyzeFile(file);
         fileAnalyses.push(analysis);
-      } catch (error) {}
+      } catch (error) {
+        // Skip files that can't be analyzed
+        process.stderr.write(`Failed to analyze ${file}: ${error}\n`);
+      }
     }
 
     // Detect architectural patterns
@@ -128,7 +131,12 @@ export class CodebaseAnalyzer {
 
       // Calculate complexity metrics
       analysis.metrics = this.calculateMetrics(content, analysis);
-    } catch (error) {}
+    } catch (error) {
+      // Return partial analysis if content analysis fails
+      process.stderr.write(
+        `Failed to analyze file content for ${filePath}: ${error}\n`
+      );
+    }
 
     return analysis;
   }
@@ -194,7 +202,12 @@ export class CodebaseAnalyzer {
           frameworks.push(framework);
         }
       }
-    } catch (error) {}
+    } catch (error) {
+      // Return empty array if package.json can't be read
+      process.stderr.write(
+        `Failed to detect frameworks from package.json: ${error}\n`
+      );
+    }
 
     return frameworks;
   }
@@ -897,6 +910,44 @@ export class CodebaseAnalyzer {
           'Consider dependency injection',
           'Use interfaces for service contracts',
         ],
+      });
+    }
+
+    if (hasUtils) {
+      patterns.push({
+        id: 'utility-layer',
+        name: 'Utility Functions',
+        description: 'Utility/helper functions organized separately',
+        type: 'structure',
+        confidence: 0.7,
+        examples: [
+          {
+            file: 'Directory structure',
+            snippet: '/utils/ directory found',
+            lineStart: 1,
+            lineEnd: 1,
+          },
+        ],
+        recommendations: ['Keep utility functions pure and well-tested'],
+      });
+    }
+
+    if (hasHooks) {
+      patterns.push({
+        id: 'custom-hooks',
+        name: 'Custom React Hooks',
+        description: 'Custom hooks pattern for React',
+        type: 'structure',
+        confidence: 0.8,
+        examples: [
+          {
+            file: 'Directory structure',
+            snippet: '/hooks/ directory found',
+            lineStart: 1,
+            lineEnd: 1,
+          },
+        ],
+        recommendations: ['Follow hooks naming convention (use prefix)'],
       });
     }
 

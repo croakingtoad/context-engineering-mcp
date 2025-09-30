@@ -220,11 +220,12 @@ function generateDefaultAnswers(
         answers[question.id] =
           analysis.rootPath.split('/').pop() || 'My Project';
         break;
-      case 'project-description':
+      case 'project-description': {
         const frameworks = analysis.framework?.split(', ') || [];
         answers[question.id] =
           `A ${frameworks.join(' and ')} application with ${analysis.architecture.join(' and ')} architecture`;
         break;
+      }
       case 'target-users':
         answers[question.id] = 'End users and administrators';
         break;

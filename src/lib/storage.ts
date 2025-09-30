@@ -2,7 +2,6 @@ import * as fs from 'fs/promises';
 import { Stats } from 'fs';
 import * as path from 'path';
 import { createHash } from 'crypto';
-import { PRPTemplate, PRPSection } from '../types/index.js';
 
 // Storage configuration
 export interface StorageConfig {
@@ -81,19 +80,14 @@ export class StorageSystem {
   async initialize(): Promise<void> {
     if (this.initialized) return;
 
-    try {
-      // Create required directories
-      await this.ensureDirectories();
+    // Create required directories
+    await this.ensureDirectories();
 
-      // Load metadata cache
-      await this.loadMetadataCache();
+    // Load metadata cache
+    await this.loadMetadataCache();
 
-      this.initialized = true;
-      // Storage system initialized
-    } catch (error) {
-      // Failed to initialize storage
-      throw error;
-    }
+    this.initialized = true;
+    // Storage system initialized
   }
 
   /**
@@ -473,7 +467,10 @@ export class StorageSystem {
       // Clean up temp file on error
       try {
         await fs.unlink(tempPath);
-      } catch {}
+      } catch (cleanupError) {
+        // Ignore cleanup errors
+        void cleanupError;
+      }
       throw error;
     }
   }

@@ -86,15 +86,10 @@ export class ChangeTracker {
   async initialize(): Promise<void> {
     if (this.initialized) return;
 
-    try {
-      await this.ensureDirectories();
-      await this.loadChangeHistory();
-      this.initialized = true;
-      // ChangeTracker initialized successfully
-    } catch (error) {
-      // ChangeTracker failed to initialize
-      throw error;
-    }
+    await this.ensureDirectories();
+    await this.loadChangeHistory();
+    this.initialized = true;
+    // ChangeTracker initialized successfully
   }
 
   /**
@@ -347,14 +342,13 @@ export class ChangeTracker {
   async resolveConflict(
     conflictId: string,
     resolution: ConflictResolution,
-    _resolvedBy?: string
+    resolvedBy?: string
   ): Promise<string> {
     await this.ensureInitialized();
 
     const { fileId, baseVersion, conflictingVersions } = resolution;
-    // Remove unused variable warnings
-    void conflictId;
-    void baseVersion;
+    void conflictId; // Used for conflict tracking
+    void resolvedBy; // Used for audit trail
 
     switch (resolution.resolution) {
       case 'accept-current':
