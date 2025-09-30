@@ -407,7 +407,8 @@ export async function generatePRPToolHandler(args: unknown): Promise<{
     const diagnostics: any = {};
 
     if (errorMessage.includes('not found')) {
-      diagnostics.suggestion = 'Use list_templates tool to see all available templates';
+      diagnostics.suggestion =
+        'Use list_templates tool to see all available templates';
       diagnostics.commonTemplates = [
         'base-prp-template',
         'web-application-template',

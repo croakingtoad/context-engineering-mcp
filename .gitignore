@@ -38,6 +38,7 @@ logs/
 *.swp
 *.swo
 *~
+.claude/
 
 # OS
 .DS_Store
@@ -56,6 +57,19 @@ Thumbs.db
 test-results/
 junit.xml
 
+# Development and testing files
+demo-integration.js
+test-server.js
+verify-installation.js
+test-fixtures/
+
+# Runtime data directories (keep structure, ignore content)
+data/.metadata/
+data/.versions/
+data/.changes/
+data/prps/*.md
+data/templates/*.md
+
 # Local markdown files (keep README.md, CONTRIBUTING.md, CLAUDE.md, and .github/*.md)
 *.md
 !README.md
@@ -63,3 +77,4 @@ junit.xml
 !CLAUDE.md
 !.github/**/*.md
 !LICENSE
+!external/**/*.md
