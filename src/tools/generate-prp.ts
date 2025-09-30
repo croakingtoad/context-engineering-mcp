@@ -293,9 +293,15 @@ export async function generatePRPToolHandler(args: unknown): Promise<{
     // Save to storage if requested
     if (input.saveToStorage && storageSystem) {
       try {
-        const filename =
+        // Generate filename and ensure it has .md extension
+        let filename =
           input.filename ||
-          `prp_${input.projectContext.name.toLowerCase().replace(/\s+/g, '_')}_${Date.now()}.md`;
+          `prp_${input.projectContext.name.toLowerCase().replace(/\s+/g, '_')}_${Date.now()}`;
+
+        // Ensure .md extension
+        if (!filename.endsWith('.md')) {
+          filename += '.md';
+        }
 
         const storageMetadata: any = {
           tags: input.tags || ['generated', input.projectContext.domain],

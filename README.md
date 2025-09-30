@@ -83,7 +83,7 @@ Instead of starting with blank requirements documents:
 
 ```bash
 # Clone the repository
-git clone https://github.com/locomotive-agency/context-engineering-mcp.git
+git clone https://github.com/croakingtoad/context-engineering-mcp.git
 cd context-engineering-mcp
 
 # Install dependencies
@@ -127,7 +127,7 @@ Add this configuration to your Claude Desktop `claude_desktop_config.json`:
 
 ```bash
 # Add to Claude Code via MCP
-claude-code mcp add context-engineering /path/to/context-engineering-mcp-server/dist/index.js
+claude add context-engineering /path/to/context-engineering-mcp-server/dist/index.js
 ```
 
 ## 🔧 Configuration Options
