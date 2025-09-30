@@ -70,12 +70,15 @@ Instead of starting with blank requirements documents:
 - ✅ Added atomic service initialization with health checks
 - ✅ Removed all console.log statements (proper JSON-RPC compliance)
 - ✅ Server now fails fast with clear error messages instead of infinite retry loops
+- ✅ Fixed PRP file extension bug - all generated PRPs now saved with .md extension
+- ✅ Synced with Cole Medin's latest upstream templates (September 2025)
 
 **What this means for you:**
 - **No token waste**: Claude Desktop won't retry endlessly on errors
 - **Clear diagnostics**: Know exactly what went wrong and how to fix it
 - **Reliable startup**: Server validates all dependencies before accepting requests
 - **Production grade**: No mock data, no placeholders, all real implementations
+- **Consistent file format**: All PRPs automatically saved as markdown files
 
 ## 🚀 Quick Start
 
@@ -84,7 +87,7 @@ Instead of starting with blank requirements documents:
 ```bash
 # Clone the repository
 git clone https://github.com/croakingtoad/context-engineering-mcp.git
-cd context-engineering-mcp
+cd context-engineering-mcp-server
 
 # Install dependencies
 npm install
@@ -137,6 +140,9 @@ claude add context-engineering /path/to/context-engineering-mcp-server/dist/inde
 - `TEMPLATES_DIR` - Directory containing internal templates (default: `./templates`)
 - `EXTERNAL_TEMPLATES_DIR` - Directory for Cole's external templates (default: `./external/context-engineering-intro`)
 - `DATA_DIR` - Directory for persistent storage (default: `./data`)
+- `INITIAL_DIRECTORY` - Directory for INITIAL.md files (default: `./data/initial`)
+- `RULES_DIRECTORY` - Directory for global rules (default: `./data/rules`)
+- `PRP_DIRECTORY` - Directory for stored PRPs (default: `./data/prps`)
 - `NODE_ENV` - Environment mode (`development`, `production`, `test`)
 
 ### Server Capabilities
